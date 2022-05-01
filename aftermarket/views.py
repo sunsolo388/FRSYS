@@ -3,18 +3,12 @@ from django.shortcuts import HttpResponse
 
 # Create your views here.
 #后台管理售后
-def AMlist(request):
-    #返回AM的待处理表单界面
-    return HttpResponse()
+def detail(request, question_id):
+    return HttpResponse("You're looking at question %s." % question_id)
 
-def p1(request):
-    #第一个界面，包括售后的相关信息展示
-    return HttpResponse()
+def results(request, question_id):
+    response = "You're looking at the results of question %s."
+    return HttpResponse(response % question_id)
 
-def p2(request):
-    #第二个处理界面，包括处理员的输入相关
-    return HttpResponse()
-
-def p3(request):
-    #提醒处理完成，与结束按钮
-    return HttpResponse()
+def vote(request, question_id):
+    return HttpResponse("You're voting on question %s." % question_id)
