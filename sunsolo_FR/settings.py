@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'aftermarket.apps.AftermarketConfig',
+    'deliver',
+    'login',
+    'purchase',
 ]
 
 MIDDLEWARE = [

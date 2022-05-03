@@ -60,9 +60,7 @@ class Car(models.Model):
 
 
 class CarForDeliver(models.Model):
-    deliver_id = models.ForeignKey(Deliver, on_delete=True)
-    car_id = models.ForeignKey(Car, on_delete=True)
-    cold_chain = models.ForeignKey(Car, on_delete=True)
-
+    deliver_id = models.ForeignKey(Deliver, on_delete=models.CASCADE)
+    car_id = models.ForeignKey(Car, on_delete=models.CASCADE)
 
 
