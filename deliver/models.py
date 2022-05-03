@@ -52,15 +52,17 @@ class Car(models.Model):
         (7, 'G级冷链冷藏车辆'), (8, 'H级冷链冷藏车辆'),
     )
 
-    car_id = models.CharField(max_length=15, verbose_name="车牌号")
+    car_id = models.CharField(max_length=15, verbose_name="车牌号",unique=True)
     status = models.PositiveIntegerField(default=STATUS_NORMAL, choices=STATUS_ITEMS, verbose_name="状态")
     cold_chain = models.PositiveIntegerField(default=0, choices=ColdChain_ITEMS, verbose_name="冷链情况")
     load = models.FloatField(verbose_name="载重")
     staff_id = models.ForeignKey(Staff, verbose_name="司机ID", on_delete=models.DO_NOTHING)
 
-
+"""
 class CarForDeliver(models.Model):
-    deliver_id = models.ForeignKey(Deliver, on_delete=models.CASCADE)
-    car_id = models.ForeignKey(Car, on_delete=models.CASCADE)
+    deliver_id = models.ForeignKey(Deliver,to_field="deliver_id", on_delete=models.CASCADE,unique=True,related_name="deliver_id")
+    car_id = models.ForeignKey(Car,to_field="car_id", on_delete=models.CASCADE,unique=True,related_name="car_id")
+    cold_chain = models.ForeignKey(Car,to_field="cold_chain", on_delete=models.CASCADE,related_name="cold_chain")
+"""
 
 
