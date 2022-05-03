@@ -41,3 +41,11 @@ class SupplierDetail(models.Model):
     product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
     supplier_id = models.ForeignKey(Supplier, on_delete=models.CASCADE)
 
+class PurchaseDetail(models.Model):
+    '''
+    purchase_detail 表
+    '''
+    purchase_id = models.ForeignKey(Purchase, on_delete=models.CASCADE)
+    product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
+    supplier_id = models.ForeignKey(Supplier, on_delete=models.CASCADE)
+    product_root = models.TextField()
