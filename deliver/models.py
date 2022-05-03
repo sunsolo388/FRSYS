@@ -42,5 +42,5 @@ class Car(models.Model):
     staff_id = models.ForeignKey(Staff, verbose_name="司机ID", on_delete=models.DO_NOTHING)
 
 class CarForDeliver(models.Model):
-    deliver_id = models.ForeignKey(Deliver,to_field="deliver_id", on_delete=models.CASCADE,unique=True,related_name="deliver_id")
-    car_id = models.ForeignKey(Car,to_field="car_id", on_delete=models.CASCADE,unique=True,related_name="car_id")
+    deliver_id = models.ForeignKey(Deliver,to_field="deliver_id", on_delete=models.CASCADE)
+    car_id = models.ForeignKey(Car,to_field="car_id", on_delete=models.CASCADE)
