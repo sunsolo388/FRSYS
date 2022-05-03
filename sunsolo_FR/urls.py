@@ -19,9 +19,4 @@ from aftermarket import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('AMlist/', views.AMlist),
-    path('AMlist/p1/', views.p1),
-    path('AMlist/p2/',views.p1),
-    path('AMlist/p3/',views.p3),
-    path('aftermarket/', include('aftermarket.urls')),
 ]

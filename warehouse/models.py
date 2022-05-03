@@ -1,13 +1,7 @@
 from django.db import models
 # Create your models here.
 from deliver import models as dm
-
-class Purchase(models.Model):
-    purchase_id = models.CharField(max_length=8,primary_key= True)
-    deliver_id = models.ForeignKey(to=dm.Deliver,to_field="deliver_id",on_delete=models.CASCADE)
-    purchase_num = models.IntegerField()
-    purchase_time = models.DateTimeField()
-    purchase_price = models.FloatField(max_length=8)
+from purchase.models import Purchase
 
 class WareHouse(models.Model):
     warehouse_flow = models.CharField(max_length=8,primary_key=True)
@@ -19,5 +13,3 @@ class Inward(models.Model):
     warehouse_id = models.ForeignKey(to=WareHouse,to_field="warehouse_flow",on_delete=models.CASCADE)
     in_time = models.DateTimeField()
 
-def cs_1():
-    print('POK')
