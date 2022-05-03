@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'personnel',
     'deliver',
     'login',
     'warehouse',
@@ -44,9 +45,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'aftermarket.apps.AftermarketConfig',
-    'deliver',
-    'login',
-    'purchase',
 ]
 
 MIDDLEWARE = [
