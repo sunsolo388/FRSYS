@@ -14,7 +14,7 @@ def register(request):
 
     # 从数据库中读取所有数据，注意缩进
     user_list = models.UserInfo.objects.all()
-    return render(request, 'index.html', {'data': user_list})
+    return render(request, 'homepage/register.html', {'data': user_list})
 
 def login(request):
     return render(request,'homepage/login.html')
