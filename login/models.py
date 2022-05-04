@@ -12,5 +12,5 @@ class UserInfo(models.Model):
     username = models.CharField(max_length=20, verbose_name='用户名')
     pwd = models.CharField(max_length=20, verbose_name='密码')
     mail = models.EmailField(verbose_name='邮箱')
-    tel_num = models.IntegerField(verbose_name='电话号码')
+    tel_num = models.PositiveBigIntegerField(verbose_name='电话号码')
     identity = models.PositiveIntegerField(default=IDENTITY_CUSTOMER, choices=IDENTITY_ITEMS, verbose_name="状态")
