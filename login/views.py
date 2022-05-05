@@ -57,6 +57,7 @@ def login(request):
                 return render(request,'''<h1>还没做好</h1>''')
         else:
             messages.add_message(request, messages.ERROR, '密码错误，登陆失败！')
+            return render(request,'homepage/login.html')
     elif request.method == 'GET':
         return render(request,'homepage/login.html')
 
