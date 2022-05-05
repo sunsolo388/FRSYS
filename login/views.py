@@ -40,7 +40,14 @@ def login(request):
     if request.method == "POST":
         email = request.POST.get('email')
         password = request.POST.get('password')
-        user = models.UserInfo.objects.get(mail=email)
+        try:
+            user = models.UserInfo.objects.get(mail=email)
+        except Exception as e:
+            user = None
+        if user == None:
+            messages.add_message(request, messages.ERROR, '不存在该账号，请注册！')
+            return redirect('/login/register/')
+        
         if password == user.pwd:
             messages.add_message(request, messages.SUCCESS, '登录成功')
             print(user.identity)
