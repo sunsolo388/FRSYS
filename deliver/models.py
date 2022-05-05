@@ -15,7 +15,7 @@ class DeliverDetail(models.Model):
     deliver_detail 表
     '''
     dd_id = models.CharField(max_length=8, primary_key=True)
-    deliver_id = models.ForeignKey(Deliver, on_delete=models.CASCADE)
+    deliver_id = models.ForeignKey(Deliver, on_delete=models.CASCADE, related_name='detail_of_this_deliver')
     province = models.CharField(max_length=20)
     city = models.CharField(max_length=20)
 
@@ -39,8 +39,12 @@ class Car(models.Model):
     status = models.PositiveIntegerField(default=STATUS_NORMAL, choices=STATUS_ITEMS, verbose_name="状态")
     cold_chain = models.PositiveIntegerField(default=0, choices=ColdChain_ITEMS, verbose_name="冷链情况")
     load = models.FloatField(verbose_name="载重")
-    staff_id = models.ForeignKey(Staff, verbose_name="司机ID", on_delete=models.DO_NOTHING)
+    staff_id = models.ForeignKey(Staff, verbose_name="司机的员工ID", on_delete=models.DO_NOTHING)
 
 class CarForDeliver(models.Model):
-    deliver_id = models.ForeignKey(Deliver,to_field="deliver_id", on_delete=models.CASCADE)
-    car_id = models.ForeignKey(Car,to_field="car_id", on_delete=models.CASCADE)
+    ''' 这里我想明确一下需求，CarForDeliver与Car、Deliver之间的关系。
+    一个Deliver只会对应一个CarForDeliver，一个Car可以对应多个CarForDeliver，我这么理解的对吗？
+    那么，我对car_id加一个related_name属性，方便查找Car对应所有CarForDeliver
+    '''
+    deliver_id = models.ForeignKey(Deliver, on_delete=models.CASCADE)
+    car_id = models.ForeignKey(Car,to_field="car_id", on_delete=models.DO_NOTHING, related_name='deliver_of_this_car')
