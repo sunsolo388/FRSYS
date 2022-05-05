@@ -23,6 +23,7 @@ from login.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
 
+    # homepage_yly
     path(r'^favicon\.ico$',RedirectView.as_view(url=r'static/favicon.ico')),
     path('admin/', admin.site.urls),
     path('index/',index),
@@ -31,4 +32,6 @@ urlpatterns = [
     path('index/about/',about),
     path('index/services/',services),
     path('index/contact/',contact),
+    path('index/work/',work)
+    
 ]
