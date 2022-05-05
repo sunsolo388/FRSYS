@@ -30,3 +30,6 @@ def contact(request):
 
 def services(request):
     return render(request,'homepage/services.html')
+
+def work(request):
+    return render(request,'homepage/work.html')

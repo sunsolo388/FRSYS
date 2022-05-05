@@ -9,7 +9,7 @@ class WareHouse(models.Model):
     warehouse_status = models.CharField(max_length=10)
 
 class Inward(models.Model):
-    purchase_id = models.ForeignKey(to=Purchase,to_field="purchase_id",on_delete=models.CASCADE,primary_key=True)
+    purchase_id = models.OneToOneField(to=Purchase,to_field="purchase_id",on_delete=models.CASCADE,primary_key=True)
     warehouse_id = models.ForeignKey(to=WareHouse,to_field="warehouse_flow",on_delete=models.CASCADE)
     in_time = models.DateTimeField()
 
