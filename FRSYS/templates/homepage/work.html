@@ -2,68 +2,77 @@
 <html lang="en">
 
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="description" content="">
-	<meta name="author" content="">
-	<link rel="shortcut icon" href="/static/favicon.ico">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="/static/favicon.ico">
 
-	<title>生鲜码盒可溯源生鲜</title>
+    <title>生鲜码盒可溯源生鲜</title>
 
-	<!-- Bootstrap core CSS -->
-	<link href="/static/css/bootstrap.css" rel="stylesheet">
+    <!-- Bootstrap core CSS -->
+    <link href="/static/css/bootstrap.css" rel="stylesheet">
 
-	<!-- Custom styles for this template -->
-	<link href="/static/css/main.css" rel="stylesheet">
-	<link href="/static/css/point.css" rel="stylesheet"> <!--自己写的css哈哈哈哈我好厉害-->
-	<link href="/static/css/font-awesome.min.css" rel="stylesheet">
-	<link href="/static/css/font-awesome.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="/static/css/main.css" rel="stylesheet">
+    <link href="/static/css/point.css" rel="stylesheet">
+    <!--自己写的css哈哈哈哈我好厉害-->
+    <link href="/static/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/static/css/font-awesome.css" rel="stylesheet">
 </head>
 
+{% if messages %}
+<script type="text/jscript">
+    {% for msg in messages %}
+    alert('{{ msg.message }}');
+    {% endfor %}
+</script>
+{% endif %}
+
 <body>
-	<!-- +++++ Projects Section +++++ -->
-	<div class="container pt">
-		<div class="row mt">
-			<div class="col-lg-6 right-side">
-				<h1><a href="/index/">
-						<span class="fa fa-pagelines" aria-hidden="true"></span>
-						生鲜码盒可溯源生鲜
-					</a></h1>
-			</div>
-		</div>
-		<div class="row mt centered">
-			<div class="col-lg-2">
-				<a><img class="img-responsive" src="/static/images/space.png" alt="" /></a>
-			</div>
-			<div class="col-lg-4">
-				<a href="work01.html"><img class="img-responsive" src="/static/images/procurement.png" alt="" /></a>
-				<p>Procurement Department</p>
-			</div>
-			<div class="col-lg-4">
-				<a href="work01.html"><img class="img-responsive" src="/static/images/Logistics.png" alt="" /></a>
-				<p>Logistics Department</p>
-			</div>
-			<div class="col-lg-2">
-				<a><img class="img-responsive" src="/static/images/space.png" alt="" /></a>
-			</div>
-		</div><!-- /row -->
-		<div class="row mt centered">
-			<div class="col-lg-4">
-				<a href="work01.html"><img class="img-responsive" src="/static/images/warehouse.png" alt="" /></a>
-				<p>Warehouse</p>
-			</div>
-			<div class="col-lg-4">
-				<a href="work01.html"><img class="img-responsive" src="/static/images/sales.png" alt="" /></a>
-				<p>Sales Department</p>
-			</div>
-			<div class="col-lg-4">
-				<a href="work01.html"><img class="img-responsive" src="/static/images/aftersale.png" alt="" /></a>
-				<p>After Sales</p>
-			</div>
-		</div><!-- /row -->
-	</div><!-- /container -->
-	<script src="/static/js/bootstrap.min.js"></script>
+    <!-- +++++ Projects Section +++++ -->
+    <div class="container pt">
+        <div class="row mt">
+            <div class="col-lg-6 right-side">
+                <h1><a href="/index/">
+                        <span class="fa fa-pagelines" aria-hidden="true"></span>
+                        生鲜码盒可溯源生鲜
+                    </a></h1>
+            </div>
+        </div>
+        <div class="row mt centered">
+            <div class="col-lg-2">
+                <a><img class="img-responsive" src="/static/images/space.png" alt="" /></a>
+            </div>
+            <div class="col-lg-4">
+                <a href="work01.html"><img class="img-responsive" src="/static/images/procurement.png" alt="" /></a>
+                <p>Procurement Department</p>
+            </div>
+            <div class="col-lg-4">
+                <a href="work01.html"><img class="img-responsive" src="/static/images/Logistics.png" alt="" /></a>
+                <p>Logistics Department</p>
+            </div>
+            <div class="col-lg-2">
+                <a><img class="img-responsive" src="/static/images/space.png" alt="" /></a>
+            </div>
+        </div><!-- /row -->
+        <div class="row mt centered">
+            <div class="col-lg-4">
+                <a href="work01.html"><img class="img-responsive" src="/static/images/warehouse.png" alt="" /></a>
+                <p>Warehouse</p>
+            </div>
+            <div class="col-lg-4">
+                <a href="work01.html"><img class="img-responsive" src="/static/images/sales.png" alt="" /></a>
+                <p>Sales Department</p>
+            </div>
+            <div class="col-lg-4">
+                <a href="work01.html"><img class="img-responsive" src="/static/images/aftersale.png" alt="" /></a>
+                <p>After Sales</p>
+            </div>
+        </div><!-- /row -->
+    </div><!-- /container -->
+    <script src="/static/js/bootstrap.min.js"></script>
 </body>
 
 </html>
