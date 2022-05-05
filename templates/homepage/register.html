@@ -29,12 +29,23 @@
     <link href="//fonts.googleapis.com/css?family=Montserrat:300,400,500,600" rel="stylesheet">
     <link href="//fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet">
 </head>
+
+{% if messages %}
+<script type="text/jscript">
+    {% for msg in messages %}
+    alert('{{ msg.message }}');
+    {% endfor %}
+</script>
+{% endif %}
+
 <body>
     <h1 class="error" color="Green">
         <a class="navbar-brand" href="/index/"> <span class="fa fa-pagelines" aria-hidden="true"></span>
         生鲜码盒可溯源生鲜
         </a>
     </h1>
+
+
 	<!---728x90--->
     <div class="w3layouts-two-grids">
 	<!---728x90--->
@@ -47,16 +58,17 @@
             </div>
             <div class="txt-left-side">
                 <h2> Sign Up Here </h2>
-                <form action="#" method="post">
+                <form action="" method="post">
+                    {% csrf_token %}
                     <div class="form-left-to-w3l">
                         <span class="fa fa-user-o" aria-hidden="true"></span>
-                        <input type="text" name="Name" placeholder=" Name" required="">
+                        <input type="text" name="username" placeholder="Name" required="">
 
                         <div class="clear"></div>
                     </div>
                     <div class="form-left-to-w3l">
                         <span class="fa fa-phone" aria-hidden="true"></span>
-                        <input type="text" name="Phone" placeholder="Phone" required="">
+                        <input type="text" name="tel" placeholder="Phone" required="">
 
                         <div class="clear"></div>
                     </div>
@@ -73,8 +85,14 @@
                         <div class="clear"></div>
                     </div>
                     <div class="form-left-to-w3l ">
+
+                        <span class="fa fa-lock" aria-hidden="true"></span>
+                        <input type="password" name="password2" placeholder="Password Again" required="">
+                        <div class="clear"></div>
+                    </div>
+                    <div class="form-left-to-w3l ">
                         <span class="fa fa-id-card" aria-hidden="true"></span>
-                        <input type="text" name="id" list="typelist" placeholder="Please chooce" required="">
+                        <input type="text" name="identity" list="typelist" placeholder="Please chooce" required="">
                         <datalist id="typelist">
                             <option>员工</option>
                             <option>用户</option>
@@ -83,7 +101,7 @@
                     </div>
 
                     <div class="btnn">
-                        <button type="submit">Sign Up </button>
+                        <button type="submit">Sign Up</button>
                     </div>
                 </form>
                 <div class="w3layouts_more-buttn">
