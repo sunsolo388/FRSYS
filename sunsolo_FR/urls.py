@@ -24,8 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # homepage_yly
-    path(r'^favicon\.ico$',RedirectView.as_view(url=r'static/favicon.ico')),
-    path('admin/', admin.site.urls),
+    path('favicon.ico',RedirectView.as_view(url=r'static/favicon.ico')),
     path('index/',index),
     path('login/',login),
     path('login/register/',register),
