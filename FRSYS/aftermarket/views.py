@@ -1,14 +1,13 @@
 from django.shortcuts import render
 from django.shortcuts import HttpResponse
-
+from .models import AM
 # Create your views here.
 #后台管理售后
-def detail(request, question_id):
-    return HttpResponse("You're looking at question %s." % question_id)
+def AMtable():
+    #跳转到售后表单界面
+    return
 
-def results(request, question_id):
-    response = "You're looking at the results of question %s."
-    return HttpResponse(response % question_id)
+def AMdealing():
+    #跳转到处理详情界面
+    return
 
-def vote(request, question_id):
-    return HttpResponse("You're voting on question %s." % question_id)
