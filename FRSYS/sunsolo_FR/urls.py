@@ -31,6 +31,7 @@ urlpatterns = [
     path('index/about/',about),
     path('index/services/',services),
     path('index/contact/',contact),
-    path('work/',work)
+    path('work/',work),
+    path('userpage/',userpage)
     
 ]

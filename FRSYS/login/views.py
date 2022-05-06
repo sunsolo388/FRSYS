@@ -14,7 +14,9 @@ def register(request):
         tel = request.POST.get('tel')
         email = request.POST.get('email')
         identity = request.POST.get('identity')
-        a=0 if identity=='客户' else 1
+        print(identity)
+        a=0 if identity=='用户' else 1
+        print(a)
         if password!=password2:
             messages.add_message(request, messages.ERROR, '两次密码输入不一致，请检查！')
             return render(request, 'homepage/register.html')
@@ -54,7 +56,7 @@ def login(request):
             if user.identity == 1:
                 return redirect('/work')
             else:
-                return render(request,'''<h1>还没做好</h1>''')
+                return redirect('/userpage')
         else:
             messages.add_message(request, messages.ERROR, '密码错误，登陆失败！')
             return render(request,'homepage/login.html')
@@ -63,7 +65,7 @@ def login(request):
 
 
 def index(request):
-    return render(request,'homepage/index.html')
+    return render(request,'hosmepage/index.html')
 
 def about(request):
     return render(request,'homepage/about.html')
@@ -76,4 +78,7 @@ def services(request):
 
 def work(request):
     return render(request, 'homepage/work.html')
+
+def userpage(request):
+    return render(request,'''<html><h1>还没做好QAQ</h1></html>''')
     
