@@ -19,6 +19,7 @@ from django.urls import path,include
 from django.views.generic.base import RedirectView
 
 from login.views import *
+from deliver.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -32,6 +33,9 @@ urlpatterns = [
     path('index/services/',services),
     path('index/contact/',contact),
     path('work/',work),
-    path('userpage/',userpage)
+    path('userpage/',userpage),
+
+    # delivery_yly
+    path('work/delivery/',deliver_home)
     
 ]
