@@ -93,7 +93,7 @@ DATABASES = {
         #'PASSWORD': 'Wxt200158', # 王心童密码
         #'PASSWORD': 'wsyly', # 于禄洋密码，查了好久不会改密码
         #'PASSWORD':'123456', # 林学涛密码，我建议统一设成123456吧
-        'PASSWORD':'123456',
+        'PASSWORD':'dyq000',# 董言嵚密码，我也不会该密码
         'HOST' : '127.0.0.1',
         'PORT' : 3306,
     }
