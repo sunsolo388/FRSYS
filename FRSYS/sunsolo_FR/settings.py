@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'order',
     'product',
     'purchase',
+    'customer',
     
     'django.contrib.admin',
     'django.contrib.auth',
@@ -55,7 +56,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    #'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -91,9 +92,10 @@ DATABASES = {
         'NAME': 'testdemo',
         'USER': 'root',
         #'PASSWORD': 'Wxt200158', # 王心童密码
-        'PASSWORD': 'wsyly', # 于禄洋密码，查了好久不会改密码
+        #'PASSWORD': 'wsyly', # 于禄洋密码，查了好久不会改密码
         #'PASSWORD':'123456', # 林学涛密码，我建议统一设成123456吧
         #'PASSWORD':'dyq000',# 董言嵚密码，我也不会该密码
+        'PASSWORD': 'root', 
         'HOST' : '127.0.0.1',
         'PORT' : 3306,
     }
@@ -124,7 +126,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'zh-hans'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 

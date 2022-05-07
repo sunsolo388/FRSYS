@@ -20,6 +20,7 @@ from django.views.generic.base import RedirectView
 
 from login.views import *
 from deliver.views import *
+from order.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -34,8 +35,11 @@ urlpatterns = [
     path('index/contact/',contact),
     path('work/',work),
     path('userpage/',userpage),
-
+    
     # delivery_yly
-    path('work/delivery/',deliver_home)
+    path('work/delivery/',deliver_home),
+    
+    # order_heyueyu
+    path('work/sales/',sales_home)
     
 ]
