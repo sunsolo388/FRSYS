@@ -1,20 +1,22 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Free Bootstrap HTML5 Admin Template : Master</title>
     <link rel="shortcut icon" href="/static/favicon.ico" />
-	<!-- Bootstrap Styles-->
+    <!-- Bootstrap Styles-->
     <link href="/static/css/bootstrap.css" rel="stylesheet" />
-     <!-- FontAwesome Styles-->
+    <!-- FontAwesome Styles-->
     <link href="/static/css/font-awesome.css" rel="stylesheet" />
     <link href="/static/css/font-awesome.min.css" rel="stylesheet">
-        <!-- Custom Styles-->
+    <!-- Custom Styles-->
     <link href="/static/css/custom-styles.css" rel="stylesheet" />
-     <!-- Google Fonts-->
-   <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+    <!-- Google Fonts-->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
 </head>
+
 <body>
     <div id="wrapper">
         <nav class="navbar navbar-default top-navbar" role="navigation">
@@ -37,7 +39,7 @@
                     <ul class="dropdown-menu dropdown-user">
                         <li><a href="/userinfo/"><i class="fa fa-user fa-fw"></i> User Profile</a>
                         </li>
-                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                        <li><a href=""><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
                         <li><a href="/index/"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
@@ -53,13 +55,24 @@
             <div class="sidebar-collapse">
                 <ul class="nav" id="main-menu">
                     <li>
-                        <a class="active-menu" href="empty.html"><i class="fa fa-desktop"></i>物流部主页</a>
+                        <a href="/work/delivery/"><i class="fa fa-desktop"></i>物流部主页</a>
                     </li>
                     <li>
-                        <a><i class="fa fa-sitemap"></i>物流管理处</a>
+                        <a class="active-menu"><i class="fa fa-sitemap"></i>物流管理处<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="#">物流任务分配</a>
+                            </li>
+                            <li>
+                                <a href="#">已完成物流任务</a>
+                            </li>
+                            <li>
+                                <a href="#">正在进行物流任务</a>
+                            </li>
+                        </ul>
                     </li>
                     <li>
-                        <a href="index.html"><i class="fa fa-car"></i>配送处</a>
+                        <a><i class="fa fa-car"></i>配送处</a>
                     </li>
                 </ul>
 
@@ -67,33 +80,33 @@
 
         </nav>
         <!-- /. NAV SIDE  -->
-        <div id="page-wrapper" >
+        <div id="page-wrapper">
             <div id="page-inner">
-			 <div class="row">
-                    <div class="col-md-12">
-                        <h1 class="page-header">
-                            Empty Page <small>Create new page.</small>
-                        </h1>
-                    </div>
-                </div> 
-                 <!-- /. ROW  -->
-				 <footer><p>All right reserved. Template by: <a href="http://webthemez.com">WebThemez</a></p></footer>
-				</div>
-             <!-- /. PAGE INNER  -->
+                <p>学生名单</p>
+                {% for name in names %}
+                <p>{{name.id}}&nbsp&nbsp&nbsp:&nbsp&nbsp&nbsp{{name.name}}</p>
+                <br>
+                {% endfor %}
+
+
+
+
+                <!-- /. PAGE INNER  -->
             </div>
-         <!-- /. PAGE WRAPPER  -->
+            <!-- /. PAGE WRAPPER  -->
         </div>
-     <!-- /. WRAPPER  -->
-    <!-- JS Scripts-->
-    <!-- jQuery Js -->
-    <script src="/static/js/jquery-1.10.2.js"></script>
-      <!-- Bootstrap Js -->
-    <script src="/static/js/bootstrap.min.js"></script>
-    <!-- Metis Menu Js -->
-    <script src="/static/js/jquery.metisMenu.js"></script>
-      <!-- Custom Js -->
-    <script src="/static/js/custom-scripts.js"></script>
-    
-   
+        <!-- /. WRAPPER  -->
+        <!-- JS Scripts-->
+        <!-- jQuery Js -->
+        <script src="/static/js/jquery-1.10.2.js"></script>
+        <!-- Bootstrap Js -->
+        <script src="/static/js/bootstrap.min.js"></script>
+        <!-- Metis Menu Js -->
+        <script src="/static/js/jquery.metisMenu.js"></script>
+        <!-- Custom Js -->
+        <script src="/static/js/custom-scripts.js"></script>
+
+
 </body>
+
 </html>

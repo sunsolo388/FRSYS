@@ -44,12 +44,18 @@ urlpatterns = [
     # delivery_yly
     path('work/delivery/',deliver_home),
 <<<<<<< HEAD
+<<<<<<< HEAD
     
     # order_heyueyu
     path('work/sales/',sales_home)
 =======
     path('work/delivery/glc/',deliver_glc),
     path('work/delivery/psc/',deliver_psc),
+=======
+    path('work/delivery/glc/',deliver_glc_rwfp),
+    path('work/delivery/psc/',deliver_psc_dqrw),
+    path('form/',form),
+>>>>>>> 94aa9fb05ad28d3bfe48aeb8eb5a63baf0991871
 
 
     # aftermarket_dyq

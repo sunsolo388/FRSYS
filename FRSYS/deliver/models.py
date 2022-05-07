@@ -21,11 +21,11 @@ class DeliverDetail(models.Model):
 
 
 class Car(models.Model):
-    STATUS_NORMAL = 1
-    STATUS_DELETE = 0
+    STATUS_NORMAL = 0
+    STATUS_DELETE = 1
     STATUS_ITEMS = (
-        (STATUS_NORMAL, '正常'),
-        (STATUS_DELETE, '删除'),
+        (STATUS_NORMAL, '空闲中'),
+        (STATUS_DELETE, '任务中'),
     )
     ColdChain_ITEMS = (
         (0, '无冷链车辆'),

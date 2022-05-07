@@ -75,8 +75,7 @@ def services(request):
     return render(request,'homepage/services.html')
 
 def work(request):
-    if request.method == 'POST':
-        return render(request, 'homepage/work.html')
+    return render(request, 'homepage/work.html')
 
 def userpage(request):
     return render(request,'userpage/base.html')
