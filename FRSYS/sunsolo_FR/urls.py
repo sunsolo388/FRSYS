@@ -20,6 +20,7 @@ from django.views.generic.base import RedirectView
 
 from login.views import *
 from deliver.views import *
+from warehouse.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -36,6 +37,8 @@ urlpatterns = [
     path('userpage/',userpage),
 
     # delivery_yly
-    path('work/delivery/',deliver_home)
-    
+    path('work/delivery/',deliver_home),
+    path('work/warehouse/',warehouse_home),
+    path('work/warehouse/inward',warehouse_inward),
+    path('work/warehouse/outward',warehouse_outward),
 ]
