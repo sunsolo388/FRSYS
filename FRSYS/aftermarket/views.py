@@ -5,10 +5,15 @@ from aftermarket import models
 # Create your views here.
 #后台管理售后
 def AMtable(request):
+    if request.method=='GET':
     #跳转到售后表单界面
-    return render(request, 'aftermarket/AMtableq.html')
+        return render(request, 'aftermarket/AMtable.html')
+    elif request.method=='POST':
+        am_id=request.POST.get("AM_id")
 
-def AMdealing(request):
+        return redirect('aftermarket/?=am_id')
+
+def AMdealing(request,am_id):
     #跳转到处理详情界面
-    return render(request,'aftermarket/AMtable')
+    return render(request,'aftermarket/AMdealing.html')
 

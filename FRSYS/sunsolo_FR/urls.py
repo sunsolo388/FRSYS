@@ -41,6 +41,6 @@ urlpatterns = [
 
     # aftermarket_dyq
     path('aftermarket/',AMtable),
-    path('aftermarket/<int:AM_id>',AMdealing)
+    path('aftermarket/<int:am_id>/',AMdealing)
     
 ]
