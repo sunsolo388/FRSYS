@@ -65,7 +65,7 @@ def login(request):
 
 
 def index(request):
-    return render(request,'hosmepage/index.html')
+    return render(request,'homepage/index.html')
 
 def about(request):
     return render(request,'homepage/about.html')
