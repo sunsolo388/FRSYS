@@ -20,6 +20,7 @@ from django.views.generic.base import RedirectView
 
 from login.views import *
 from deliver.views import *
+from aftermarket.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -38,9 +39,11 @@ urlpatterns = [
     # delivery_yly
     path('work/delivery/',deliver_home),
     path('work/delivery/glc/',deliver_glc),
-    path('work/delivery/psc/',deliver_psc)
+    path('work/delivery/psc/',deliver_psc),
 
 
-
+    # aftermarket_dyq
+    path('aftermarket/',AMtable),
+    path('aftermarket/<int:AM_id>',AMdealing)
     
 ]
