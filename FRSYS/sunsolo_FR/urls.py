@@ -36,6 +36,11 @@ urlpatterns = [
     path('userpage/',userpage),
 
     # delivery_yly
-    path('work/delivery/',deliver_home)
+    path('work/delivery/',deliver_home),
+    path('work/delivery/glc/',deliver_glc),
+    path('work/delivery/psc/',deliver_psc)
+
+
+
     
 ]

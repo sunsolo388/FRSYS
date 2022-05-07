@@ -14,9 +14,7 @@ def register(request):
         tel = request.POST.get('tel')
         email = request.POST.get('email')
         identity = request.POST.get('identity')
-        print(identity)
         a=0 if identity=='用户' else 1
-        print(a)
         if password!=password2:
             messages.add_message(request, messages.ERROR, '两次密码输入不一致，请检查！')
             return render(request, 'homepage/register.html')
