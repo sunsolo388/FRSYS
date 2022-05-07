@@ -20,14 +20,13 @@ from django.views.generic.base import RedirectView
 
 from login.views import *
 from deliver.views import *
-<<<<<<< HEAD
 from order.views import *
-=======
 from aftermarket.views import *
 from warehouse.views import *
->>>>>>> cd8b9f6a0d3e3e436f7e0b7bbc33e2b049831b3b
+
 
 urlpatterns = [
+    path('',index),
     path('admin/', admin.site.urls),
 
     # homepage_yly
@@ -43,25 +42,25 @@ urlpatterns = [
     
     # delivery_yly
     path('work/delivery/',deliver_home),
-<<<<<<< HEAD
-<<<<<<< HEAD
-    
+    #test
+   # path('work/delivery/chart',test),
+
     # order_heyueyu
-    path('work/sales/',sales_home)
-=======
-    path('work/delivery/glc/',deliver_glc),
-    path('work/delivery/psc/',deliver_psc),
-=======
+    path('work/sales/',sales_home),
+
+  #  path('work/delivery/glc/',deliver_glc),
+  #  path('work/delivery/psc/',deliver_psc),
+
     path('work/delivery/glc/',deliver_glc_rwfp),
     path('work/delivery/psc/',deliver_psc_dqrw),
     path('form/',form),
->>>>>>> 94aa9fb05ad28d3bfe48aeb8eb5a63baf0991871
+
 
 
     # aftermarket_dyq
     path('aftermarket/',AMtable),
-    path('aftermarket/<int:am_id>/',AMdealing)
->>>>>>> cd8b9f6a0d3e3e436f7e0b7bbc33e2b049831b3b
+    path('aftermarket/<int:am_id>/',AMdealing),
+
     
     #warehouse_wxt
     path('work/warehouse/',warehouse_home),

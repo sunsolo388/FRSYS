@@ -16,6 +16,8 @@
     <link href="/static/css/custom-styles.css" rel="stylesheet" />
     <!-- Google Fonts-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+    <!--加个渲染-->
+    <link href="/static/css/font-awesome.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -28,7 +30,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/work"><i class="fa fa-comments"></i> <strong>返回主页 </strong></a>
+                <a class="navbar-brand" href="/work"><i class="fa fa-bath"></i> <strong>返回主页 </strong></a>
             </div>
 
 
@@ -40,13 +42,13 @@
                 <ul class="nav" id="main-menu">
 
                     <li>
-                        <a href="/work/warehouse"><i class="fa fa-dashboard"></i> 库存管理</a>
+                        <a href="/work/warehouse"><i class="fa fa-sitemap"></i> 库存管理</a>
                     </li>
                     <li>
-                        <a class="active-menu" href="inward"><i class="fa fa-desktop"></i> 入库管理</a>
+                        <a class="active-menu" href="inward"><i class="fa fa-long-arrow-left"></i> 入库管理</a>
                     </li>
 					<li>
-                        <a href="outward"><i class="fa fa-bar-chart-o"></i> 出库管理</a>
+                        <a href="outward"><i class="fa fa-long-arrow-right"></i> 出库管理</a>
                     </li>
 
                 </ul>
@@ -58,16 +60,52 @@
         <div id="page-wrapper">
             <div id="page-inner">
                 <!-- /. ROW  -->
+
 		<div class="row">
-			<div class="col-xs-6 col-md-3">
-				<div class="panel panel-default">
-					<div class="panel-body easypiechart-panel">
-						<h4>海鲜</h4>
-						<div class="easypiechart" id="easypiechart-blue" data-percent="82" ><span class="percent">82%</span>
-						</div>
-					</div>
-				</div>
-			</div>
+
+        <div class="form-left-to-w3l">
+                        <span class="fa fa-file" aria-hidden="true"></span>
+                        <input type="text" name="purchase_id" placeholder="订单编号" required="">
+
+                        <div class="clear"></div>
+                    </div>
+
+        <div class="form-left-to-w3l">
+                        <span class="fa fa-check-square" aria-hidden="true"></span>
+                        <input type="text" name="warehouse_flow" placeholder="仓库流水" required="">
+
+                        <div class="clear"></div>
+                    </div>
+
+		<div class="form-left-to-w3l ">
+                        <span class="fa fa-id-card" aria-hidden="true"></span>
+                        <input type="text" name="identity" list="typelist" placeholder="选择商品" required="">
+                        <datalist id="typelist">
+                            <option>商品1</option>
+                            <option>商品2</option>
+                            <option>商品3</option>>
+                        </datalist>
+                        <div class="clear"></div>
+                    </div>
+
+        <label>
+        <span>选择日期</span>
+        <input type="datetime-local" class="measureDate" placeholder="请选择日期">
+        </label>
+
+        <script type="text/javascript">
+        let date = new Date()
+        let yyyy = date.getFullYear()
+        let MM = (date.getMonth() + 1) < 10 ? ("0" + (date.getMonth() + 1)) : (date.getMonth() + 1)
+        let dd = date.getDate() < 10 ? ("0" + date.getDate()) : date.getDate()
+        let HH = date.getHours() < 10 ? ("0" + date.getHours()) : date.getHours()
+        let mm = date.getMinutes() < 10 ? ("0" + date.getMinutes()) : date.getMinutes()
+
+        let curDay = yyyy + '-' + MM + '-' + dd + 'T' + HH + ':' + mm;
+        $('.measureDate').val(curDay)
+        console.log(date)
+        </script>
+
 			<div class="col-xs-6 col-md-3">
 				<div class="panel panel-default">
 					<div class="panel-body easypiechart-panel">
@@ -208,6 +246,18 @@
 
                     </div>
                 </div>
+
+                <div class="row">
+                <div class="col-md-12">
+                    <div class="jumbotron">
+                        <h1>提交</h1>
+                        <p>明天这个按钮必然将出现在他该出现的位置，连通上面那批巧夺天工的输入框.</p>
+                        <p>
+                            <a class="btn btn-primary btn-lg" role="button">提交入库</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
                 <!-- /. ROW  -->
 				<footer><p>All right reserved. Template by: <a href="http://webthemez.com">WebThemez</a></p></footer>
             </div>

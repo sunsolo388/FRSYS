@@ -3,7 +3,6 @@ from django.http import HttpResponse
 from django.contrib import messages
 from warehouse import models  # 导入models文件
 
-
 def warehouse_home(request):
     '''
     仓库主页
@@ -20,3 +19,7 @@ def warehouse_outward(request):
     出库管理
     '''
     return render(request,'warehouse/outward.html')
+"""
+def test(request):
+    return render(request,'delivery/tab-panel.html')
+"""
