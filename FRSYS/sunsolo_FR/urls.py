@@ -38,8 +38,9 @@ urlpatterns = [
 
     # delivery_yly
     path('work/delivery/',deliver_home),
-    path('work/delivery/glc/',deliver_glc),
-    path('work/delivery/psc/',deliver_psc),
+    path('work/delivery/glc/',deliver_glc_rwfp),
+    path('work/delivery/psc/',deliver_psc_dqrw),
+    path('form/',form),
 
 
     # aftermarket_dyq
