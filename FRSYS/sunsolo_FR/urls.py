@@ -21,6 +21,7 @@ from django.views.generic.base import RedirectView
 from login.views import *
 from deliver.views import *
 from aftermarket.views import *
+from warehouse.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -45,6 +46,10 @@ urlpatterns = [
 
     # aftermarket_dyq
     path('aftermarket/',AMtable),
-    path('aftermarket/<int:AM_id>',AMdealing)
+    path('aftermarket/<int:am_id>/',AMdealing)
     
+    #warehouse_wxt
+    path('work/warehouse/',warehouse_home),
+    path('work/warehouse/inward',warehouse_inward),
+    path('work/warehouse/outward',warehouse_outward),
 ]
