@@ -40,6 +40,10 @@ class Car(models.Model):
     cold_chain = models.PositiveIntegerField(default=0, choices=ColdChain_ITEMS, verbose_name="冷链情况")
     load = models.FloatField(verbose_name="载重")
     staff_id = models.ForeignKey(Staff, verbose_name="司机的员工ID", on_delete=models.DO_NOTHING)
+    '''
+    insert into deliver_car values ("京A11111",0,4,20,1);
+    insert into deliver_car values ("京A11112",0,2,10.5,2);
+    '''
 
 class CarForDeliver(models.Model):
     ''' 这里我想明确一下需求，CarForDeliver与Car、Deliver之间的关系。
