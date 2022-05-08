@@ -12,6 +12,7 @@ class Purchase(models.Model):
     deliver_id = models.ForeignKey(Deliver, on_delete=models.SET_NULL, related_name="purchase_of_this_deliver", null=True)
     purchase_num = models.FloatField(verbose_name='采购数量')
     purchase_time = models.DateTimeField(verbose_name='采购时间')
+
     purchase_price = models.FloatField(max_length=8, verbose_name='采购的价格')
 
 class PurchaseDetail(models.Model):
