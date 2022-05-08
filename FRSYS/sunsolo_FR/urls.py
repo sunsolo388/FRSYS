@@ -42,26 +42,19 @@ urlpatterns = [
     
     # delivery_yly
     path('work/delivery/',deliver_home),
-    #test
-   # path('work/delivery/chart',test),
+    path('work/delivery/glc/',deliver_glc_rwfp),
+    path('work/delivery/psc/',deliver_psc_dqrw),
+    path('work/delivery/test',test),
 
     # order_heyueyu
     path('work/sales/',sales_home),
-
-  #  path('work/delivery/glc/',deliver_glc),
-  #  path('work/delivery/psc/',deliver_psc),
-
-    path('work/delivery/glc/',deliver_glc_rwfp),
-    path('work/delivery/psc/',deliver_psc_dqrw),
-    path('form/',form),
-
 
 
     # aftermarket_dyq
     path('aftermarket/',AMtable),
     path('aftermarket/<int:am_id>/',AMdealing),
 
-    
+
     #warehouse_wxt
     path('work/warehouse/',warehouse_home),
     path('work/warehouse/inward',warehouse_inward),
