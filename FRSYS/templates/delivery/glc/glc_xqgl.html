@@ -94,15 +94,17 @@
                             <th>出发地点</th>
                             <th>目标地点</th>
                             <th>申请时间</th>
+                            <th>  操作 </th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for car in freecar %}
+                        {% for xq in wclxq %}
                         <tr>
-                            <td>{{ car.car_id }}</td>
-                            <td>{{ car.driver }}</td>
-                            <td>{{ car.load }}</td>
-                            <td>{{ car.cold_chain_level}}</td>
+                            <td>{{ xq.depart }}</td>
+                            <td>{{ xq.deliver_id }}</td>
+                            <td>{{ xq.start_add }}</td>
+                            <td>{{ xq.aim_add }}</td>
+                            <td>{{ xq.apply_time }}</td>
                             <td></td>
                         </tr>
                         {% endfor %}
