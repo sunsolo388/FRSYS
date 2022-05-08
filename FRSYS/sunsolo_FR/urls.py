@@ -20,7 +20,9 @@ from django.views.generic.base import RedirectView
 
 from login.views import *
 from deliver.views import *
+
 from order.views import *
+
 from aftermarket.views import *
 from warehouse.views import *
 
@@ -42,14 +44,13 @@ urlpatterns = [
     
     # delivery_yly
     path('work/delivery/',deliver_home),
-    #test
-   # path('work/delivery/chart',test),
 
+    
     # order_heyueyu
     path('work/sales/',sales_home),
 
-  #  path('work/delivery/glc/',deliver_glc),
-  #  path('work/delivery/psc/',deliver_psc),
+    # path('work/delivery/glc/',deliver_glc),
+    # path('work/delivery/psc/',deliver_psc),
 
     path('work/delivery/glc/',deliver_glc_rwfp),
     path('work/delivery/psc/',deliver_psc_dqrw),
@@ -61,7 +62,6 @@ urlpatterns = [
     path('aftermarket/',AMtable),
     path('aftermarket/<int:am_id>/',AMdealing),
 
-    
     #warehouse_wxt
     path('work/warehouse/',warehouse_home),
     path('work/warehouse/inward',warehouse_inward),
