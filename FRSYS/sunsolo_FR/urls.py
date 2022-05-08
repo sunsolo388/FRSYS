@@ -42,9 +42,12 @@ urlpatterns = [
     
     # delivery_yly
     path('work/delivery/',deliver_home),
-    path('work/delivery/glc/',deliver_glc_rwfp),
-    path('work/delivery/psc/',deliver_psc_dqrw),
-    path('work/delivery/test',test),
+    path('work/delivery/glc/xqgl/',deliver_glc_xqgl),
+    path('work/delivery/glc/rwfp/',deliver_glc_rwfp),
+
+    path('work/delivery/psc/dqrw/',deliver_psc_dqrw),
+
+    path('work/delivery/test/',test),
 
     # order_heyueyu
     path('work/sales/',sales_home),

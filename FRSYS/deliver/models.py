@@ -7,7 +7,10 @@ class Deliver(models.Model):
     deliver 表
     '''
     deliver_id = models.CharField(max_length=8, primary_key=True, verbose_name='物流编号')
-    departure_time = models.DateTimeField(verbose_name='离开时间')
+    start_add=models.CharField(max_length=30,null=True,verbose_name='出发地点')
+    aim_add=models.CharField(max_length=30,null=True, verbose_name='目标地点')
+    apply_time=models.DateTimeField(verbose_name='申请时间',auto_now_add=True)
+    departure_time = models.DateTimeField(null=True,verbose_name='离开时间')
     arrival_time = models.DateTimeField(blank=True, null=True, verbose_name='到达时间')
 
 class DeliverDetail(models.Model):
