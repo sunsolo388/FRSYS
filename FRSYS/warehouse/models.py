@@ -16,3 +16,10 @@ class WareHouse(models.Model):
     warehouse_status = models.CharField(max_length=10)
 
 
+
+
+
+
+
+
+
