@@ -20,6 +20,14 @@
     <link href="/static/css/font-awesome.min.css" rel="stylesheet">
 </head>
 
+{% if messages %}
+<script type="text/jscript">
+    {% for msg in messages %}
+    alert('{{ msg.message }}');
+    {% endfor %}
+</script>
+{% endif %}
+
 <body>
     <div id="wrapper">
         <nav class="navbar navbar-default top-navbar" role="navigation">
@@ -63,77 +71,60 @@
 
 		<div class="row">
 
-        <div class="form-left-to-w3l">
-                        <span class="fa fa-file" aria-hidden="true"></span>
-                        <input type="text" name="purchase_id" placeholder="订单编号" required="">
+        <form action="" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <span class="fa fa-circle-o" aria-hidden="true"></span>
+                        <input type="text" name="purchase_id" placeholder="订单编号" required="" input style="width:200px;height:30px">
+
+                        <div class="clear"></div>
+                    </div>
+                    <div class="form-group">
+                        <span class="fa fa-plus-square-o" aria-hidden="true"></span>
+                        <input type="text" name="warehouse_flow" placeholder="仓库流水" required="" input style="width:200px;height:30px">
 
                         <div class="clear"></div>
                     </div>
 
-        <div class="form-left-to-w3l">
-                        <span class="fa fa-check-square" aria-hidden="true"></span>
-                        <input type="text" name="warehouse_flow" placeholder="仓库流水" required="">
 
+
+
+                    <div class="form-group ">
+                        <span class="fa fa-spinner fa-spin" aria-hidden="true"></span>
+                        <input type="number" name="in_num" placeholder="入库质量" required="" step="0.5" input style="width:200px;height:30px">
                         <div class="clear"></div>
+
                     </div>
 
-		<div class="form-left-to-w3l ">
-                        <span class="fa fa-id-card" aria-hidden="true"></span>
-                        <input type="text" name="identity" list="typelist" placeholder="选择商品" required="">
+                        <div class="form-group ">
+                        <span class="fa fa-cog fa-spin" aria-hidden="true"></span>
+                        <input type="text" name="identity" list="typelist" placeholder="选择商品" required="" input style="width:200px;height:30px">
                         <datalist id="typelist">
                             <option>商品1</option>
                             <option>商品2</option>
-                            <option>商品3</option>>
+                            <option>商品3</option>
                         </datalist>
                         <div class="clear"></div>
                     </div>
 
-        <label>
-        <span>选择日期</span>
-        <input type="datetime-local" class="measureDate" placeholder="请选择日期">
-        </label>
+                    <div class="from-group">
+                        <span class="fa fa-refresh fa-spin" aria-hidden="true"></span>
+                        <input type="datetime-local" name="time" placeholder="时间" required="" input style="width:200px;height:30px">
 
-        <script type="text/javascript">
-        let date = new Date()
-        let yyyy = date.getFullYear()
-        let MM = (date.getMonth() + 1) < 10 ? ("0" + (date.getMonth() + 1)) : (date.getMonth() + 1)
-        let dd = date.getDate() < 10 ? ("0" + date.getDate()) : date.getDate()
-        let HH = date.getHours() < 10 ? ("0" + date.getHours()) : date.getHours()
-        let mm = date.getMinutes() < 10 ? ("0" + date.getMinutes()) : date.getMinutes()
 
-        let curDay = yyyy + '-' + MM + '-' + dd + 'T' + HH + ':' + mm;
-        $('.measureDate').val(curDay)
-        console.log(date)
-        </script>
+                        <div class="clear"></div>
 
-			<div class="col-xs-6 col-md-3">
-				<div class="panel panel-default">
-					<div class="panel-body easypiechart-panel">
-						<h4>果蔬</h4>
-						<div class="easypiechart" id="easypiechart-orange" data-percent="55" ><span class="percent">55%</span>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-xs-6 col-md-3">
-				<div class="panel panel-default">
-					<div class="panel-body easypiechart-panel">
-						<h4>半成品</h4>
-						<div class="easypiechart" id="easypiechart-teal" data-percent="84" ><span class="percent">84%</span>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-xs-6 col-md-3">
-				<div class="panel panel-default">
-					<div class="panel-body easypiechart-panel">
-						<h4>人体表皮组织（？）</h4>
-						<div class="easypiechart" id="easypiechart-red" data-percent="46" ><span class="percent">46%</span>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div><!--/.row-->
+                    </div>
+
+
+                    <div class="btnn">
+                        <button type="submit" button style="width:100px;height:40px">提交</button>
+                    </div>
+
+
+                </form>
+
+
                 <!-- /. ROW  -->
                 <div class="row">
                     <div class="col-md-4 col-sm-12 col-xs-12">
@@ -247,17 +238,7 @@
                     </div>
                 </div>
 
-                <div class="row">
-                <div class="col-md-12">
-                    <div class="jumbotron">
-                        <h1>提交</h1>
-                        <p>明天这个按钮必然将出现在他该出现的位置，连通上面那批巧夺天工的输入框.</p>
-                        <p>
-                            <a class="btn btn-primary btn-lg" role="button">提交入库</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
+
                 <!-- /. ROW  -->
 				<footer><p>All right reserved. Template by: <a href="http://webthemez.com">WebThemez</a></p></footer>
             </div>
@@ -285,8 +266,8 @@
 
     <!-- Custom Js -->
     <script src="/static/js/custom-scripts.js"></script>
-
-
+    </div>>
 </body>
+
 
 </html>
