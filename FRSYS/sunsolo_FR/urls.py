@@ -47,7 +47,10 @@ urlpatterns = [
     path('work/delivery/glc/jxz/',deliver_glc_jxz),
     path('work/delivery/glc/ywc/',deliver_glc_ywc),
 
-    path('work/delivery/psc/dqrw/',deliver_psc_dqrw),
+    path('work/delivery/psc/sfyz/',deliver_psc_sfyz),
+    path('work/delivery/psc/<str:staff_id>/dqrw/',deliver_psc_dqrw),
+    path('work/delivery/psc/<str:staff_id>/xxsc/',deliver_psc_xxsc),
+    path('work/delivery/psc/<str:staff_id>/ywc/',deliver_psc_ywc),
     
     path('work/delivery/test/',test),
 

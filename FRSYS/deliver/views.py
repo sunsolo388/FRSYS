@@ -91,14 +91,40 @@ def deliver_glc_ywc(request):
             xq['depart']='销售部'
         elif xq['deliver_id'][0:2]=='CG':
             xq['depart']='采购部'
+        xq['use_time']=xq['arrival_time']-xq['apply_time']
     context={
         'ywcxq':ywcxq,
     }
     return render(request,'delivery/glc/glc_ywc.html',context=context)
 
+def deliver_psc_sfyz(request):
+    return render(request,'delivery/psc/psc_sfyz.html')
 
-def deliver_psc_dqrw(request):
-    return render(request,'delivery/psc/psc_dqrw.html')
+def deliver_psc_dqrw(request,staff_id):
+
+
+    context={
+        
+    }
+    return render(request,'delivery/psc/psc_dqrw.html',context=context)
+
+def deliver_psc_xxsc(request,staff_id):
+
+
+    context={
+        
+    }
+    return render(request,'delivery/psc/psc_xxsc.html',context=context)
+
+def deliver_psc_ywc(request,staff_id):
+
+
+    context={
+        
+    }
+    return render(request,'delivery/psc/psc_ywc.html',context=context)
+
+
 
 
 def test(request):

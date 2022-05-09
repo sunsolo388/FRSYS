@@ -1,20 +1,23 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Free Bootstrap HTML5 Admin Template : Master</title>
+    <title>生鲜码盒可溯源生鲜——物流部</title>
     <link rel="shortcut icon" href="/static/favicon.ico" />
-	<!-- Bootstrap Styles-->
+    <!-- Bootstrap Styles-->
     <link href="/static/css/bootstrap.css" rel="stylesheet" />
-     <!-- FontAwesome Styles-->
+    <!-- FontAwesome Styles-->
     <link href="/static/css/font-awesome.css" rel="stylesheet" />
     <link href="/static/css/font-awesome.min.css" rel="stylesheet">
-        <!-- Custom Styles-->
+    <!-- Custom Styles-->
     <link href="/static/css/custom-styles.css" rel="stylesheet" />
-     <!-- Google Fonts-->
-   <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+    <!-- Google Fonts-->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+    <link href="/static/js/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
 </head>
+
 <body>
     <div id="wrapper">
         <nav class="navbar navbar-default top-navbar" role="navigation">
@@ -56,21 +59,21 @@
                         <a href="/work/delivery/"><i class="fa fa-desktop"></i>物流部主页</a>
                     </li>
                     <li>
-                        <a><i class="fa fa-sitemap"></i>物流管理处</a>
-                    </li>
-                    <li>
-                        <a><i class="fa fa-car"></i>配送处<span class="fa arrow"></span></a>
+                        <a><i class="fa fa-sitemap"></i>物流管理处<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a class="active-menu">当前物流任务</a>
+                                <a href="../xqgl/">物流需求管理</a>
                             </li>
                             <li>
-                                <a href="../xxsc/">物流信息上传</a>
+                                <a href="../rwfp/">物流任务分配</a>
                             </li>
                             <li>
-                                <a href="../ywc/">已完成物流任务</a>
+                                <a class="active-menu">已完成物流任务</a>
                             </li>
                         </ul>
+                    </li>
+                    <li>
+                        <a><i class="fa fa-car"></i>配送处</a>
                     </li>
                 </ul>
 
@@ -134,17 +137,32 @@
             </div>
             <!-- /. PAGE WRAPPER  -->
         </div>
-     <!-- /. WRAPPER  -->
-    <!-- JS Scripts-->
-    <!-- jQuery Js -->
-    <script src="/static/js/jquery-1.10.2.js"></script>
-      <!-- Bootstrap Js -->
-    <script src="/static/js/bootstrap.min.js"></script>
-    <!-- Metis Menu Js -->
-    <script src="/static/js/jquery.metisMenu.js"></script>
-      <!-- Custom Js -->
-    <script src="/static/js/custom-scripts.js"></script>
-    
-   
+        <!-- /. WRAPPER  -->
+        <!-- JS Scripts-->
+        <!-- jQuery Js -->
+        <script src="/static/js/jquery-1.10.2.js"></script>
+        <!-- Bootstrap Js -->
+        <script src="/static/js/bootstrap.min.js"></script>
+        <!-- Metis Menu Js -->
+        <script src="/static/js/jquery.metisMenu.js"></script>
+        <!-- Custom Js -->
+        <script src="/static/js/custom-scripts.js"></script>
+        <script src="/static/js/jquery-1.10.2.js"></script>
+
+
+        <!-- Metis Menu Js -->
+        <script src="/static/js/jquery.metisMenu.js"></script>
+        <!-- DATA TABLE SCRIPTS -->
+        <script src="/static/js/dataTables/jquery.dataTables.js"></script>
+        <script src="/static/js/dataTables/dataTables.bootstrap.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('#dataTables-example').dataTable();
+            });
+        </script>
+        <!-- Custom Js -->
+
+
 </body>
+
 </html>
