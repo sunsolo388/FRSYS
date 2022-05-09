@@ -32,21 +32,19 @@ def deliver_glc_rwfp(request):
     return render(request,'delivery/glc/glc_rwfp.html',context=context)
 
 def deliver_glc_xqgl(request):
-    deliverinfo=models.Deliver.objects.all().values('deliver_id','departure_time','arrival_time')
+    deliverinfo=models.Deliver.objects.all().order_by('apply_time').values(
+        'deliver_id','departure_time','arrival_time',
+        'aim_add','start_add','apply_time'
+    )
     wclxq=deliverinfo.filter(departure_time__isnull=True)
     wclxq=wclxq.filter(arrival_time__isnull=True)
 
-    print(wclxq)
     for xq in wclxq:
         print(xq)
         if xq['deliver_id'][0:2]=='XS':
             xq['depart']='销售部'
         elif xq['deliver_id'][0:2]=='CG':
             xq['depart']='采购部'
-
-    print(wclxq)
-    for xq in wclxq:
-        print(xq)
     context={
         'wclxq':wclxq,
     }
