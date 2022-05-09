@@ -20,6 +20,7 @@ from django.views.generic.base import RedirectView
 
 from login.views import *
 from deliver.views import *
+from purchase.views import *
 from order.views import *
 from aftermarket.views import *
 from warehouse.views import *
@@ -39,7 +40,7 @@ urlpatterns = [
     path('index/contact/',contact),
     path('work/',work),
     path('userpage/',userpage),
-    
+
     # delivery_yly
     path('work/delivery/',deliver_home),
     path('work/delivery/glc/xqgl/',deliver_glc_xqgl),
@@ -56,6 +57,8 @@ urlpatterns = [
 
     # order_heyueyu
     path('work/sales/',sales_home),
+    path('work/delivery/glc/',deliver_glc_rwfp),
+    path('work/delivery/psc/',deliver_psc_dqrw),
 
 
     # aftermarket_dyq
@@ -67,4 +70,16 @@ urlpatterns = [
     path('work/warehouse/',warehouse_home),
     path('work/warehouse/inward',warehouse_inward),
     path('work/warehouse/outward',warehouse_outward),
+
+    #purchase_lxt
+    path('work/purchase/',purchase_home),
+
+    path('work/purchase/make_purchase/',purchase_make_purchase),
+    path('work/purchase/make_purchase/add/',purchase_make_purchase_add),
+    path('work/purchase/make_purchase/update/',purchase_make_purchase_update),
+
+    path('work/purchase/manage_supplierinfo/',purchase_manage_supplierinfo),
+    path('work/purchase/manage_supplierinfo/add',purchase_manage_supplierinfo_add),
+    path('work/purchase/manage_supplierinfo/update',purchase_manage_supplierinfo_update),
+
 ]
