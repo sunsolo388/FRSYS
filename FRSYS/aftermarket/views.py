@@ -8,8 +8,9 @@ def AMtable(request):
     if request.method=='GET':
     #跳转到售后表单界面
         return render(request, 'aftermarket/AMtable.html')
-    elif request.method=='POST':
+    else:
         am_id=request.POST.get("AM_id")
+
 
         return redirect('aftermarket/?=am_id')
 
