@@ -30,4 +30,7 @@ class Staff(models.Model):
     insert into personnel_staff
     (staff_id,department_id_id,staff_name,staff_gender,staff_tel,staff_address)
     values(2,1,"配送员2","男",10652,"北航");
+    insert into personnel_staff
+    (staff_id,department_id_id,staff_name,staff_gender,staff_tel,staff_address)
+    values(3,1,"配送员3","女",1064552,"北航");
     '''

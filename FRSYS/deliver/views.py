@@ -1,6 +1,7 @@
 from django.db import reset_queries
 from django.shortcuts import render
 from django.shortcuts import HttpResponseRedirect,HttpResponse
+from sympy import det
 from deliver import models
 from personnel.models import Staff
 import datetime
@@ -57,7 +58,7 @@ def deliver_glc_jxz(request):
         'deliver_id','departure_time','arrival_time',
         'aim_add','start_add','apply_time'
     )
-    dd=models.DeliverDetail.objects.all().values('deliver_id','province','city','atime')
+    dd=models.DeliverDetail.objects.all().order_by('detail_time').values('deliver_id','province','city','detail_time')
 
     jxzxq=deliverinfo.filter(departure_time__isnull=False)
     jxzxq=jxzxq.filter(arrival_time__isnull=True)
@@ -67,8 +68,10 @@ def deliver_glc_jxz(request):
             xq['depart']='销售部'
         elif xq['deliver_id'][0:2]=='CG':
             xq['depart']='采购部'
-        xq['use_time']=datetime.datetime.now()-datetime.datetime.strftime(xq['apply_time'],"%Y-%m-%d %H:%M:%S.%f")
-        print(xq)
+        xq['use_time']=(datetime.datetime.now()-xq['apply_time'].replace(tzinfo=None))
+        detail=dd.filter(deliver_id=xq['deliver_id']).last()
+        xq['place']=detail['province']+'省'+detail['city']+'市'
+
     context={
         'jxzxq':jxzxq,
     }

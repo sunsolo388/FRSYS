@@ -17,6 +17,10 @@ class Deliver(models.Model):
     insert into deliver_deliver (deliver_id,aim_add,start_add,apply_time) values('XS000001',"清华","北航",now());
     insert into deliver_deliver (deliver_id,aim_add,start_add,apply_time) values('XS000002',"北大","北航",now());
     insert into deliver_deliver (deliver_id,aim_add,start_add,apply_time) values('CG000001',"我家","北航",now());
+
+    insert into deliver_deliver (deliver_id,aim_add,start_add,apply_time,departure_time) values('CG000004',"我家","北航",now(),now());
+
+    insert into deliver_deliver (deliver_id,aim_add,start_add,apply_time,departure_time,arrival_time) values('CG000005',"我家","北航",now(),now(),now());
     '''
 
 
@@ -29,6 +33,11 @@ class DeliverDetail(models.Model):
     province = models.CharField(max_length=20)
     city = models.CharField(max_length=20)
     detail_time = models.DateTimeField(default=timezone.now)
+    '''
+    insert into deliver_deliverdetail 
+    (dd_id,province,city,detail_time,deliver_id_id) 
+    values ('DD00001','山西','太原',now(),'CG000004');
+    '''
 
 
 class Car(models.Model):
@@ -53,9 +62,11 @@ class Car(models.Model):
     staff_id = models.ForeignKey(Staff, verbose_name="司机的员工ID", on_delete=models.DO_NOTHING)
     '''
     insert into deliver_car
-    values (1,"京A11111",0,4,20,1);
+    values ("京A11111",0,4,20,1);
     insert into deliver_car
     values ("京A11112",0,2,10.5,2);
+    insert into deliver_car
+    values ("京A11113",1,2,10.5,3);
     '''
 
 class CarForDeliver(models.Model):
