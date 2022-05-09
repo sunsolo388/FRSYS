@@ -44,9 +44,11 @@ urlpatterns = [
     path('work/delivery/',deliver_home),
     path('work/delivery/glc/xqgl/',deliver_glc_xqgl),
     path('work/delivery/glc/rwfp/',deliver_glc_rwfp),
+    path('work/delivery/glc/jxz/',deliver_glc_jxz),
+    path('work/delivery/glc/ywc/',deliver_glc_ywc),
 
     path('work/delivery/psc/dqrw/',deliver_psc_dqrw),
-
+    
     path('work/delivery/test/',test),
 
     # order_heyueyu
@@ -54,8 +56,8 @@ urlpatterns = [
 
 
     # aftermarket_dyq
-    path('aftermarket/',AMtable),
-    path('aftermarket/<int:am_id>/',AMdealing),
+    path('work/aftermarket/',AMtable),
+    path('work/aftermarket/<int:am_id>/',AMdealing),
 
 
     #warehouse_wxt

@@ -1,5 +1,6 @@
 from django.db import models
 from personnel.models import Department,Staff
+from django.utils import timezone
 # Create your models here.
 
 class Deliver(models.Model):
@@ -9,7 +10,7 @@ class Deliver(models.Model):
     deliver_id = models.CharField(max_length=8, primary_key=True, verbose_name='物流编号')
     start_add=models.CharField(max_length=30,null=True,verbose_name='出发地点')
     aim_add=models.CharField(max_length=30,null=True, verbose_name='目标地点')
-    apply_time=models.DateTimeField(verbose_name='申请时间',auto_now_add=True)
+    apply_time=models.DateTimeField(verbose_name='申请时间',default=timezone.now)
     departure_time = models.DateTimeField(null=True,verbose_name='离开时间')
     arrival_time = models.DateTimeField(blank=True, null=True, verbose_name='到达时间')
     '''
@@ -27,6 +28,7 @@ class DeliverDetail(models.Model):
     deliver_id = models.ForeignKey(Deliver, on_delete=models.CASCADE, related_name='detail_of_this_deliver')
     province = models.CharField(max_length=20)
     city = models.CharField(max_length=20)
+    detail_time = models.DateTimeField(default=timezone.now)
 
 
 class Car(models.Model):

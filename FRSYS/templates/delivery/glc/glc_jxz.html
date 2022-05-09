@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Free Bootstrap HTML5 Admin Template : Master</title>
+    <title>生鲜码盒可溯源生鲜——物流部</title>
     <link rel="shortcut icon" href="/static/favicon.ico" />
     <!-- Bootstrap Styles-->
     <link href="/static/css/bootstrap.css" rel="stylesheet" />
@@ -15,6 +15,7 @@
     <link href="/static/css/custom-styles.css" rel="stylesheet" />
     <!-- Google Fonts-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+    <link href="/static/js/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -61,7 +62,7 @@
                         <a><i class="fa fa-sitemap"></i>物流管理处<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a class="active-menu" href="/work/delivery/glc/xqgl/">物流需求管理</a>
+                                <a href="/work/delivery/glc/xqgl/">物流需求管理</a>
                             </li>
                             <li>
                                 <a href="/work/delivery/glc/rwfp/">物流任务分配</a>
@@ -70,7 +71,7 @@
                                 <a href="/work/delivery/glc/ywc/">已完成物流任务</a>
                             </li>
                             <li>
-                                <a href="/work/delivery/glc/jxz/">正在进行物流任务</a>
+                                <a class="active-menu" href="/work/delivery/glc/jxz/">正在进行物流任务</a>
                             </li>
                         </ul>
                     </li>
@@ -85,29 +86,52 @@
         <!-- /. NAV SIDE  -->
         <div id="page-wrapper">
             <div id="page-inner">
-                <h1>司机信息</h1>
-                <table class="table table-striped table-bordered table-hover" id="freecar_info">    
-                    <thead>
-                        <tr>
-                            <th>车牌号</th>
-                            <th>司机姓名</th>
-                            <th>车辆载重</th>
-                            <th>车辆冷链信息</th>
-                            <th>操作</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for car in freecar %}
-                        <tr>
-                            <td>{{ car.car_id }}</td>
-                            <td>{{ car.driver }}</td>
-                            <td>{{ car.load }}</td>
-                            <td>{{ car.cold_chain_level}}</td>
-                            <td></td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>   
-                </table>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="page-header">
+                            物流需求信息
+                        </h1>
+                    </div>
+                </div>
+                <!-- /. ROW  -->
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- Advanced Tables -->
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered table-hover"
+                                        id="dataTables-example">
+                                        <thead>
+                                            <tr>
+                                                <th>需求部门</th>
+                                                <th>物流编号</th>
+                                                <th>出发地点</th>
+                                                <th>目标地点</th>
+                                                <th>申请时间</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for xq in jxzxq %}
+                                            <tr>
+                                                <td>{{ xq.depart }}</td>
+                                                <td>{{ xq.deliver_id }}</td>
+                                                <td>{{ xq.start_add }}</td>
+                                                <td>{{ xq.aim_add }}</td>
+                                                <td>{{ xq.apply_time }}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!--End Advanced Tables -->
+                    </div>
+                </div>
+
                 <!-- /. PAGE INNER  -->
             </div>
             <!-- /. PAGE WRAPPER  -->
@@ -122,6 +146,20 @@
         <script src="/static/js/jquery.metisMenu.js"></script>
         <!-- Custom Js -->
         <script src="/static/js/custom-scripts.js"></script>
+        <script src="/static/js/jquery-1.10.2.js"></script>
+
+
+        <!-- Metis Menu Js -->
+        <script src="/static/js/jquery.metisMenu.js"></script>
+        <!-- DATA TABLE SCRIPTS -->
+        <script src="/static/js/dataTables/jquery.dataTables.js"></script>
+        <script src="/static/js/dataTables/dataTables.bootstrap.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('#dataTables-example').dataTable();
+            });
+        </script>
+        <!-- Custom Js -->
 
 
 </body>

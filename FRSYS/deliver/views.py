@@ -3,10 +3,31 @@ from django.shortcuts import render
 from django.shortcuts import HttpResponseRedirect,HttpResponse
 from deliver import models
 from personnel.models import Staff
+import datetime
 
 
 def deliver_home(request):
     return render(request,'delivery/homepage.html')
+
+
+def deliver_glc_xqgl(request):
+    deliverinfo=models.Deliver.objects.all().order_by('apply_time').values(
+        'deliver_id','departure_time','arrival_time',
+        'aim_add','start_add','apply_time'
+    )
+    wclxq=deliverinfo.filter(departure_time__isnull=True)
+    wclxq=wclxq.filter(arrival_time__isnull=True)
+
+    for xq in wclxq:
+        if xq['deliver_id'][0:2]=='XS':
+            xq['depart']='销售部'
+        elif xq['deliver_id'][0:2]=='CG':
+            xq['depart']='采购部'
+    context={
+        'wclxq':wclxq,
+    }
+
+    return render(request,'delivery/glc/glc_xqgl.html',context=context)
 
 def deliver_glc_rwfp(request):
     ColdChain_ITEMS = (
@@ -31,29 +52,51 @@ def deliver_glc_rwfp(request):
     }
     return render(request,'delivery/glc/glc_rwfp.html',context=context)
 
-def deliver_glc_xqgl(request):
+def deliver_glc_jxz(request):
     deliverinfo=models.Deliver.objects.all().order_by('apply_time').values(
         'deliver_id','departure_time','arrival_time',
         'aim_add','start_add','apply_time'
     )
-    wclxq=deliverinfo.filter(departure_time__isnull=True)
-    wclxq=wclxq.filter(arrival_time__isnull=True)
+    dd=models.DeliverDetail.objects.all().values('deliver_id','province','city','atime')
 
-    for xq in wclxq:
+    jxzxq=deliverinfo.filter(departure_time__isnull=False)
+    jxzxq=jxzxq.filter(arrival_time__isnull=True)
+
+    for xq in jxzxq:
+        if xq['deliver_id'][0:2]=='XS':
+            xq['depart']='销售部'
+        elif xq['deliver_id'][0:2]=='CG':
+            xq['depart']='采购部'
+        xq['use_time']=datetime.datetime.now()-datetime.datetime.strftime(xq['apply_time'],"%Y-%m-%d %H:%M:%S.%f")
         print(xq)
+    context={
+        'jxzxq':jxzxq,
+    }
+
+    return render(request,'delivery/glc/glc_jxz.html',context=context)
+
+def deliver_glc_ywc(request):
+    deliverinfo=models.Deliver.objects.all().order_by('apply_time').values(
+        'deliver_id','departure_time','arrival_time',
+        'aim_add','start_add','apply_time'
+    )
+    ywcxq=deliverinfo.filter(departure_time__isnull=False)
+    ywcxq=ywcxq.filter(arrival_time__isnull=False)
+
+    for xq in ywcxq:
         if xq['deliver_id'][0:2]=='XS':
             xq['depart']='销售部'
         elif xq['deliver_id'][0:2]=='CG':
             xq['depart']='采购部'
     context={
-        'wclxq':wclxq,
+        'ywcxq':ywcxq,
     }
-
-    return render(request,'delivery/glc/glc_xqgl.html',context=context)
+    return render(request,'delivery/glc/glc_ywc.html',context=context)
 
 
 def deliver_psc_dqrw(request):
     return render(request,'delivery/psc/psc_dqrw.html')
+
 
 def test(request):
     return render(request,'delivery/table.html')
