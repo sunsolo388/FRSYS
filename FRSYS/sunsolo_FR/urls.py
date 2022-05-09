@@ -51,7 +51,7 @@ urlpatterns = [
     path('work/delivery/psc/<str:staff_id>/dqrw/',deliver_psc_dqrw),
     path('work/delivery/psc/<str:staff_id>/xxsc/',deliver_psc_xxsc),
     path('work/delivery/psc/<str:staff_id>/ywc/',deliver_psc_ywc),
-    
+
     path('work/delivery/test/',test),
 
     # order_heyueyu
