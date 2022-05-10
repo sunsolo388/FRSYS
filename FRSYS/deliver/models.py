@@ -1,14 +1,35 @@
 from django.db import models
 from personnel.models import Department,Staff
+from django.utils import timezone
 # Create your models here.
 
 class Deliver(models.Model):
     '''
     deliver 表
     '''
+    STATUS_ITEMS = (
+        (0, '未分配'),
+        (1, '已分配'),
+        (2, '进行中'),
+        (3, '已完成'),
+    )
     deliver_id = models.CharField(max_length=8, primary_key=True, verbose_name='物流编号')
-    departure_time = models.DateTimeField(verbose_name='离开时间')
+    start_add=models.CharField(max_length=30,null=True,verbose_name='出发地点')
+    aim_add=models.CharField(max_length=30,null=True, verbose_name='目标地点')
+    apply_time=models.DateTimeField(verbose_name='申请时间',default=timezone.now)
+    departure_time = models.DateTimeField(null=True,verbose_name='离开时间')
     arrival_time = models.DateTimeField(blank=True, null=True, verbose_name='到达时间')
+    status = models.PositiveIntegerField(default=0, choices=STATUS_ITEMS, verbose_name="冷链情况")
+    '''
+    insert into deliver_deliver (deliver_id,aim_add,start_add,apply_time) values('XS000001',"清华","北航",now());
+    insert into deliver_deliver (deliver_id,aim_add,start_add,apply_time) values('XS000002',"北大","北航",now());
+    insert into deliver_deliver (deliver_id,aim_add,start_add,apply_time) values('CG000001',"我家","北航",now());
+
+    insert into deliver_deliver (deliver_id,aim_add,start_add,apply_time,departure_time) values('CG000004',"我家","北航",now(),now());
+
+    insert into deliver_deliver (deliver_id,aim_add,start_add,apply_time,departure_time,arrival_time) values('CG000005',"我家","北航",now(),now(),now());
+    '''
+
 
 class DeliverDetail(models.Model):
     '''
@@ -18,6 +39,12 @@ class DeliverDetail(models.Model):
     deliver_id = models.ForeignKey(Deliver, on_delete=models.CASCADE, related_name='detail_of_this_deliver')
     province = models.CharField(max_length=20)
     city = models.CharField(max_length=20)
+    detail_time = models.DateTimeField(default=timezone.now)
+    '''
+    insert into deliver_deliverdetail 
+    (dd_id,province,city,detail_time,deliver_id_id) 
+    values ('DD00001','山西','太原',now(),'CG000004');
+    '''
 
 
 class Car(models.Model):
@@ -35,14 +62,18 @@ class Car(models.Model):
         (7, 'G级冷链冷藏车辆'), (8, 'H级冷链冷藏车辆'),
     )
 
-    car_id = models.CharField(max_length=15, verbose_name="车牌号",unique=True)
+    car_id = models.CharField(max_length=15,primary_key=True,verbose_name="车牌号",unique=True)
     status = models.PositiveIntegerField(default=STATUS_NORMAL, choices=STATUS_ITEMS, verbose_name="状态")
     cold_chain = models.PositiveIntegerField(default=0, choices=ColdChain_ITEMS, verbose_name="冷链情况")
     load = models.FloatField(verbose_name="载重")
     staff_id = models.ForeignKey(Staff, verbose_name="司机的员工ID", on_delete=models.DO_NOTHING)
     '''
-    insert into deliver_car values ("京A11111",0,4,20,1);
-    insert into deliver_car values ("京A11112",0,2,10.5,2);
+    insert into deliver_car
+    values ("京A11111",0,4,20,1);
+    insert into deliver_car
+    values ("京A11112",0,2,10.5,2);
+    insert into deliver_car
+    values ("京A11113",1,2,10.5,3);
     '''
 
 class CarForDeliver(models.Model):

@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Free Bootstrap HTML5 Admin Template : Master</title>
+    <title>生鲜码盒可溯源生鲜——物流部</title>
     <link rel="shortcut icon" href="/static/favicon.ico" />
     <!-- Bootstrap Styles-->
     <link href="/static/css/bootstrap.css" rel="stylesheet" />
@@ -15,6 +15,7 @@
     <link href="/static/css/custom-styles.css" rel="stylesheet" />
     <!-- Google Fonts-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+    <link href="/static/js/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -58,16 +59,19 @@
                         <a href="/work/delivery/"><i class="fa fa-desktop"></i>物流部主页</a>
                     </li>
                     <li>
-                        <a class="active-menu"><i class="fa fa-sitemap"></i>物流管理处<span class="fa arrow"></span></a>
+                        <a><i class="fa fa-sitemap"></i>物流管理处<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="#">物流任务分配</a>
+                                <a href="/work/delivery/glc/xqgl/">物流需求管理</a>
                             </li>
                             <li>
-                                <a href="#">已完成物流任务</a>
+                                <a class="active-menu" href="/work/delivery/glc/rwfp/">物流任务分配</a>
                             </li>
                             <li>
-                                <a href="#">正在进行物流任务</a>
+                                <a href="/work/delivery/glc/ywc/">已完成物流任务</a>
+                            </li>
+                            <li>
+                                <a href="/work/delivery/glc/jxz/">正在进行物流任务</a>
                             </li>
                         </ul>
                     </li>
@@ -82,29 +86,63 @@
         <!-- /. NAV SIDE  -->
         <div id="page-wrapper">
             <div id="page-inner">
-                <h1>司机信息</h1>
-                <table class="table table-striped table-bordered table-hover" id="freecar_info">    
-                    <thead>
-                        <tr>
-                            <th>车牌号</th>
-                            <th>司机姓名</th>
-                            <th>车辆载重</th>
-                            <th>车辆冷链信息</th>
-                            <th>操作</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for car in freecar %}
-                        <tr>
-                            <td>{{ car.car_id }}</td>
-                            <td>{{ car.driver }}</td>
-                            <td>{{ car.load }}</td>
-                            <td>{{ car.cold_chain_level}}</td>
-                            <td></td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>   
-                </table>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="page-header">
+                            为{{ request.session.did }}查看车辆
+                        </h1>
+                    </div>
+                </div>
+                <!-- /. ROW  -->
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- Advanced Tables -->
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>车牌号</th>
+                                                <th>司机姓名</th>
+                                                <th>车辆载重</th>
+                                                <th>车辆冷链信息</th>
+                                                <th>操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for car in freecar %}
+                                            <form action="" method="post">
+                                                {% csrf_token %}
+                                                <tr>
+                                                    <td>
+                                                        <div class="form-left-to-w3l ">
+                                                            <input type="text" name="car_id" value="{{ car.car_id }}" readonly required="">
+                                                            <div class="clear"></div>
+                                                            <input type="text" name="deliver_id" value="{{ request.session.did }}"
+                                                                readonly hidden="">
+                                                        </div>
+                                                    </td>
+                                                    <td>{{ car.driver }}</td>
+                                                    <td>{{ car.load }}</td>
+                                                    <td>{{ car.cold_chain_level}}</td>
+                                                    <td>
+                                                        <button type="submit">分配</button>
+                                                    </td>
+                                                </form>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!--End Advanced Tables -->
+                    </div>
+                </div>
+
                 <!-- /. PAGE INNER  -->
             </div>
             <!-- /. PAGE WRAPPER  -->
@@ -119,6 +157,19 @@
         <script src="/static/js/jquery.metisMenu.js"></script>
         <!-- Custom Js -->
         <script src="/static/js/custom-scripts.js"></script>
+        <script src="/static/js/jquery-1.10.2.js"></script>
+
+
+        <!-- Metis Menu Js -->
+        <script src="/static/js/jquery.metisMenu.js"></script>
+        <!-- DATA TABLE SCRIPTS -->
+        <script src="/static/js/dataTables/jquery.dataTables.js"></script>
+        <script src="/static/js/dataTables/dataTables.bootstrap.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('#dataTables-example').dataTable();
+            });
+        </script>
 
 
 </body>

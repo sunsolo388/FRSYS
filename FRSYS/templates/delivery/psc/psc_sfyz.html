@@ -15,9 +15,14 @@
     <link href="/static/css/custom-styles.css" rel="stylesheet" />
     <!-- Google Fonts-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
-    <link href="/static/css/point.css" rel="stylesheet">
 </head>
-
+{% if messages %}
+<script type="text/jscript">
+    {% for msg in messages %}
+    alert('{{ msg.message }}');
+    {% endfor %}
+</script>
+{% endif %}
 <body>
     <div id="wrapper">
         <nav class="navbar navbar-default top-navbar" role="navigation">
@@ -56,13 +61,13 @@
             <div class="sidebar-collapse">
                 <ul class="nav" id="main-menu">
                     <li>
-                        <a class="active-menu" href="/work/delivery/"><i class="fa fa-desktop"></i>物流部主页</a>
+                        <a href="/work/delivery/"><i class="fa fa-desktop"></i>物流部主页</a>
                     </li>
                     <li>
                         <a><i class="fa fa-sitemap"></i>物流管理处</a>
                     </li>
                     <li>
-                        <a><i class="fa fa-car"></i>配送处</a>
+                        <a class="active-menu"><i class="fa fa-car"></i>配送处</a>
                     </li>
                 </ul>
             </div>
@@ -71,31 +76,37 @@
         <!-- /. NAV SIDE  -->
         <div id="page-wrapper">
             <div id="page-inner">
-                <table>
-                    <tr>
-                        <td><img src="/static/images/space.png" border=0 width="60%"></td>
-                        <td><img src="/static/images/space.png" border=0 width="60%"></td>
-                    </tr>
-                    <tr>
-                        <td><a href="/work/delivery/glc/xqgl/"><img src="/static/images/glc.png" border=0 width="80%"></a></td>
-                        <td><a href="/work/delivery/psc/sfyz/"><img src="/static/images/psc.png" border=0 width="80%"></a></td>
-                    </tr>
-                </table>
+                <div>
+                    <h1>员工信息验证</h1>
+                    <p></p>
+                    <p></p>
+                    <form role="form" method="post">
+                        {% csrf_token %}
+                        <fieldset>
+                            <div class="form-group">
+                                <label>请输入员工编号</label>
+                                <input class="form-control" type="text" placeholder="请输入员工编号" name="sid">
+                            </div>
+                            <p align="center"><button style="width: 60%;" type="submit" class="btn btn-primary">验证</button></p>
+                        </fieldset>
+                    </form>
+
+                </div>
+
+                <!-- /. PAGE INNER  -->
             </div>
-            <!-- /. PAGE INNER  -->
+            <!-- /. PAGE WRAPPER  -->
         </div>
-        <!-- /. PAGE WRAPPER  -->
-    </div>
-    <!-- /. WRAPPER  -->
-    <!-- JS Scripts-->
-    <!-- jQuery Js -->
-    <script src="/static/js/jquery-1.10.2.js"></script>
-    <!-- Bootstrap Js -->
-    <script src="/static/js/bootstrap.min.js"></script>
-    <!-- Metis Menu Js -->
-    <script src="/static/js/jquery.metisMenu.js"></script>
-    <!-- Custom Js -->
-    <script src="/static/js/custom-scripts.js"></script>
+        <!-- /. WRAPPER  -->
+        <!-- JS Scripts-->
+        <!-- jQuery Js -->
+        <script src="/static/js/jquery-1.10.2.js"></script>
+        <!-- Bootstrap Js -->
+        <script src="/static/js/bootstrap.min.js"></script>
+        <!-- Metis Menu Js -->
+        <script src="/static/js/jquery.metisMenu.js"></script>
+        <!-- Custom Js -->
+        <script src="/static/js/custom-scripts.js"></script>
 
 
 </body>
