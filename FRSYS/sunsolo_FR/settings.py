@@ -82,6 +82,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'sunsolo_FR.wsgi.application'
 
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
@@ -92,9 +93,9 @@ DATABASES = {
         'NAME': 'testdemo',
         'USER': 'root',
         #'PASSWORD': 'Wxt200158', # 王心童密码，改密码怎么这么难
-        #'PASSWORD': 'wsyly', # 于禄洋密码，查了好久不会改密码
+        'PASSWORD': 'wsyly', # 于禄洋密码，查了好久不会改密码
         #'PASSWORD':'123456', # 林学涛密码，我建议统一设成123456吧
-        'PASSWORD':'dyq000',# 董言嵚密码，我也不会该密码
+        #'PASSWORD':'dyq000',# 董言嵚密码，我也不会该密码
         # 'PASSWORD': 'root',
         'HOST' : '127.0.0.1',
         'PORT' : 3306,

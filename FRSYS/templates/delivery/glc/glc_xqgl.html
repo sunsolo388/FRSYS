@@ -101,10 +101,7 @@
                         <div class="panel panel-default">
                             <div class="panel-body">
                                 <div class="table-responsive">
-                                    <form method="post" role="form">
-                                        {% csrf_token %}
-                                    <table class="table table-striped table-bordered table-hover"
-                                        id="dataTables-example">
+                                    <table class="table table-striped table-bordered table-hover">
                                         <thead>
                                             <tr>
                                                 <th>需求部门</th>
@@ -117,16 +114,25 @@
                                         </thead>
                                         <tbody>
                                             {% for xq in wclxq %}
-                                            <tr>
-                                                <td>{{ xq.depart }}</td>
-                                                <td>{{ xq.deliver_id }}</td>
-                                                <td>{{ xq.start_add }}</td>
-                                                <td>{{ xq.aim_add }}</td>
-                                                <td>{{ xq.apply_time }}</td>
-                                                <td>  
-                                                    <button name="input" value="orz" herf="/work/delivery/glc/rwfp/">分配</button>
-                                                </td>
-                                            </tr>
+                                            <form action="" method="post">
+                                                {% csrf_token %}
+                                                <tr>
+                                                    <td>{{ xq.depart }}</td>
+                                                    <td>
+                                                        <div class="form-left-to-w3l ">
+                                                            <input type="text" name="deliver_id" value="{{ xq.deliver_id }}"
+                                                                readonly required="">
+                                                            <div class="clear"></div>
+                                                        </div>
+                                                    </td>
+                                                    <td>{{ xq.start_add }}</td>
+                                                    <td>{{ xq.aim_add }}</td>
+                                                    <td>{{ xq.apply_time }}</td>
+                                                    <td>
+                                                        <button type="submit">分配</button>
+                                                    </td>
+                                                </tr>
+                                            </form>
                                             {% endfor %}
                                         </tbody>
                                     </table>
