@@ -2,6 +2,7 @@ from django.db import reset_queries
 from django.shortcuts import redirect, render
 from django.shortcuts import HttpResponseRedirect,HttpResponse
 from sympy import det
+from django.contrib import messages
 from deliver import models
 from personnel.models import Staff
 import datetime
@@ -24,6 +25,22 @@ def get_car_info(did):
 def deliver_home(request):
     return render(request,'delivery/homepage.html')
 
+
+def deliver_glc_sfyz(request):
+    if request.method=='POST':
+        sid=request.sid
+        s=Staff.objects.filter(staff_id=sid).values('position')
+        if not s:
+            messages.add_message((request,messages.ERROR,"部门验证失败"))
+            redirect('/work/delivery/glc/sfyz/')
+        elif s['position']=="管理员":
+            messages.add_message((request,messages.SUCCESS,"干活吧打工人 ╰（‵□′）╯"))
+            redirect('/work/delivery/glc/dqrw/')
+        else:
+            messages.add_message((request,messages.ERROR,"部门验证失败"))
+            redirect('/work/delivery/glc/sfyz/')
+    else:
+        return render(request,'delivery/glc/glc_sfyz.html')
 
 def deliver_glc_xqgl(request):
     '''update deliver_deliver set status=0 where status!=0;'''
@@ -57,6 +74,8 @@ def deliver_glc_rwfp(request):
             car_id=models.Car.objects.filter(car_id=car_id).first()
         )
         context = get_car_info(did)
+
+        messages.add_message(request, messages.SUCCESS, '注册成功')
         return redirect('/work/delivery/glc/xqgl/')
     else:
         did = request.session.get('did')
@@ -97,14 +116,25 @@ def deliver_glc_ywc(request):
     return render(request,'delivery/glc/glc_ywc.html',context=context)
 
 def deliver_psc_sfyz(request):
-    return render(request,'delivery/psc/psc_sfyz.html')
+    if request.method=='POST':
+        sid=request.sid
+        s=Staff.objects.filter(staff_id=sid).values('position')
+        if not s:
+            messages.add_message((request,messages.ERROR,"部门验证失败"))
+            redirect('/work/delivery/psc/sfyz/')
+        elif s['position']=="配送员":
+            messages.add_message((request,messages.SUCCESS,"干活吧打工人 ╰（‵□′）╯"))
+            redirect('/work/delivery/psc/'+sid+'/dqrw/')
+        else:
+            messages.add_message((request,messages.ERROR,"部门验证失败"))
+            redirect('/work/delivery/psc/sfyz/')
+    else:
+        return render(request,'delivery/psc/psc_sfyz.html')
 
 def deliver_psc_dqrw(request,staff_id):
+    
 
-
-    context={
-        
-    }
+    context={}
     return render(request,'delivery/psc/psc_dqrw.html',context=context)
 
 def deliver_psc_xxsc(request,staff_id):
