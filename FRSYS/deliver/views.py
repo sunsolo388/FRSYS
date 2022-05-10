@@ -69,10 +69,7 @@ def deliver_glc_jxz(request):
         'aim_add','start_add','apply_time'
     )
     dd=models.DeliverDetail.objects.all().order_by('detail_time').values('deliver_id','province','city','detail_time')
-
-    jxzxq=deliverinfo.filter(departure_time__isnull=False)
-    jxzxq=jxzxq.filter(arrival_time__isnull=True)
-
+    jxzxq=deliverinfo.filter(status=2)
     for xq in jxzxq:
         if xq['deliver_id'][0:2]=='XS':
             xq['depart']='销售部'
@@ -81,11 +78,7 @@ def deliver_glc_jxz(request):
         xq['use_time']=(datetime.datetime.now()-xq['apply_time'].replace(tzinfo=None))
         detail=dd.filter(deliver_id=xq['deliver_id']).last()
         xq['place']=detail['province']+'省'+detail['city']+'市'
-
-    context={
-        'jxzxq':jxzxq,
-    }
-
+    context={'jxzxq':jxzxq}
     return render(request,'delivery/glc/glc_jxz.html',context=context)
 
 def deliver_glc_ywc(request):
@@ -93,18 +86,14 @@ def deliver_glc_ywc(request):
         'deliver_id','departure_time','arrival_time',
         'aim_add','start_add','apply_time'
     )
-    ywcxq=deliverinfo.filter(departure_time__isnull=False)
-    ywcxq=ywcxq.filter(arrival_time__isnull=False)
-
+    ywcxq=deliverinfo.filter(status=3)
     for xq in ywcxq:
         if xq['deliver_id'][0:2]=='XS':
             xq['depart']='销售部'
         elif xq['deliver_id'][0:2]=='CG':
             xq['depart']='采购部'
         xq['use_time']=xq['arrival_time']-xq['apply_time']
-    context={
-        'ywcxq':ywcxq,
-    }
+    context={'ywcxq':ywcxq}
     return render(request,'delivery/glc/glc_ywc.html',context=context)
 
 def deliver_psc_sfyz(request):
