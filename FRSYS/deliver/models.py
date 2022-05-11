@@ -21,13 +21,11 @@ class Deliver(models.Model):
     arrival_time = models.DateTimeField(blank=True, null=True, verbose_name='到达时间')
     status = models.PositiveIntegerField(default=0, choices=STATUS_ITEMS, verbose_name="冷链情况")
     '''
-    insert into deliver_deliver (deliver_id,aim_add,start_add,apply_time) values('XS000001',"清华","北航",now());
-    insert into deliver_deliver (deliver_id,aim_add,start_add,apply_time) values('XS000002',"北大","北航",now());
-    insert into deliver_deliver (deliver_id,aim_add,start_add,apply_time) values('CG000001',"我家","北航",now());
-
-    insert into deliver_deliver (deliver_id,aim_add,start_add,apply_time,departure_time) values('CG000004',"我家","北航",now(),now());
-
-    insert into deliver_deliver (deliver_id,aim_add,start_add,apply_time,departure_time,arrival_time) values('CG000005',"我家","北航",now(),now(),now());
+    insert into deliver_deliver (deliver_id,aim_add,start_add,apply_time,status) values('XS000001',"清华","北航",now(),0);
+    insert into deliver_deliver (deliver_id,aim_add,start_add,apply_time,status) values('XS000002',"北大","北航",now(),0);
+    insert into deliver_deliver (deliver_id,aim_add,start_add,apply_time,status) values('CG000001',"我家","北航",now(),0);
+    insert into deliver_deliver (deliver_id,aim_add,start_add,apply_time,status) values('CG000002',"我家","北航",now(),0);
+    insert into deliver_deliver (deliver_id,aim_add,start_add,apply_time,status) values('CG000003',"我家","北航",now(),0);
     '''
 
 
@@ -43,7 +41,10 @@ class DeliverDetail(models.Model):
     '''
     insert into deliver_deliverdetail 
     (dd_id,province,city,detail_time,deliver_id_id) 
-    values ('DD00001','山西','太原',now(),'CG000004');
+    values ('DD00001','河北','石家庄',now(),'CG000001');
+    insert into deliver_deliverdetail 
+    (dd_id,province,city,detail_time,deliver_id_id) 
+    values ('DD00002','山西','太原',now(),'CG000001');
     '''
 
 
@@ -73,7 +74,13 @@ class Car(models.Model):
     insert into deliver_car
     values ("京A11112",0,2,10.5,2);
     insert into deliver_car
-    values ("京A11113",1,2,10.5,3);
+    values ("京A11113",0,0,10.5,3);
+    insert into deliver_car
+    values ("京A11114",0,6,15,5);
+    insert into deliver_car
+    values ("京A11115",0,1,50.5,6);
+    insert into deliver_car
+    values ("京A11116",0,3,30.5,7);
     '''
 
 class CarForDeliver(models.Model):

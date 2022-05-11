@@ -35,6 +35,8 @@ urlpatterns = [
     path('index/',index),
     path('login/',login),
     path('login/register/',register),
+    path('innerlogin/',login_worker),
+    path('innerlogin/innerregister/',register_worker),
     path('index/about/',about),
     path('index/services/',services),
     path('index/contact/',contact),
@@ -43,8 +45,8 @@ urlpatterns = [
 
     # delivery_yly
     path('work/delivery/',deliver_home),
-
-    path('work/delivery/glc/xqgl/',deliver_glc_xqgl),
+    path('work/delivery/glc/sfyz/',deliver_glc_sfyz),
+    path('work/delivery/glc/xqgl/',deliver_glc_xqgl),   
     path('work/delivery/glc/rwfp/',deliver_glc_rwfp),
     path('work/delivery/glc/jxz/',deliver_glc_jxz),
     path('work/delivery/glc/ywc/',deliver_glc_ywc),
@@ -75,7 +77,7 @@ urlpatterns = [
     path('work/purchase/make_purchase/',purchase_make_purchase),
     path('work/purchase/make_purchase/add/',purchase_make_purchase_add),
     path('work/purchase/make_purchase/update/',purchase_make_purchase_update),
-
+    
     path('work/purchase/manage_supplierinfo/',purchase_manage_supplierinfo),
     path('work/purchase/manage_supplierinfo/add',purchase_manage_supplierinfo_add),
     path('work/purchase/manage_supplierinfo/update',purchase_manage_supplierinfo_update),

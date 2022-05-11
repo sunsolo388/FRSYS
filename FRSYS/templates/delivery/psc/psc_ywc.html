@@ -59,26 +59,24 @@
                         <a href="/work/delivery/"><i class="fa fa-desktop"></i>物流部主页</a>
                     </li>
                     <li>
-                        <a><i class="fa fa-sitemap"></i>物流管理处<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
+                        <a><i class="fa fa-sitemap"></i>物流管理处</a>
+                    </li>
+                    <li>
+                        <a><i class="fa fa-car"></i>配送处<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level in">
                             <li>
-                                <a href="../xqgl/">物流需求管理</a>
+                                <a herf="../dqrw/" >当前物流任务</a>
                             </li>
                             <li>
-                                <a href="../rwfp/">物流任务分配</a>
+                                <a href="../xxsc/">物流信息上传</a>
                             </li>
                             <li>
-                                <a class="active-menu">已完成物流任务</a>
+                                <a class="active-menu" href="../ywc/">已完成物流任务</a>
                             </li>
                         </ul>
                     </li>
-                    <li>
-                        <a><i class="fa fa-car"></i>配送处</a>
-                    </li>
                 </ul>
-
             </div>
-
         </nav>
         <!-- /. NAV SIDE  -->
         <div id="page-wrapper">
@@ -106,21 +104,19 @@
                                                 <th>物流编号</th>
                                                 <th>出发地点</th>
                                                 <th>目标地点</th>
-                                                <th>申请时间</th>
-                                                <th>当前地点</th>
-                                                <th>已用时间</th>
+                                                <th>共耗时</th>
+                                                <th>途径地点</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {% for xq in jxzxq %}
+                                            {% for rw in ywcrw %}
                                             <tr>
-                                                <td>{{ xq.depart }}</td>
-                                                <td>{{ xq.deliver_id }}</td>
-                                                <td>{{ xq.start_add }}</td>
-                                                <td>{{ xq.aim_add }}</td>
-                                                <td>{{ xq.apply_time }}</td>
-                                                <td>{{ xq.place }}</td>
-                                                <td>{{ xq.use_time }}</td>
+                                                <td>{{ rw.depart }}</td>
+                                                <td>{{ rw.deliver_id }}</td>
+                                                <td>{{ rw.start_add }}</td>
+                                                <td>{{ rw.aim_add }}</td>
+                                                <td>{{ rw.apply_time }}</td>
+                                                <td>{{ rw.passadd }}</td>
                                             </tr>
                                             {% endfor %}
                                         </tbody>

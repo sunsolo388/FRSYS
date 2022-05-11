@@ -46,14 +46,16 @@ def login(request):
         if user == None:
             messages.add_message(request, messages.ERROR, '不存在该账号，请注册！')
             return redirect('/login/register/')
-        
-        if password == user.pwd:
+        if password == user.pwd and user.identity==0:
             messages.add_message(request, messages.SUCCESS, '登录成功')
-            print(user.identity)
             return redirect('/userpage/')
-        else:
+        elif password != user.pwd:
             messages.add_message(request, messages.ERROR, '密码错误，登陆失败！')
-            return render(request,'homepage/login.html')
+            return redirect('/login/')
+        elif user.identity!=0:
+            messages.add_message(request, messages.ERROR, '员工请通过员工通道登录！')
+            return redirect('/innerlogin/')
+
     elif request.method == 'GET':
         return render(request,'homepage/login_user.html')
 

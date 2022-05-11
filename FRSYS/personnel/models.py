@@ -30,15 +30,25 @@ class Staff(models.Model):
     position = models.CharField(max_length=10,verbose_name="职务",null=True)
     '''
     insert into personnel_staff
-    (staff_id,department_id_id,staff_name,staff_gender,staff_tel,staff_address)
+    (staff_id,department_id_id,staff_name,staff_gender,staff_tel,staff_address,position)
     values(1,2,"配送员1","男",16165,"北航","配送员");
     insert into personnel_staff
-    (staff_id,department_id_id,staff_name,staff_gender,staff_tel,staff_address)
+    (staff_id,department_id_id,staff_name,staff_gender,staff_tel,staff_address,position)
     values(2,2,"配送员2","男",10652,"北航","配送员");
     insert into personnel_staff
-    (staff_id,department_id_id,staff_name,staff_gender,staff_tel,staff_address)
+    (staff_id,department_id_id,staff_name,staff_gender,staff_tel,staff_address,position)
     values(3,2,"配送员3","女",1064552,"北航","配送员");
     insert into personnel_staff
-    (staff_id,department_id_id,staff_name,staff_gender,staff_tel,staff_address)
+    (staff_id,department_id_id,staff_name,staff_gender,staff_tel,staff_address,position)
     values(4,2,"管理员3","女",1064,"北航","管理员");
+    insert into personnel_staff
+    (staff_id,department_id_id,staff_name,staff_gender,staff_tel,staff_address,position)
+    values(5,2,"配送员4","女",106552,"北航","配送员");
+    insert into personnel_staff
+    (staff_id,department_id_id,staff_name,staff_gender,staff_tel,staff_address,position)
+    values(6,2,"配送员5","男",10642,"北航","配送员");
+    insert into personnel_staff
+    (staff_id,department_id_id,staff_name,staff_gender,staff_tel,staff_address,position)
+    values(7,2,"配送员6","女",1552,"北航","配送员");
+    
     '''

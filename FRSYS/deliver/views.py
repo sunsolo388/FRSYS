@@ -1,3 +1,4 @@
+import django
 from django.db import reset_queries
 from django.shortcuts import redirect, render
 from django.shortcuts import HttpResponseRedirect,HttpResponse
@@ -29,17 +30,18 @@ def deliver_home(request):
 def deliver_glc_sfyz(request):
     if request.method=='POST':
         sid=request.POST.get('sid')
-        s=Staff.objects.filter(staff_id=sid).values('position')
+        s=Staff.objects.filter(staff_id=sid).values('position').last()
         if not s:
             messages.add_message(request,messages.ERROR,"部门验证失败")
-            redirect('/work/delivery/glc/sfyz/')
+            return redirect('/work/delivery/glc/sfyz/')
         elif s['position']=="管理员":
             messages.add_message(request,messages.SUCCESS,"干活吧打工人 ╰（‵□′）╯")
-            redirect('/work/delivery/glc/dqrw/')
+            print(s['position'])
+            return redirect('/work/delivery/glc/xqgl/')
         else:
             messages.add_message(request,messages.ERROR,"部门验证失败")
-            redirect('/work/delivery/glc/sfyz/')
-    else:
+            return redirect('/work/delivery/glc/sfyz/')
+    else:    
         return render(request,'delivery/glc/glc_sfyz.html')
 
 def deliver_glc_xqgl(request):
@@ -75,7 +77,7 @@ def deliver_glc_rwfp(request):
         )
         context = get_car_info(did)
 
-        messages.add_message(request, messages.SUCCESS, '注册成功')
+        messages.add_message(request, messages.SUCCESS, '分配成功')
         return redirect('/work/delivery/glc/xqgl/')
     else:
         did = request.session.get('did')
@@ -115,26 +117,50 @@ def deliver_glc_ywc(request):
     context={'ywcxq':ywcxq}
     return render(request,'delivery/glc/glc_ywc.html',context=context)
 
+
 def deliver_psc_sfyz(request):
     if request.method=='POST':
         sid=request.POST.get('sid')
-        s=Staff.objects.filter(staff_id=sid).values('position')
+        s=Staff.objects.filter(staff_id=sid).values('position').last()
         if not s:
             messages.add_message(request,messages.ERROR,"部门验证失败")
-            redirect('/work/delivery/psc/sfyz/')
+            return redirect('/work/delivery/psc/sfyz/')
         elif s['position']=="配送员":
             messages.add_message(request,messages.SUCCESS,"干活吧打工人 ╰（‵□′）╯")
-            redirect('/work/delivery/psc/'+sid+'/dqrw/')
+            return redirect('/work/delivery/psc/'+sid+'/dqrw/')
         else:
             messages.add_message(request,messages.ERROR,"部门验证失败")
-            redirect('/work/delivery/psc/sfyz/')
+            return redirect('/work/delivery/psc/sfyz/')
     else:
         return render(request,'delivery/psc/psc_sfyz.html')
 
 def deliver_psc_dqrw(request,staff_id):
-    
+    car_id=models.Car.objects.filter(staff_id=staff_id).values('car_id').last()['car_id']
+    dqrw=models.CarForDeliver.objects.filter(car_id=car_id).order_by('id')
+    aim_deliver=dqrw.values('deliver_id').last()['deliver_id']
+    deliver=models.Deliver.objects.filter(deliver_id=aim_deliver)
+    deliver_info=deliver.values('deliver_id','start_add','aim_add','apply_time','departure_time','status').last()
+    dd=models.DeliverDetail.objects.filter(deliver_id=aim_deliver).order_by('detail_time')
 
-    context={}
+    if request.method=='POST':
+        if deliver_info['status']!=2:
+            models.Deliver.objects.filter(deliver_id=aim_deliver).update(departure_time=datetime.datetime.now())
+            models.Deliver.objects.filter(deliver_id=aim_deliver).update(status=2)
+            messages.add_message(request,messages.SUCCESS,"任务已开始\n祝您一路顺风\n╰（‵□′）╯")
+            return redirect('/work/delivery/psc/'+staff_id+'/dqrw/')
+
+    if deliver_info['deliver_id'][0:2]=='XS':
+        deliver_info['depart']='销售部'
+    elif deliver_info['deliver_id'][0:2]=='CG':
+        deliver_info['depart']='采购部'
+    if dd==None:
+        deliver_info['place']='还未出发'
+    else:
+        ddinfo=dd.values('province','city').last()
+        deliver_info['place']=ddinfo['province']+'省'+ddinfo['city']+'市'
+    deliver_info['use_time']=datetime.datetime.now()-deliver_info['apply_time'].replace(tzinfo=None)
+
+    context={'rwxx':deliver_info}
     return render(request,'delivery/psc/psc_dqrw.html',context=context)
 
 def deliver_psc_xxsc(request,staff_id):
@@ -146,15 +172,28 @@ def deliver_psc_xxsc(request,staff_id):
     return render(request,'delivery/psc/psc_xxsc.html',context=context)
 
 def deliver_psc_ywc(request,staff_id):
-
-
-    context={
-        
-    }
+    car_id=models.Car.objects.filter(staff_id=staff_id).values('car_id').last()['car_id']
+    syrw=models.CarForDeliver.objects.filter(car_id=car_id).values('deliver_id')
+    for rw in syrw:
+        deliver_id=rw['deliver_id']
+        if deliver_id[0:2]=='XS':
+            rw['depart']='销售部'
+        elif deliver_id[0:2]=='CG':
+            rw['depart']='采购部'
+        deliver=models.Deliver.objects.filter(deliver_id=deliver_id).filter(status=3)
+        deliver_info=deliver.values('deliver_id','apply_time','start_add','aim_add','departure_time','arrival_time').last()
+        if deliver_info is None:
+            return render(request,'delivery/psc/psc_ywc.html')
+        rw['use_time']=deliver_info['arrival_time']-deliver_info['departure_time']
+        deliverdetail=models.DeliverDetail.objects.filter(deliver_id=deliver_id).order_by('detail_time')
+        detail_info=deliverdetail.values('province','city')
+        rw.update(deliver_info)
+        rw['passadd']=''
+        for ddinfo in detail_info:
+            rw['passadd']+=(ddinfo['province']+'省'+ddinfo['city']+'市'+'、')
+    print(syrw)
+    context={'ywcrw':syrw}
     return render(request,'delivery/psc/psc_ywc.html',context=context)
-
-
-
 
 def test(request):
     return render(request,'delivery/form.html')
