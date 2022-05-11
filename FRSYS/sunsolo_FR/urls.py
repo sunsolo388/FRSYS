@@ -82,4 +82,7 @@ urlpatterns = [
     path('work/purchase/manage_supplierinfo/add',purchase_manage_supplierinfo_add),
     path('work/purchase/manage_supplierinfo/update',purchase_manage_supplierinfo_update),
 
+    path('work/purchase/purchase_demand/',purchase_purchase_demand),
+    path('work/purchase/purchase_demand/update',purchase_purchase_demand_update),
+
 ]

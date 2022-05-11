@@ -25,4 +25,12 @@ def purchase_make_purchase_add(request):
 def purchase_make_purchase_update(request):
     return render(request,'purchase/make_purchase/update.html')
 
+# 采购需求管理
+# 查看采购需求
+def purchase_purchase_demand(request):
+    return render(request,'purchase/purchase_demand/homepage.html')
+## 更新采购需求
+def purchase_purchase_demand_update(request):
+    return render(request,'purchase/purchase_demand/update.html')
+
 

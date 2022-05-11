@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>生鲜码盒可溯源生鲜-采购部-管理供应商</title>
+    <title>生鲜码盒可溯源生鲜-采购部-供应商管理</title>
     <link rel="shortcut icon" href="/static/favicon.ico" />
     <!-- Bootstrap Styles-->
     <link href="/static/css/bootstrap.css" rel="stylesheet" />
@@ -40,9 +40,28 @@
                 </button>
                 <a class="navbar-brand" href="/work/purchase"><i class="fa fa-pagelines"></i> <strong>返回主页</strong></a>
             </div>
-
+            <ul class="nav navbar-top-links navbar-right">
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+                        <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="/userinfo/"><i class="fa fa-user fa-fw"></i>个人信息</a>
+                        </li>
+                        <li><a href=""><i class="fa fa-gear fa-fw"></i>设置</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="/index/"><i class="fa fa-sign-out fa-fw"></i>登出</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
 
         </nav>
+
         <!--/. NAV TOP  -->
         <nav class="navbar-default navbar-side" role="navigation">
 
@@ -50,13 +69,45 @@
                 <ul class="nav" id="main-menu">
 
                     <li>
-                        <a href="/work/warehouse"><i class="fa fa-sitemap"></i> 库存管理</a>
+                        <a class="active-menu" ><i class="fa fa-address-card"></i>供应商信息管理</a>
+                        <ul class="nav nav-second-level in">
+                            <li>
+                                <a class="active-menu" href="/work/purchase/manage_supplierinfo">查看供应商信息</a>
+                            </li>
+                            <li>
+                                <a href="/work/purchase/manage_supplierinfo/add">添加供应商信息</a>
+                            </li>
+                            <li>
+                                <a href="/work/purchase/manage_supplierinfo/update">更新供应商信息</a>
+                            </li>
+                        </ul>
                     </li>
+
                     <li>
-                        <a class="active-menu" href="inward"><i class="fa fa-long-arrow-left"></i> 入库管理</a>
+                        <a><i class="fa fa-address-card"></i>采购订单信息管理</a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="/work/purchase/make_purchase">查看采购订单</a>
+                            </li>
+                            <li>
+                                <a href="/work/purchase/make_purchase/add">添加采购订单</a>
+                            </li>
+                            <li>
+                                <a href="/work/purchase/make_purchase/update">更新采购订单</a>
+                            </li>
+                        </ul>
                     </li>
+
 					<li>
-                        <a href="outward"><i class="fa fa-long-arrow-right"></i> 出库管理</a>
+                        <a><i class="fa fa-tasks"></i>采购需求管理</a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="/work/purchase/purchase_demand">查看采购需求</a>
+                            </li>
+                            <li>
+                                <a href="/work/purchase/purchase_demand/update">更新采购需求</a>
+                            </li>
+                        </ul>
                     </li>
 
                 </ul>
@@ -75,25 +126,20 @@
                     {% csrf_token %}
                     <div class="form-group">
                         <span class="fa fa-circle-o" aria-hidden="true"></span>
-                        <input type="text" name="purchase_id" placeholder="订单编号" required="" input style="width:200px;height:30px">
-
+                        <input type="text" name="supplier_id" placeholder="供应商编号" required="" input style="width:200px;height:30px">
                         <div class="clear"></div>
                     </div>
+
                     <div class="form-group">
                         <span class="fa fa-plus-square-o" aria-hidden="true"></span>
-                        <input type="text" name="warehouse_flow" placeholder="仓库流水" required="" input style="width:200px;height:30px">
-
+                        <input type="text" name="supplier_name" placeholder="供应商名称" required="" input style="width:200px;height:30px">
                         <div class="clear"></div>
                     </div>
-
-
-
 
                     <div class="form-group ">
                         <span class="fa fa-spinner fa-spin" aria-hidden="true"></span>
                         <input type="number" name="in_num" placeholder="入库质量" required="" step="0.5" input style="width:200px;height:30px">
                         <div class="clear"></div>
-
                     </div>
 
                         <div class="form-group ">
@@ -118,7 +164,7 @@
 
 
                     <div class="btnn">
-                        <button type="submit" button style="width:100px;height:40px">提交</button>
+                        <button type="submit" button style="width:100px;height:40px">查询</button>
                     </div>
 
 
