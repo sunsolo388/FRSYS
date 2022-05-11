@@ -67,7 +67,7 @@
                     </div>
                     <div class="form-left-to-w3l">
                         <span class="fa fa-lock" aria-hidden="true"></span>
-                        <input type="text" name="password" placeholder="Password" required="">
+                        <input type="text" id="passwd" name="password" placeholder="Password" required="">
 
                         <div class="clear"></div>
                     </div>
@@ -86,7 +86,7 @@
                 </form>
                 <div class="w3layouts_more-buttn">
                     <h3>Don't Have an account..?
-                        <a href="/login/register/">Log Up Here</a>
+                        <a href="/innerlogin/innerregister/">Log Up Here</a>
                     </h3>
                 </div>
                 <div class="clear"></div>
@@ -96,8 +96,20 @@
     <!---728x90--->
     <p>
         © 2022 生鲜码盒可溯源生鲜. All Rights Reserved | Design by
-        <a>被信息系统设计了小组</a>
+        <a href="/innerlogin/">被信息系统设计了小组</a>
     </p>
 </body>
-
+<script language="JavaScript">
+    function demo() {
+        var tp = document.all["passwd"];
+        //tp.setAttribute("type","text");     //ok1
+        //tp.type="text";           //ok2
+        var rd = document.all["rd"];
+        if (rd.checked) {
+            tp.type = "text";
+        } else {
+            tp.type = "password";
+        }
+    }
+</script>
 </html>

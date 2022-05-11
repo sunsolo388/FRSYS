@@ -28,16 +28,16 @@ def deliver_home(request):
 
 def deliver_glc_sfyz(request):
     if request.method=='POST':
-        sid=request.sid
+        sid=request.POST.get('sid')
         s=Staff.objects.filter(staff_id=sid).values('position')
         if not s:
-            messages.add_message((request,messages.ERROR,"部门验证失败"))
+            messages.add_message(request,messages.ERROR,"部门验证失败")
             redirect('/work/delivery/glc/sfyz/')
         elif s['position']=="管理员":
-            messages.add_message((request,messages.SUCCESS,"干活吧打工人 ╰（‵□′）╯"))
+            messages.add_message(request,messages.SUCCESS,"干活吧打工人 ╰（‵□′）╯")
             redirect('/work/delivery/glc/dqrw/')
         else:
-            messages.add_message((request,messages.ERROR,"部门验证失败"))
+            messages.add_message(request,messages.ERROR,"部门验证失败")
             redirect('/work/delivery/glc/sfyz/')
     else:
         return render(request,'delivery/glc/glc_sfyz.html')
@@ -117,16 +117,16 @@ def deliver_glc_ywc(request):
 
 def deliver_psc_sfyz(request):
     if request.method=='POST':
-        sid=request.sid
+        sid=request.POST.get('sid')
         s=Staff.objects.filter(staff_id=sid).values('position')
         if not s:
-            messages.add_message((request,messages.ERROR,"部门验证失败"))
+            messages.add_message(request,messages.ERROR,"部门验证失败")
             redirect('/work/delivery/psc/sfyz/')
         elif s['position']=="配送员":
-            messages.add_message((request,messages.SUCCESS,"干活吧打工人 ╰（‵□′）╯"))
+            messages.add_message(request,messages.SUCCESS,"干活吧打工人 ╰（‵□′）╯")
             redirect('/work/delivery/psc/'+sid+'/dqrw/')
         else:
-            messages.add_message((request,messages.ERROR,"部门验证失败"))
+            messages.add_message(request,messages.ERROR,"部门验证失败")
             redirect('/work/delivery/psc/sfyz/')
     else:
         return render(request,'delivery/psc/psc_sfyz.html')

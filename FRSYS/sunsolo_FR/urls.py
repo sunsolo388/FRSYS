@@ -35,6 +35,8 @@ urlpatterns = [
     path('index/',index),
     path('login/',login),
     path('login/register/',register),
+    path('innerlogin/',login_worker),
+    path('innerlogin/innerregister/',register_worker),
     path('index/about/',about),
     path('index/services/',services),
     path('index/contact/',contact),
