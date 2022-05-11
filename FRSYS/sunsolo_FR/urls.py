@@ -28,7 +28,6 @@ from warehouse.views import *
 
 
 urlpatterns = [
-    path('',index),
     path('admin/', admin.site.urls),
 
     # homepage_yly
@@ -46,8 +45,17 @@ urlpatterns = [
     
     # delivery_yly
     path('work/delivery/',deliver_home),
-    path('work/delivery/glc/',deliver_glc_rwfp),
-    path('work/delivery/psc/',deliver_psc_dqrw),
+    path('work/delivery/glc/sfyz/',deliver_glc_sfyz),
+    path('work/delivery/glc/xqgl/',deliver_glc_xqgl),
+    path('work/delivery/glc/rwfp/',deliver_glc_rwfp),
+    path('work/delivery/glc/ywc/',deliver_glc_ywc),
+    path('work/delivery/glc/jxz/',deliver_glc_jxz),
+
+    path('work/delivery/psc/sfyz/',deliver_psc_sfyz),
+    path('work/delivery/psc/<string:sid>/dqrw/',deliver_psc_dqrw),
+    path('work/delivery/psc/<string:sid>/xxsc/',deliver_psc_xxsc),
+    path('work/delivery/psc/<string:sid>/ywc/',deliver_psc_ywc),
+
     path('work/delivery/test',test),
 
 
