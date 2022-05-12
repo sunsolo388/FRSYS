@@ -17,7 +17,13 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
     <link href="/static/js/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
 </head>
-
+{% if messages %}
+<script type="text/jscript">
+    {% for msg in messages %}
+    alert('{{ msg.message }}');
+    {% endfor %}
+</script>
+{% endif %}
 <body>
     <div id="wrapper">
         <nav class="navbar navbar-default top-navbar" role="navigation">
@@ -65,7 +71,7 @@
                         <a><i class="fa fa-car"></i>配送处<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level in">
                             <li>
-                                <a herf="../dqrw/" >当前物流任务</a>
+                                <a href="../dqrw/" >当前物流任务</a>
                             </li>
                             <li>
                                 <a href="../xxsc/">物流信息上传</a>
@@ -115,7 +121,7 @@
                                                 <td>{{ rw.deliver_id }}</td>
                                                 <td>{{ rw.start_add }}</td>
                                                 <td>{{ rw.aim_add }}</td>
-                                                <td>{{ rw.apply_time }}</td>
+                                                <td>{{ rw.use_time }}</td>
                                                 <td>{{ rw.passadd }}</td>
                                             </tr>
                                             {% endfor %}

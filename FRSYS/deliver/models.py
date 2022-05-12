@@ -33,18 +33,17 @@ class DeliverDetail(models.Model):
     '''
     deliver_detail 表
     '''
-    dd_id = models.CharField(max_length=8, primary_key=True)
+    dd_id = models.AutoField(primary_key=True)
     deliver_id = models.ForeignKey(Deliver, on_delete=models.CASCADE, related_name='detail_of_this_deliver')
     province = models.CharField(max_length=20)
     city = models.CharField(max_length=20)
     detail_time = models.DateTimeField(default=timezone.now)
     '''
-    insert into deliver_deliverdetail 
-    (dd_id,province,city,detail_time,deliver_id_id) 
-    values ('DD00001','河北','石家庄',now(),'CG000001');
-    insert into deliver_deliverdetail 
-    (dd_id,province,city,detail_time,deliver_id_id) 
-    values ('DD00002','山西','太原',now(),'CG000001');
+    insert into deliver_deliverdetail (province,city,detail_time,deliver_id_id) values("p1","c1",now(),"CG000002");
+    insert into deliver_deliverdetail (province,city,detail_time,deliver_id_id) values("p2","c2","2022-05-12 10:27:18","CG000002");
+    insert into deliver_deliverdetail (province,city,detail_time,deliver_id_id) values("p3","c3","2022-05-12 11:27:18","CG000002");
+    insert into deliver_deliverdetail (province,city,detail_time,deliver_id_id) values("河北","石家庄","2022-05-11 19:27:18","CG000001");
+    insert into deliver_deliverdetail (province,city,detail_time,deliver_id_id) values("山西","太原","2022-05-11 21:27:18","CG000001");
     '''
 
 

@@ -17,7 +17,13 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
     <link href="/static/js/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
 </head>
-
+{% if messages %}
+<script type="text/jscript">
+    {% for msg in messages %}
+    alert('{{ msg.message }}');
+    {% endfor %}
+</script>
+{% endif %}
 <body>
     <div id="wrapper">
         <nav class="navbar navbar-default top-navbar" role="navigation">
@@ -85,9 +91,10 @@
             <div id="page-inner">
                 <div class="row">
                     <div class="col-md-12">
-                        <h1 class="page-header">
-                            物流需求信息
-                        </h1>
+                        <h3 class="page-header">
+                            当前任务信息  <p> 当前已用时 {{ use_time }} </p>
+                        </h3>
+                        
                     </div>
                 </div>
                 <!-- /. ROW  -->
@@ -106,21 +113,21 @@
                                                 <th>物流编号</th>
                                                 <th>出发地点</th>
                                                 <th>目标地点</th>
-                                                <th>申请时间</th>
-                                                <th>当前地点</th>
-                                                <th>已用时间</th>
+                                                <th>途径地点</th>
+                                                <th>到达时刻</th>
+                                                <th>到达累积用时</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {% for xq in jxzxq %}
+                                            {% for dd in detail_info %}
                                             <tr>
-                                                <td>{{ xq.depart }}</td>
-                                                <td>{{ xq.deliver_id }}</td>
-                                                <td>{{ xq.start_add }}</td>
-                                                <td>{{ xq.aim_add }}</td>
-                                                <td>{{ xq.apply_time }}</td>
-                                                <td>{{ xq.place }}</td>
-                                                <td>{{ xq.use_time }}</td>
+                                                <td>{{ depart }}</td>
+                                                <td>{{ deliver_id }}</td>
+                                                <td>{{ start_add }}</td>
+                                                <td>{{ aim_add }}</td>
+                                                <td>{{ dd.passadd }}</td>
+                                                <td>{{ dd.detail_time }}</td>
+                                                <td>{{ dd.use_time }}</td>
                                             </tr>
                                             {% endfor %}
                                         </tbody>
@@ -132,7 +139,22 @@
                         <!--End Advanced Tables -->
                     </div>
                 </div>
-
+                <form role="form" method="post">
+                    {% csrf_token %}
+                    <fieldset>
+                        <div class="form-group">
+                            <label>请输入所在省份</label>
+                            <input class="form-control" type="text" placeholder="请输入员工编号" name="province">
+                            <label>请输入所在城市</label>
+                            <input class="form-control" type="text" placeholder="请输入员工编号" name="city">
+                        </div>
+                        <p align="center">
+                            <button style="width: 40%;" type="submit" class="btn btn-primary" name="sc">上传</button>
+                            <a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                            <button style="width: 40%;" type="submit" class="btn btn-primary" name="js">结束</button>
+                        </p>
+                    </fieldset>
+                </form>
                 <!-- /. PAGE INNER  -->
             </div>
             <!-- /. PAGE WRAPPER  -->
