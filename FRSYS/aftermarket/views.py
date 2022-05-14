@@ -9,18 +9,23 @@ from aftermarket import models as amm
 def AMtable(request):
     # 跳转到售后表单界面
     if request.method =='GET':
-        aminfo = amm.AM.objects.all()
-        print(aminfo)
+        try :
+            aminfo = amm.AM.objects.all()
+        except Exception as e:
+            aminfo = NULL
+
+
         return render(request, 'aftermarket/AMtable.html', locals())
     else:
         am_id=request.POST.get("am_id")
         AMinfo=amm.AM.objects.all()
-        return render(request, 'aftermarket/AMdealing.html')
+        return AMdealing(request,am_id)
 
 
 def AMdealing(request, am_id):
     # 跳转到处理详情界面
 
     if request.method == 'GET':
-        return render(request, 'aftermarket/AMdealing.html')
+        AM_id=am_id
+        return render(request, 'aftermarket/AMdealing.html',locals())
 
