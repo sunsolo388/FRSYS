@@ -59,7 +59,10 @@ urlpatterns = [
     path('work/delivery/test/',test),
 
     # order_heyueyu
-    #path('work/sales',OrderPlaceView.as_view(),name='sales_index'),
+    path('work/sales/',sales_home),
+    path('work/sales/order_check/',sales_order_check),
+    path('work/sales/customer_rela/',customer_manage),
+    path('work/purchase/order_stats/',order_stats),
 
 
     # aftermarket_dyq
