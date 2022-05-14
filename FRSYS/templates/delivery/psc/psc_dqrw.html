@@ -119,6 +119,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            {% for rwxx in dqrws %}
                                             <tr>
                                                 <td>{{ rwxx.depart }}</td>
                                                 <td>{{ rwxx.deliver_id }}</td>
@@ -128,6 +129,7 @@
                                                 <td>{{ rwxx.place }}</td>
                                                 <td>{{ rwxx.use_time }}</td>
                                             </tr>
+                                            {% endfor %}
                                         </tbody>
                                     </table>
                                 </div>
