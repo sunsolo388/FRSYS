@@ -12,5 +12,5 @@ class PurchaseDemand(models.Model):
     product_id = models.ForeignKey(to=Product,to_field="product_id",on_delete=models.CASCADE)
     pdemand_num = models.FloatField(max_length=8)
     pdemand_time = models.DateField()
-    pdemand_state = models.BooleanField()
+    pdemand_state = models.BooleanField(default=0)
 
