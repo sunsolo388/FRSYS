@@ -85,7 +85,7 @@
                         </div>
                         <div class="panel-body">
                             <div class="table-responsive">
-                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                <table class="table table-striped table-bordered table-hover" >
                                     <thead>
                                         <tr>
                                             <th>售后流水</th>
@@ -97,20 +97,27 @@
                                     </thead>
                                     <tbody>
 
-                                            {% for i in aminfo%}
-                                                <tr class="odd gradeX">
-                                                    <td>{{ i.AM_id }}</td>
+                                            {% for i in aminfo %}
+                                                <form action="" method="post">
+                                                {% csrf_token %}
+                                                <tr>
+
+                                                    <td>
+                                                        <div class="form-left-to-w3l ">
+                                                            <input type="text" name="am_id" value="{{ i.AM_id }}"
+                                                                readonly required="" style=" border: #FFFFFF" >
+                                                            <div class="clear"></div>
+                                                        </div>
+                                                    </td>
                                                     <td>{{ i.order_id }}</td>
                                                     <td>{{ i.reason_kind }}</td>
                                                     <td>{{ i.AM_status }}</td>
                                                     <td>
-                                                        <form action="" method="post">
-                                                            <button type="button" >处理</button>
-                                                        </form>
+                                                        <button type="submit">处理</button>
                                                     </td>
-                                                 </tr>
-                                            {% endfor %}
-
+                                                </tr>
+                                                </form>
+                                        {% endfor  %}
 
                                     </tbody>
                                 </table>
