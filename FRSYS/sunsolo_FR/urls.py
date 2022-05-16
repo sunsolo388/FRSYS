@@ -75,15 +75,14 @@ urlpatterns = [
     # purchase_lxt
     path('work/purchase/', purchase_home),
 
-    path('work/purchase/make_purchase/', purchase_make_purchase),
-    path('work/purchase/make_purchase/add/', purchase_make_purchase_add),
-    path('work/purchase/make_purchase/update/', purchase_make_purchase_update),
+    path('work/purchase/make_purchase/',purchase_make_purchases),
+    path('work/purchase/make_purchase/add/',purchase_make_purchase_add_purchase),
+    path('work/purchase/make_purchase/update/',purchase_make_purchase_update_purchase),
 
-    path('work/purchase/manage_supplierinfo/', purchase_manage_supplierinfo),
-    path('work/purchase/manage_supplierinfo/add', purchase_manage_supplierinfo_add),
-    path('work/purchase/manage_supplierinfo/update', purchase_manage_supplierinfo_update),
+    path('work/purchase/manage_supplierinfo/',purchase_manage_suppliers_info),
+    path('work/purchase/manage_supplierinfo/add',purchase_manage_supplierinfo_add_info),
+    path('work/purchase/manage_supplierinfo/update',purchase_manage_supplierinfo_update_info),
 
-    path('work/purchase/purchase_demand/', purchase_purchase_demand),
-    path('work/purchase/purchase_demand/update', purchase_purchase_demand_update),
+    path('work/purchase/purchase_demand/',purchase_purchase_demands),
 
 ]
