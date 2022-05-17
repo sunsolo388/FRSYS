@@ -1,6 +1,6 @@
 import django
 from django.db import reset_queries
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, reverse
 from django.shortcuts import HttpResponseRedirect,HttpResponse
 from sympy import det, re
 from django.contrib import messages
@@ -43,10 +43,10 @@ def purchase_manage_supplierinfo_add_info(request):
             new_supplier = models.Supplier.add_supplier(supplier_add,supplier_charge_phone,supplier_name,supplier_charge_name)
 
             messages.add_message(request, messages.SUCCESS, '添加成功！')
-            return redirect('')           # 重定向还不会写
+            return HttpResponseRedirect(reverse('add_supplier'))           # 重定向还不会写
         except ValueError:
             messages.add_message(request, messages.ERROR, '添加失败，已存在该供应商信息！')
-            return redirect('')
+            return HttpResponseRedirect(reverse('add_supplier'))
     else:
         return render(request,'purchase/manage_supplierinfo/add.html')
 
@@ -93,13 +93,12 @@ def purchase_make_purchase_add_purchase(request):
                                                                product_name=product_name, product_type=product_type,
                                                                product_root=product_root)
 
-            new_purchase_oder.save()
             messages.add_message(request, messages.SUCCESS, '添加成功！')
-            return redirect('')           # 重定向还不会写
+            return HttpResponseRedirect(reverse('add_purchase'))
 
         except ValueError as ve:
             messages.add_message(request, messages.ERROR, ve)
-            return redirect('')
+            return HttpResponseRedirect(reverse('add_purchase'))
 
     else:
         return render(request,'purchase/make_purchase/add.html')

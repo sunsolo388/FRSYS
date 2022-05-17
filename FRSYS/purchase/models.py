@@ -35,17 +35,18 @@ class Purchase(models.Model):
         id = str(int(time.time()))
 
         # 在创建采购订单时创建对应的物流需求
-        deliver = Deliver(deliver_id='CG'+id, start_add = '本公司距离目标最近的基地', aim_add = supplier.supplier_add,
+        deliver = Deliver( deliver_id='CG'+id, start_add = '本公司距离目标最近的基地', aim_add = supplier.supplier_add,
                           apply_time = datetime.datetime.now() )
         deliver.save()
 
-        # 创建对应的采购订单详情
-        purchase_detail = PurchaseDetail.add_purchase_detail(purchase_id=id, product_id=product.product_id,
-                                                             supplier_id=supplier.supplier_id, product_root=product_root)
         # 创建采购订单
-        purchase_order = cls(purchase_id=id, deliver_id = deliver.deliver_id, purchase_num=purchase_num,
+        purchase_order = Purchase(purchase_id=id, deliver_id = deliver, purchase_num=purchase_num,
                        purchase_time=purchase_time, purchase_price=purchase_price)
         purchase_order.save()
+
+        # 创建对应的采购订单详情
+        purchase_detail = PurchaseDetail.add_purchase_detail(purchase_id=purchase_order, product_id=product,
+                                                             supplier_id=supplier, product_root=product_root)
 
         return purchase_order
 
@@ -72,7 +73,7 @@ class Purchase(models.Model):
             product = Product(product_name=product_name, product_type=product_type)
             product.save()
         finally:
-            # 更新PurchaseDetail表
+            # 更新PurchaseDetail表     ### 这里如果还报错，那么就把product_id删了，传入实例对象
             PurchaseDetail.update_purchase_detail(purchase_id=purchase_id, product_id=product.product_id,
                                               supplier_id=supplier.supplier_id, product_root=product_root)
 

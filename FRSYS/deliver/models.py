@@ -13,7 +13,7 @@ class Deliver(models.Model):
         (2, '进行中'),
         (3, '已完成'),
     )
-    deliver_id = models.CharField(max_length=8, primary_key=True, verbose_name='物流编号')
+    deliver_id = models.CharField(max_length=12, primary_key=True, verbose_name='物流编号')
     start_add=models.CharField(max_length=30,null=True,verbose_name='出发地点')
     aim_add=models.CharField(max_length=30,null=True, verbose_name='目标地点')
     apply_time=models.DateTimeField(verbose_name='申请时间',default=timezone.now)
