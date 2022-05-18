@@ -77,11 +77,11 @@ urlpatterns = [
 
     path('work/purchase/make_purchase/',purchase_make_purchases),
     path('work/purchase/make_purchase/add/',purchase_make_purchase_add_purchase,name='add_purchase'),
-    path('work/purchase/make_purchase/update/',purchase_make_purchase_update_purchase),
+    path('work/purchase/make_purchase/update/',purchase_make_purchase_update_purchase,name='update_purchase'),
 
     path('work/purchase/manage_supplierinfo/',purchase_manage_suppliers_info),
     path('work/purchase/manage_supplierinfo/add',purchase_manage_supplierinfo_add_info,name='add_supplier'),
-    path('work/purchase/manage_supplierinfo/update',purchase_manage_supplierinfo_update_info),
+    path('work/purchase/manage_supplierinfo/update',purchase_manage_supplierinfo_update_info,name='update_supplier'),
 
     path('work/purchase/purchase_demand/',purchase_purchase_demands),
 

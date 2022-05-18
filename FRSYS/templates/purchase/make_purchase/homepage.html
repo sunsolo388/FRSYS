@@ -123,30 +123,30 @@
                     <h6></h6>
                     <div class="form-group">
                         <span class="fa fa-circle-o" aria-hidden="true"> </span>
-                        <input type="text" name="purchase_id" placeholder="采购订单编号" required="" style="width:200px;height:30px">
+                        <input type="text" name="purchase_id" placeholder="采购订单编号" style="width:200px;height:30px">
                         <div class="clear"></div>
                     </div>
 
                     <div class="form-group">
                         <span class="fa fa-tag" aria-hidden="true"> </span>
-                        <input type="text" name="supplier_name" placeholder="供应商名称" required="" style="width:200px;height:30px">
+                        <input type="text" name="supplier_name" placeholder="供应商名称" style="width:200px;height:30px">
                         <div class="clear"></div>
                     </div>
 
                     <div class="form-group">
                         <span class="fa fa-barcode" aria-hidden="true"> </span>
-                        <input type="text" name="product_name" placeholder="采购商品名称" required="" style="width:200px;height:30px">
+                        <input type="text" name="product_name" placeholder="采购商品名称" style="width:200px;height:30px">
                         <div class="clear"></div>
                     </div>
 
                     <div class="form-group ">
                         <span class="fa fa-calendar" aria-hidden="true"> </span>
-                        <input type="text" name="purchase_time" placeholder="采购时间" required="" style="width:200px;height:30px">
+                        <input type="text" name="purchase_time" placeholder="采购时间" style="width:200px;height:30px">
                         <div class="clear"></div>
                     </div>
 
                     <div class="btn">
-                        <button type="button" class="fa fa-search btn btn-primary" style="width:100px;height:40px">查询</button>
+                        <button type="submit" name="search_purchase_order" class="fa fa-search btn btn-primary" style="width:100px;height:40px">查询</button>
                     </div>
                 </form>
 
@@ -157,7 +157,7 @@
 
                     <div class="panel-heading">
                         采购订单信息
-                        <button type="button" class="btn btn-link" style="float:right">添加新的采购订单</button>
+                        <a class="btn btn-link" href="/work/purchase/make_purchase/add" style="float:right">添加新的采购订单</a>
                     </div>
 
                     <div class="panel-body">
@@ -171,23 +171,27 @@
                                         <th>供货商</th>
                                         <th>对应物流编号</th>
                                         <th>采购价格</th>
+                                        <th>产品来源</th>
                                         <th>操作</th>
                                     </tr>
                                 </thead>
 
                                 <tbody>
+                                    {% for purchase_detail in purchase_orders_info %}
                                     <tr>
-                                        <td>1</td>
-                                        <td>小青龙</td>
-                                        <td>10</td>
-                                        <td>福建东山海鲜</td>
-                                        <td>231312</td>
-                                        <td>99.00</td>
+                                        <td>{{ purchase_detail.purchase_id.purchase_id }}</td>
+                                        <td>{{ purchase_detail.product_id.product_name }}</td>
+                                        <td>{{ purchase_detail.purchase_id.purchase_num }}</td>
+                                        <td>{{ purchase_detail.supplier_id.supplier_name }}</td>
+                                        <td>{{ purchase_detail.purchase_id.deliver_id.deliver_id }}</td>
+                                        <td>{{ purchase_detail.purchase_id.purchase_price }}</td>
+                                        <td>{{ purchase_detail.product_root }}</td>
                                         <td>
-                                            <button type="button" class="btn btn-link">编辑</button>
+                                            <a class="btn btn-link" href="/work/purchase/make_purchase/update">编辑</a>
                                             <button type="button" class="btn btn-link">删除</button>
                                         </td>
                                     </tr>
+                                    {% endfor %}
                                 </tbody>
                             </table>
                         </div>

@@ -15,22 +15,45 @@ def purchase_home(request):
 
 # 管理供应商信息
 def purchase_manage_suppliers_info(request):
+    _content = 0
     suppliers_info = models.Supplier.objects.all().order_by('supplier_id').values(
         'supplier_id','supplier_name','supplier_add',
         'supplier_charge_name','supplier_charge_phone'
     )
-
-    context = {'suppliers_info':suppliers_info}
+    # 这里是初始化页面展示时，可以设置为展示后台所有的供应商，也可以设置为不展示内容
+    context = {'suppliers_info':None}
 
     if request.method=='POST':
-        if 'edit' in request.POST:
-            pass
+        # 查询功能
+        if 'search_supplier' in request.POST:
+            supplier_id = request.POST.get("supplier_id")
+            supplier_name = request.POST.get("supplier_name")
+            supplier_add = request.POST.get("supplier_add")
+            supplier_charge_name = request.POST.get("supplier_charge_name")
+            supplier_charge_phone = request.POST.get("supplier_charge_phone")
+
+            if supplier_id:
+                suppliers_info = suppliers_info.filter(supplier_id__icontains = supplier_id)
+                _content = 1
+            if supplier_name:
+                suppliers_info = suppliers_info.filter(supplier_name__icontains = supplier_name)
+                _content = 1
+            if supplier_add :
+                suppliers_info = suppliers_info.filter(supplier_add__icontains = supplier_add )
+                _content = 1
+            if supplier_charge_name:
+                suppliers_info = suppliers_info.filter(supplier_charge_name__icontains = supplier_charge_name)
+                _content = 1
+            if supplier_charge_phone:
+                suppliers_info = suppliers_info.filter(supplier_charge_phone = supplier_charge_phone)
+                _content = 1
+
+            if _content:    context['suppliers_info'] = suppliers_info
+        # 删除功能 尚未完成
         elif 'delete' in request.POST:
             pass
-        elif 'add' in request.POST:
-            pass
 
-    return render(request,'purchase/manage_supplierinfo/homepage.html',context)
+    return render(request,'purchase/manage_supplierinfo/homepage.html',context=context)
 
 ## 添加供应商信息
 def purchase_manage_supplierinfo_add_info(request):
@@ -43,7 +66,7 @@ def purchase_manage_supplierinfo_add_info(request):
             new_supplier = models.Supplier.add_supplier(supplier_add,supplier_charge_phone,supplier_name,supplier_charge_name)
 
             messages.add_message(request, messages.SUCCESS, '添加成功！')
-            return HttpResponseRedirect(reverse('add_supplier'))           # 重定向还不会写
+            return HttpResponseRedirect(reverse('add_supplier'))
         except ValueError:
             messages.add_message(request, messages.ERROR, '添加失败，已存在该供应商信息！')
             return HttpResponseRedirect(reverse('add_supplier'))
@@ -63,10 +86,10 @@ def purchase_manage_supplierinfo_update_info(request):
                                          supplier_charge_phone=supplier_charge_phone, supplier_charge_name=supplier_charge_name)
 
             messages.add_message(request, messages.SUCCESS, '更新成功！')
-            return redirect('')  # 重定向还不会写
+            return HttpResponseRedirect(reverse('update_supplier'))
         except ValueError as ve:
             messages.add_message(request, messages.ERROR, ve)
-            return redirect('')
+            return HttpResponseRedirect(reverse('update_supplier'))
     else:
         return render(request, 'purchase/manage_supplierinfo/update.html')
 
@@ -74,7 +97,66 @@ def purchase_manage_supplierinfo_update_info(request):
 
 # 制定采购决策
 def purchase_make_purchases(request):
-    return render(request,'purchase/make_purchase/homepage.html')
+    purchase_detail = models.PurchaseDetail.objects.all()
+
+    _content = 0
+    context = {'purchase_orders_info': None}
+
+    if request.method=='POST':
+        # 查询功能
+        if 'search_purchase_order' in request.POST:
+            purchase_id = request.POST.get('purchase_id')
+            product_name = request.POST.get('product_name')
+            supplier_name = request.POST.get('supplier_name')
+            purchase_time = request.POST.get('purchase_time')
+
+            if purchase_id:
+                purchase_detail = purchase_detail.filter(purchase_id = purchase_id)
+                _content = 1
+            if product_name:    # 如果商品名称不为空，那么搜索相关商品的采购订单
+                product = models.Product.objects.filter(product_name__icontains = product_name)    # 首先搜索包含该名称的所有商品
+                if product:   # 保证在有搜索到商品的情况下进行   避免报错
+                    p = product[0]  # 先更新为搜索出的第一个商品对应的所有订单详情
+                    new_purchase_detail = purchase_detail.filter(product_id_id = p.product_id)
+                    for p in product[1:]:   # 如果搜索到的商品不止一个，那么将后续的商品对应的所有订单详情并入purchase_detail
+                        new_purchase_detail = new_purchase_detail | purchase_detail.filter(product_id_id = p.product_id)
+                    # 对purchase_detail进行更新
+                    ''' 这里是采用union的方法，会报错，不推荐使用
+                    print('new_purchase_detail:')
+                    for pd in new_purchase_detail:
+                        print(pd.purchase_id)
+                    print('purchase_detail:')
+                    for pd in purchase_detail:
+                        print(pd.purchase_id)
+                    purchase_detail = purchase_detail & new_purchase_detail
+                    '''
+                    purchase_detail = new_purchase_detail.distinct()
+                else:
+                    purchase_detail = None
+                _content = 1
+            if supplier_name:   # 这里的处理过程和商品名称的处理过程基本一致
+                supplier = models.Supplier.objects.filter(supplier_name__icontains = supplier_name)
+                if supplier:
+                    s = supplier[0]
+                    new_purchase_detail = purchase_detail.filter(supplier_id_id = s.supplier_id)
+                    for s in supplier[1:]:
+                        new_purchase_detail = new_purchase_detail | purchase_detail.filter(supplier_id_id = s.supplier_id)
+                    # 对purchase_detail进行更新
+                    purchase_detail = new_purchase_detail.distinct()
+                else:
+                    purchase_detail = None
+                _content = 1
+            # 采购时间 可能还需要改一改需求，未处理
+            if purchase_time:
+                pass
+                _content = 1
+
+            if _content:    context['purchase_orders_info'] = purchase_detail
+        # 删除功能 尚未完成
+        elif 'delete_purchase_order' in request.POST:
+            pass
+
+    return render(request,'purchase/make_purchase/homepage.html',context=context)
 
 ## 添加采购订单
 def purchase_make_purchase_add_purchase(request):
@@ -123,10 +205,10 @@ def purchase_make_purchase_update_purchase(request):
             old_purchase_order.save()
             messages.add_message(request, messages.SUCCESS, '更新成功！')
 
-            return redirect('')  # 重定向还不会写
+            return HttpResponseRedirect(reverse('update_purchase'))
         except models.Supplier.DoesNotExit:
             messages.add_message(request, messages.ERROR, '更新失败，不存在该供应商信息！')
-            return redirect('')
+            return HttpResponseRedirect(reverse('update_purchase'))
 
     else:
         return render(request,'purchase/make_purchase/update.html')
