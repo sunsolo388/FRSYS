@@ -121,30 +121,34 @@
                     <h6></h6>
                     <div class="form-group">
                         <span class="fa fa-circle-o" aria-hidden="true"> </span>
-                        <input type="datetime-local" name="xxx" placeholder="限定日期" required="" style="width:200px;height:30px">
+                        <input type="date" name="pdemand_time" style="width:200px;height:30px">
                         <div class="clear"></div>
                     </div>
 
                     <div class="form-group">
                         <span class="fa fa-barcode" aria-hidden="true"> </span>
-                        <input type="text" name="product_name" placeholder="商品名称" required="" style="width:200px;height:30px">
+                        <input type="text" name="product_name" placeholder="商品名称" style="width:200px;height:30px">
                         <div class="clear"></div>
                     </div>
 
                     <div class="form-group">
                         <span class="fa fa-bookmark" aria-hidden="true"> </span>
-                        <input type="text" name="xxx" placeholder="商品类型" required="" style="width:200px;height:30px">
+                        <input type="text" name="product_type" placeholder="商品类型" style="width:200px;height:30px">
                         <div class="clear"></div>
                     </div>
 
                     <div class="form-group ">
-                        <span class="fa fa-question" aria-hidden="true"> </span>
-                        <input type="text" name="pdemand_state" placeholder="需求状态" required="" style="width:200px;height:30px">
+                        <span class="fa fa-question" aria-hidden="true"> 需求状态：</span>
+                        <select class="form-control" name="pdemand_state">
+                            <option></option>
+                            <option>未完成需求</option>
+                            <option>已完成需求</option>
+                        </select>
                         <div class="clear"></div>
                     </div>
 
                     <div class="btn">
-                        <button type="button" class="fa fa-search btn btn-primary" style="width:100px;height:40px">查询</button>
+                        <button type="submit" name="search_purchase_demand" class="fa fa-search btn btn-primary" style="width:100px;height:40px">查询</button>
                     </div>
                 </form>
                     <!-- /. ROW  -->
@@ -168,24 +172,30 @@
                                         <th>需求商品名称</th>
                                         <th>需求商品类型</th>
                                         <th>需求数量</th>
-                                        <th>限定时间</th>
+                                        <th>截止时间</th>
                                         <th>需求状态</th>
                                         <th>操作</th>
                                     </tr>
                                 </thead>
 
                                 <tbody>
+                                {% for purchase_demand in purchase_demand_info %}
                                     <tr>
-                                        <td>1</td>
-                                        <td>特级小青龙</td>
-                                        <td>龙虾</td>
-                                        <td>10000</td>
-                                        <td>2022-02-22</td>
-                                        <td>暂缺</td>
+                                        <td>{{ purchase_demand.pdemand_id }}</td>
+                                        <td>{{ purchase_demand.product_id.product_name }}</td>
+                                        <td>{{ purchase_demand.product_id.product_type }}</td>
+                                        <td>{{ purchase_demand.pdemand_num }}</td>
+                                        <td>{{ purchase_demand.pdemand_time }}</td>
+                                        {% if purchase_demand.pdemand_state %}
+                                        <td>已完成</td>
+                                        {% else %}
+                                        <td>未完成</td>
+                                        {% endif %}
                                         <td>
                                             <button type="button" class="btn btn-link">修改需求状态</button>
                                         </td>
                                     </tr>
+                                {% endfor %}
                                 </tbody>
                             </table>
                         </div>

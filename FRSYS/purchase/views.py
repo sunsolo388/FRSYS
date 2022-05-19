@@ -5,6 +5,7 @@ from django.shortcuts import HttpResponseRedirect,HttpResponse
 from sympy import det, re
 from django.contrib import messages
 from purchase import models
+from product.models import PurchaseDemand
 
 # Create your views here.
 # 采购部主页
@@ -146,9 +147,17 @@ def purchase_make_purchases(request):
                 else:
                     purchase_detail = None
                 _content = 1
-            # 采购时间 可能还需要改一改需求，未处理
             if purchase_time:
-                pass
+                purchase = models.Purchase.objects.filter(purchase_time = purchase_time)
+                if purchase:
+                    p = purchase[0]
+                    new_purchase_detail = purchase_detail.filter(purchase_id_id = p.purchase_id)
+                    for p in purchase[1:]:
+                        new_purchase_detail = new_purchase_detail | purchase_detail.filter(purchase_id_id=p.purchase_id)
+                    # 对purchase_detail进行更新
+                    purchase_detail = new_purchase_detail.distinct()
+                else:
+                    purchase_detail = None
                 _content = 1
 
             if _content:    context['purchase_orders_info'] = purchase_detail
@@ -218,7 +227,49 @@ def purchase_make_purchase_update_purchase(request):
 # 采购需求管理
 # 查看采购需求
 def purchase_purchase_demands(request):
-    return render(request,'purchase/purchase_demand/homepage.html')
+    purchase_demand = PurchaseDemand.objects.all()
+    _content = 0
+    context = {'purchase_demand_info':None}
 
+    if request.method == 'POST':
+        if 'search_purchase_demand' in request.POST:
+            pdemand_time = request.POST.get('pdemand_time')
+            product_name = request.POST.get('product_name')
+            product_type = request.POST.get('product_type')
+            pdemand_state = request.POST.get('pdemand_state')
 
+            if pdemand_time:
+                purchase_demand = purchase_demand.filter(pdemand_time = pdemand_time)
+                _content = 1
+            if pdemand_state != '':
+                # 由于获取到的是“未完成”和“已完成”,故需要先进行转换
+                if pdemand_state == '未完成需求':  pdemand_state = 0
+                elif pdemand_state == '已完成需求': pdemand_state = 1
+                purchase_demand = purchase_demand.filter(pdemand_state = pdemand_state)
+                _content = 1
+            if product_name:    # 类似于采购订单的处理
+                product = models.Product.objects.filter(product_name__icontains=product_name)  # 首先搜索包含该名称的所有商品
+                if product:
+                    p = product[0]
+                    new_purchase_demand = purchase_demand.filter(product_id_id=p.product_id)
+                    for p in product[1:]:
+                        new_purchase_demand = new_purchase_demand | purchase_demand.filter(product_id_id=p.product_id)
+                    purchase_demand = new_purchase_demand.distinct()
+                else:
+                    purchase_demand = None
+                _content = 1
+            if product_type:
+                product = models.Product.objects.filter(product_type__icontains=product_type)
+                if product:
+                    p = product[0]
+                    new_purchase_demand = purchase_demand.filter(product_id_id=p.product_id)
+                    for p in product[1:]:
+                        new_purchase_demand = new_purchase_demand | purchase_demand.filter(product_id_id=p.product_id)
+                    purchase_demand = new_purchase_demand.distinct()
+                else:
+                    purchase_demand = None
+                _content = 1
 
+            if _content:    context['purchase_demand_info'] = purchase_demand
+
+    return render(request,'purchase/purchase_demand/homepage.html', context=context)
