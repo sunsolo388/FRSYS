@@ -54,12 +54,12 @@ class Purchase(models.Model):
     @classmethod
     def update_purchase_order(cls,purchase_id, purchase_num, purchase_time, purchase_price, supplier_name, product_name, product_type, product_root):
         try:
-            old_purchase_order = Purchase.objects.get(purchase_id=purchase_id)
+            purchase_order = Purchase.objects.get(purchase_id=purchase_id)
             # 更新Purchase表
-            old_purchase_order.purchase_num = purchase_num
-            old_purchase_order.purchase_time = purchase_time
-            old_purchase_order.purchase_price = purchase_price
-            old_purchase_order.save()
+            purchase_order.purchase_num = purchase_num
+            purchase_order.purchase_time = purchase_time
+            purchase_order.purchase_price = purchase_price
+            purchase_order.save()
 
             supplier = Supplier.objects.get(supplier_name=supplier_name)
             product = Product.objects.get(product_name=product_name)
@@ -72,12 +72,11 @@ class Purchase(models.Model):
             # 如果商品库中没有对应商品，就将新商品存入商品库
             product = Product(product_name=product_name, product_type=product_type)
             product.save()
-        finally:
-            # 更新PurchaseDetail表     ### 这里如果还报错，那么就把product_id删了，传入实例对象
-            PurchaseDetail.update_purchase_detail(purchase_id=purchase_id, product_id=product.product_id,
-                                              supplier_id=supplier.supplier_id, product_root=product_root)
+        # 更新PurchaseDetail表
+        PurchaseDetail.update_purchase_detail(purchase_id=purchase_id, product=product,
+                                            supplier=supplier, product_root=product_root)
 
-            return old_purchase_order
+        return purchase_order
 
 
 class PurchaseDetail(models.Model):
@@ -107,16 +106,16 @@ class PurchaseDetail(models.Model):
 
     # 更新采购订单细节
     @classmethod
-    def update_purchase_detail(cls, purchase_id, product_id, supplier_id, product_root):
+    def update_purchase_detail(cls, purchase_id, product, supplier, product_root):
         try:
-            old_purchase_detail = PurchaseDetail.objects.get(purchase_id=purchase_id)
+            purchase_detail = PurchaseDetail.objects.get(purchase_id=purchase_id)
 
-            old_purchase_detail.product_id = product_id
-            old_purchase_detail.supplier_id = supplier_id
-            old_purchase_detail.product_root = product_root
-            old_purchase_detail.save()
+            purchase_detail.product_id = product
+            purchase_detail.supplier_id = supplier
+            purchase_detail.product_root = product_root
+            purchase_detail.save()
 
-            return old_purchase_detail
+            return purchase_detail
         except PurchaseDetail.DoesNotExist:
             raise ValueError('更新失败，该采购订单不存在！')
 

@@ -83,10 +83,14 @@ def purchase_manage_supplierinfo_update_info(request):
         supplier_charge_name = request.POST.get('supplier_charge_name')
         supplier_charge_phone = request.POST.get('supplier_charge_phone')
         try:
-            models.Supplier.update_supplier(supplier_id=supplier_id, supplier_name=supplier_name, supplier_add=supplier_add,
-                                         supplier_charge_phone=supplier_charge_phone, supplier_charge_name=supplier_charge_name)
+            supplier = models.Supplier.objects.get(supplier_id=supplier_id)
+            supplier.update_supplier(supplier_id=supplier_id, supplier_name=supplier_name, supplier_add=supplier_add,
+                                    supplier_charge_phone=supplier_charge_phone, supplier_charge_name=supplier_charge_name)
 
             messages.add_message(request, messages.SUCCESS, '更新成功！')
+            return HttpResponseRedirect(reverse('update_supplier'))
+        except models.Supplier.DoesNotExist:
+            messages.add_message(request, messages.ERROR, '更新失败，不存在该供应商信息！\n请检查供应商编号是否输入错误！')
             return HttpResponseRedirect(reverse('update_supplier'))
         except ValueError as ve:
             messages.add_message(request, messages.ERROR, ve)
@@ -208,15 +212,15 @@ def purchase_make_purchase_update_purchase(request):
 
         try:
             old_purchase_order = models.Purchase.objects.get(purchase_id = purchase_id)
+            old_purchase_order.update_purchase_order(purchase_id=purchase_id,purchase_num=purchase_num,
+                                                     purchase_time=purchase_time, purchase_price=purchase_price,
+                                                     supplier_name=supplier_name, product_name=product_name,
+                                                     product_type=product_type, product_root=product_root)
 
-
-
-            old_purchase_order.save()
             messages.add_message(request, messages.SUCCESS, '更新成功！')
-
             return HttpResponseRedirect(reverse('update_purchase'))
-        except models.Supplier.DoesNotExit:
-            messages.add_message(request, messages.ERROR, '更新失败，不存在该供应商信息！')
+        except ValueError as ve:
+            messages.add_message(request, messages.ERROR, ve)
             return HttpResponseRedirect(reverse('update_purchase'))
 
     else:
