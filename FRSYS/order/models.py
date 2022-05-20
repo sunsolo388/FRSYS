@@ -12,12 +12,12 @@ class enterprise_flow(models.Model):
 
 
 class Customer(models.Model):
-    customer_id = models.CharField(max_length=8,primary_key=True)
+    customer_id = models.IntegerField(max_length=4,primary_key=True)
     customer_name = models.CharField(max_length=8)
     customer_tel = models.CharField(max_length=11)
     customer_cre = models.FloatField(max_length=8)
     customer_add = models.TextField()
-    customer_gender = models.BooleanField("性别")
+    #customer_gender = models.BooleanField("性别")
 
 class Order(models.Model):
     order_id = models.CharField(max_length=8,primary_key=True)

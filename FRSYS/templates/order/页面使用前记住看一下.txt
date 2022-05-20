@@ -1,4 +1,0 @@
-记住改页面中所有css，js，img等的路径（static下）
-把所有img换为images（貌似没有）
-font-awesome/fonts修改为fonts（这个会有好多）
-每个页面的head处加一行： <link rel="shortcut icon" href="/static/favicon.ico" />

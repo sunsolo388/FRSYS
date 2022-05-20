@@ -63,6 +63,10 @@ urlpatterns = [
     path('work/sales/order_check/',sales_order_check),
     path('work/sales/customer_rela/',customer_manage),
     path('work/purchase/order_stats/',order_stats),
+    path('work/sales/order_check/a',sales_order_new),  # 待处理订单
+    path('work/sales/order_check/b',sales_order_search),  # 订单查询
+    path('work/sales/order_check/c',sales_order_all),  # 全部订单
+    path('work/sales/order_check/b/d',sales_order_correct),  # 订单修改
 
 
     # aftermarket_dyq
