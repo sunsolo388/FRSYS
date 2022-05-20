@@ -122,6 +122,80 @@
                     <h2>更新采购订单信息</h2>
                     <h4></h4>
 
+                    {% if request.session.table_purchase_order %}
+                    <div class="form-group">
+                        <h4>
+                            <span class="fa fa-circle-o" aria-hidden="true"> 订单编号：</span>
+                            <input type="text" name="purchase_id" value="{{ request.session.table_purchase_order.purchase_id }}"
+                                   required="" style="width:1000px;height:35px">
+                        </h4>
+                        <div class="clear"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <h4>
+                            <span class="fa fa-barcode" aria-hidden="true"> 商品名称：</span>
+                            <input type="text" name="product_name" value="{{ request.session.table_purchase_order.product_name }}"
+                                   required="" style="width:1000px;height:35px">
+                        </h4>
+                        <div class="clear"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <h4>
+                            <span class="fa fa-bookmark" aria-hidden="true"> 商品类型：</span>
+                            <input type="text" name="product_type" value="{{ request.session.table_purchase_order.product_type }}"
+                                   required="" style="width:1000px;height:35px">
+                        </h4>
+                        <div class="clear"></div>
+                    </div>
+
+                    <div class="form-group ">
+                        <h4>
+                            <span class="fa fa-calculator" aria-hidden="true"> 采购数量：</span>
+                            <input type="number" name="purchase_num" value="{{ request.session.table_purchase_order.purchase_num }}"
+                                   required="" style="width:1000px;height:35px">
+                        </h4>
+                        <div class="clear"></div>
+                    </div>
+
+                    <div class="form-group ">
+                        <h4>
+                            <span class="fa fa-home" aria-hidden="true"> 供 货 商 ：</span>
+                            <input type="text" name="supplier_name" value="{{ request.session.table_purchase_order.supplier_name }}"
+                                   required="" style="width:1000px;height:35px">
+                        </h4>
+                        <div class="clear"></div>
+                    </div>
+
+                    <div class="form-group ">
+                        <h4>
+                            <span class="fa fa-calendar" aria-hidden="true"> 采购时间：</span>
+                            <input type="date" name="purchase_time" value="{{ request.session.table_purchase_order.purchase_time }}"
+                                   required="" style="width:1000px;height:35px">
+                        </h4>
+                        <div class="clear"></div>
+                    </div>
+
+                    <div class="form-group ">
+                        <h4>
+                            <span class="fa fa-handshake-o" aria-hidden="true"> 采购价格：</span>
+                            <input type="number" name="purchase_price" value="{{ request.session.table_purchase_order.purchase_price }}"
+                                   required="" style="width:1000px;height:35px">
+                        </h4>
+                        <div class="clear"></div>
+                    </div>
+
+                    <div class="form-group ">
+                        <h4>
+                            <span class="fa fa-globe" aria-hidden="true"> 产品来源：</span>
+                            <input type="text" name="product_root" value="{{ request.session.table_purchase_order.product_root }}"
+                                   style="width:1000px;height:35px">
+                        </h4>
+                        <div class="clear"></div>
+                    </div>
+
+                    {% else %}
                     <div class="form-group">
                         <h4>
                             <span class="fa fa-circle-o" aria-hidden="true"> 订单编号：</span>
@@ -185,6 +259,7 @@
                         </h4>
                         <div class="clear"></div>
                     </div>
+                    {% endif %}
 
                     <div class="btn">
                         <div class="col-sm-offset-8">

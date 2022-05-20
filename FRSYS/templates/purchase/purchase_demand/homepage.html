@@ -181,7 +181,13 @@
                                 <tbody>
                                 {% for purchase_demand in purchase_demand_info %}
                                     <tr>
-                                        <td>{{ purchase_demand.pdemand_id }}</td>
+                                        <td>
+                                            <div>
+                                                <input type="text" name="table_purchase_demand_id" value="{{ purchase_demand.pdemand_id }}"
+                                                    readonly required="">
+                                                <div class="clear"></div>
+                                            </div>
+                                        </td>
                                         <td>{{ purchase_demand.product_id.product_name }}</td>
                                         <td>{{ purchase_demand.product_id.product_type }}</td>
                                         <td>{{ purchase_demand.pdemand_num }}</td>
@@ -192,7 +198,7 @@
                                         <td>未完成</td>
                                         {% endif %}
                                         <td>
-                                            <button type="button" class="btn btn-link">修改需求状态</button>
+                                            <button type="submit" name="update_purchase_demand_state" class="btn btn-link">修改需求状态</button>
                                         </td>
                                     </tr>
                                 {% endfor %}
