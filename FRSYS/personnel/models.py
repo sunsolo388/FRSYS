@@ -10,11 +10,13 @@ class Department(models.Model):
     department_id = models.CharField(max_length=8, primary_key=True, verbose_name='部门编号')
     department_name = models.CharField(max_length=50, verbose_name='部门名字')
     '''
-    insert into personnel_department values (5,"售后部");
-    insert into personnel_department values (4,"销售部");
-    insert into personnel_department values (3,"仓库");
-    insert into personnel_department values (2,"物流部");
-    insert into personnel_department values (1,"采购部");
+    insert into personnel_department 
+    values 
+    (5,"售后部")
+    (4,"销售部") 
+    (3,"仓库")
+    (2,"物流部")
+    (1,"采购部");
     '''
 
 class Staff(models.Model):

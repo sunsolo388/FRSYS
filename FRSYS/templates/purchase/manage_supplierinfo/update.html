@@ -105,9 +105,6 @@
                             <li>
                                 <a href="/work/purchase/purchase_demand">查看采购需求</a>
                             </li>
-                            <li>
-                                <a href="/work/purchase/purchase_demand/update">更新采购需求</a>
-                            </li>
                         </ul>
                     </li>
 
@@ -123,6 +120,53 @@
                     <h2>更新供应商信息</h2>
                     <h4></h4>
 
+                    {% if request.session.table_supplier %}
+                    <div class="form-group">
+                        <h4>
+                            <span class="fa fa-circle-o" aria-hidden="true"> 供应商编号：</span>
+                            <input type="text" name="supplier_id" value="{{ request.session.table_supplier.supplier_id }}"
+                                   required="" style="width:1000px;height:35px">
+                        </h4>
+                        <div class="clear"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <h4>
+                            <span class="fa fa-tag" aria-hidden="true"> 供应商名称：</span>
+                            <input type="text" name="supplier_name" value="{{ request.session.table_supplier.supplier_name }}"
+                                   required="" style="width:1000px;height:35px">
+                        </h4>
+                        <div class="clear"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <h4>
+                            <span class="fa fa-home" aria-hidden="true"> 供应商地址：</span>
+                            <input type="text" name="supplier_add" value="{{ request.session.table_supplier.supplier_add }}"
+                                   required="" style="width:1000px;height:35px">
+                        </h4>
+                        <div class="clear"></div>
+                    </div>
+
+                    <div class="form-group ">
+                        <h4>
+                            <span class="fa fa-user" aria-hidden="true"> 负责人名称：</span>
+                            <input type="text" name="supplier_charge_name" value="{{ request.session.table_supplier.supplier_charge_name }}"
+                                   required="" style="width:1000px;height:35px">
+                        </h4>
+                        <div class="clear"></div>
+                    </div>
+
+                    <div class="form-group ">
+                        <h4>
+                            <span class="fa fa-phone" aria-hidden="true"> 负责人电话：</span>
+                            <input type="tel" name="supplier_charge_phone" value="{{ request.session.table_supplier.supplier_charge_phone }}"
+                                   required="" style="width:1000px;height:35px">
+                        </h4>
+                        <div class="clear"></div>
+                    </div>
+
+                    {% else %}
                     <div class="form-group">
                         <h4>
                             <span class="fa fa-circle-o" aria-hidden="true"> 供应商编号：</span>
@@ -162,6 +206,8 @@
                         </h4>
                         <div class="clear"></div>
                     </div>
+
+                    {% endif %}
 
                     <div class="btn">
                         <div class="col-sm-offset-8">

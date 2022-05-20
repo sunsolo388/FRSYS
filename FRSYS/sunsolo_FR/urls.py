@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path,include
+from django.urls import path, include
 
 from django.views.generic.base import RedirectView
 
@@ -25,40 +25,40 @@ from order.views import *
 from aftermarket.views import *
 from warehouse.views import *
 
-
 urlpatterns = [
-    path('',index),
+    path('', index),
     path('admin/', admin.site.urls),
 
     # homepage_yly
-    path('favicon.ico',RedirectView.as_view(url=r'static/favicon.ico')),
-    path('index/',index),
-    path('login/',login),
-    path('login/register/',register),
-    path('innerlogin/',login_worker),
-    path('innerlogin/innerregister/',register_worker),
-    path('index/about/',about),
-    path('index/services/',services),
-    path('index/contact/',contact),
-    path('work/',work),
-    path('userpage/',userpage),
+    path('favicon.ico', RedirectView.as_view(url=r'static/favicon.ico')),
+    path('index/', index),
+    path('login/', login),
+    path('login/register/', register),
+    path('innerlogin/', login_worker),
+    path('innerlogin/innerregister/', register_worker),
+    path('index/about/', about),
+    path('index/services/', services),
+    path('index/contact/', contact),
+    path('work/', work),
+    path('userpage/', userpage),
 
     # delivery_yly
-    path('work/delivery/',deliver_home),
-    path('work/delivery/glc/sfyz/',deliver_glc_sfyz),
-    path('work/delivery/glc/xqgl/',deliver_glc_xqgl),   
-    path('work/delivery/glc/rwfp/',deliver_glc_rwfp),
-    path('work/delivery/glc/jxz/',deliver_glc_jxz),
-    path('work/delivery/glc/ywc/',deliver_glc_ywc),
+    path('work/delivery/', deliver_home),
+    path('work/delivery/glc/sfyz/', deliver_glc_sfyz),
+    path('work/delivery/glc/xqgl/', deliver_glc_xqgl),
+    path('work/delivery/glc/rwfp/', deliver_glc_rwfp),
+    path('work/delivery/glc/jxz/', deliver_glc_jxz),
+    path('work/delivery/glc/ywc/', deliver_glc_ywc),
 
-    path('work/delivery/psc/sfyz/',deliver_psc_sfyz),
-    path('work/delivery/psc/<str:staff_id>/dqrw/',deliver_psc_dqrw),
-    path('work/delivery/psc/<str:staff_id>/xxsc/',deliver_psc_xxsc),
-    path('work/delivery/psc/<str:staff_id>/ywc/',deliver_psc_ywc),
+    path('work/delivery/psc/sfyz/', deliver_psc_sfyz),
+    path('work/delivery/psc/<str:staff_id>/dqrw/', deliver_psc_dqrw),
+    path('work/delivery/psc/<str:staff_id>/xxsc/', deliver_psc_xxsc),
+    path('work/delivery/psc/<str:staff_id>/ywc/', deliver_psc_ywc),
 
-    path('work/delivery/test/',test),
+    path('work/delivery/test/', test),
 
     # order_heyueyu
+<<<<<<< HEAD
     path('work/sales/',sales_home),
     path('work/sales/order_check/',sales_order_check),
     path('work/sales/customer_rela/',customer_manage),
@@ -68,28 +68,33 @@ urlpatterns = [
     path('work/sales/order_check/c',sales_order_all),  # 全部订单
     path('work/sales/order_check/b/d',sales_order_correct),  # 订单修改
 
+=======
+    path('work/sales/', sales_home),
+    path('work/sales/order_check/', sales_order_check),
+    path('work/sales/customer_rela/', customer_manage),
+    path('work/purchase/order_stats/', order_stats),
+>>>>>>> a42799c1a9e2b422716063a9866b21b2e4fbabd0
 
     # aftermarket_dyq
-    path('work/aftermarket/',AMtable),
-    path('work/aftermarket/<int:am_id>/',AMdealing),
+    path('work/aftermarket/', AMtable),
+    path('work/aftermarket/<am_id>/', AMdealing),
 
-    #warehouse_wxt
-    path('work/warehouse/',warehouse_home),
-    path('work/warehouse/inward',warehouse_inward),
-    path('work/warehouse/outward',warehouse_outward),
+    # warehouse_wxt
+    path('work/warehouse/', warehouse_home),
+    path('work/warehouse/inward', warehouse_inward),
+    path('work/warehouse/outward', warehouse_outward),
 
-    #purchase_lxt
-    path('work/purchase/',purchase_home),
+    # purchase_lxt
+    path('work/purchase/', purchase_home),
 
-    path('work/purchase/make_purchase/',purchase_make_purchase),
-    path('work/purchase/make_purchase/add/',purchase_make_purchase_add),
-    path('work/purchase/make_purchase/update/',purchase_make_purchase_update),
-    
-    path('work/purchase/manage_supplierinfo/',purchase_manage_supplierinfo),
-    path('work/purchase/manage_supplierinfo/add',purchase_manage_supplierinfo_add),
-    path('work/purchase/manage_supplierinfo/update',purchase_manage_supplierinfo_update),
+    path('work/purchase/make_purchase/',purchase_make_purchases),
+    path('work/purchase/make_purchase/add/',purchase_make_purchase_add_purchase,name='add_purchase'),
+    path('work/purchase/make_purchase/update/',purchase_make_purchase_update_purchase,name='update_purchase'),
 
-    path('work/purchase/purchase_demand/',purchase_purchase_demand),
-    path('work/purchase/purchase_demand/update',purchase_purchase_demand_update),
+    path('work/purchase/manage_supplierinfo/',purchase_manage_suppliers_info),
+    path('work/purchase/manage_supplierinfo/add/',purchase_manage_supplierinfo_add_info,name='add_supplier'),
+    path('work/purchase/manage_supplierinfo/update/',purchase_manage_supplierinfo_update_info,name='update_supplier'),
+
+    path('work/purchase/purchase_demand/',purchase_purchase_demands,name='purchase_demand_homepage'),
 
 ]
