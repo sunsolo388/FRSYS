@@ -27,8 +27,6 @@ class Order(models.Model):
     order_price = models.FloatField(max_length=8)
     order_time = models.DateTimeField()
 
-
-
 class AfterSales(models.Model):
     aftersales_id = models.CharField(max_length=8,primary_key=True)
     order_id = models.ForeignKey(to=Order,to_field="order_id",on_delete=models.CASCADE)

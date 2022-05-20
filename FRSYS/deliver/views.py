@@ -60,7 +60,6 @@ def deliver_glc_xqgl(request):
                 xq['depart']='销售部'
             elif xq['deliver_id'][0:2]=='CG':
                 xq['depart']='采购部'
-            
         context={'wclxq':wclxq}
         return render(request,'delivery/glc/glc_xqgl.html',context=context)
 
