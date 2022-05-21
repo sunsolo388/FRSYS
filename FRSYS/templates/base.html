@@ -4,7 +4,7 @@
 
     <div class="header_con">
 		<div class="header">
-			<div class="welcome fl">欢迎来到天天生鲜!</div>
+			<div class="welcome fl">欢迎来到生鲜码盒可溯源生鲜!</div>
 			<div class="fr">
 {#                判断是否已经登录#}
                 {% if request.session.user_name|default:'' != '' %}
@@ -70,12 +70,12 @@
 
 
 
+    {% block content %}
+    {% endblock content %}
+    {% block center_body %}
+    
+    {% endblock center_body %}
 
-{% block content %}
-{% endblock content %}
-{% block center_body %}
-
-{% endblock center_body %}
 
 
 {% endblock body %}

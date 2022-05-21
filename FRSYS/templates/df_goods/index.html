@@ -4,18 +4,16 @@
     <script type="text/javascript" src="/static/js/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="/static/js/slide.js"></script>
 {% endblock head %}
-
 {% block center_body %}
-
+	
 	<div class="navbar_con">
 		<div class="navbar">
-			<h1 class="fl">全部商品分类</h1>
 			<ul class="navlist fl">
-				<li><a href="{% url "df_goods:index" %}">首页</a></li>
-				<li class="interval">|</li>
-				<li><a href="#">手机生鲜</a></li>
-				<li class="interval">|</li>
-				<li><a href="#">抽奖</a></li>
+			<li><a href="{% url "df_goods:index" %}">首页</a></li>
+			<li class="interval">|</li>
+			<li><a href="#">手机生鲜</a></li>
+			<li class="interval">|</li>
+			<li><a href="#">抽奖</a></li>
 			</ul>
 		</div>
 	</div>

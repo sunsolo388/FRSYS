@@ -7,10 +7,7 @@
         total();
         {#    全选全消#}
         $('#check_all').click(function () {
-    {#        获取当前全选框的状态#}
-
             state=$(this).prop('checked');
-    {#        将其他的选矿 都设置成这个状态#}
             $(':checkbox:not(#ckeck_all)').prop('checked',state)
         });
         //选择
