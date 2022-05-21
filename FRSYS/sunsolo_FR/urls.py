@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.urls import re_path as url
+from django.views.static import serve  # 上传文件处理函数
 
 from django.views.generic.base import RedirectView
 
@@ -24,6 +26,11 @@ from purchase.views import *
 from order.views import *
 from aftermarket.views import *
 from warehouse.views import *
+from df_cart.views import *
+from df_goods.views import *
+from df_order.views import *
+from df_user.views import *
+from .settings import MEDIA_ROOT
 
 urlpatterns = [
     path('', index),
@@ -31,16 +38,23 @@ urlpatterns = [
 
     # homepage_yly
     path('favicon.ico', RedirectView.as_view(url=r'static/favicon.ico')),
-    path('index/', index),
-    path('login/', login),
-    path('login/register/', register),
+    path('index/', index1),
+    path('login/', login1),
+    path('login/register/', register1),
     path('innerlogin/', login_worker),
     path('innerlogin/innerregister/', register_worker),
     path('index/about/', about),
     path('index/services/', services),
     path('index/contact/', contact),
     path('work/', work),
-    path('userpage/', userpage),
+
+    # userpage
+    url(r'^userpage/', include('df_goods.urls', namespace='df_goods')),
+    url(r'^userpage/user/', include('df_user.urls', namespace='df_user')),
+    url(r'^userpage/cart/', include('df_cart.urls', namespace='df_cart')),
+    url(r'^userpage/order/', include('df_order.urls', namespace='df_order')),
+    url(r'^userpage/tinymce/', include('tinymce.urls')),  # 使用富文本编辑框配置confurl
+    url(r'^userpage/media/(?P<path>.*)$', serve, {"document_root":MEDIA_ROOT}),
 
     # delivery_yly
     path('work/delivery/', deliver_home),
@@ -84,5 +98,7 @@ urlpatterns = [
     path('work/purchase/manage_supplierinfo/update',purchase_manage_supplierinfo_update_info,name='update_supplier'),
 
     path('work/purchase/purchase_demand/',purchase_purchase_demands),
+
+
 
 ]

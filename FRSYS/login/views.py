@@ -6,7 +6,7 @@ from login import models  # 导入models文件
 # Create your views here.
 
 
-def register(request):
+def register1(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -35,7 +35,7 @@ def register(request):
     elif request.method == 'GET':
         return render(request, 'homepage/register_user.html')
 
-def login(request):
+def login1(request):
     if request.method == "POST":
         email = request.POST.get('email')
         password = request.POST.get('password')
@@ -127,7 +127,7 @@ def login_worker(request):
 
 
 
-def index(request):
+def index1(request):
     return render(request,'homepage/index.html')
 
 def about(request):
@@ -143,5 +143,5 @@ def work(request):
     return render(request, 'homepage/work.html')
 
 def userpage(request):
-    return render(request,'userpage/base.html')
+    return render(request,'df_goods/base.html')
     
