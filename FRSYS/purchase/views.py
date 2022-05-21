@@ -14,6 +14,13 @@ def purchase_home(request):
 
 
 
+def get_supplier_info(supplier):
+    return {'supplier_id':supplier.supplier_id,
+         'supplier_name':supplier.supplier_name,
+         'supplier_add':supplier.supplier_add,
+         'supplier_charge_name':supplier.supplier_charge_name,
+         'supplier_charge_phone': supplier.supplier_charge_phone
+         }
 # 管理供应商信息
 def purchase_manage_suppliers_info(request):
     _content = 0
@@ -50,8 +57,15 @@ def purchase_manage_suppliers_info(request):
                 _content = 1
 
             if _content:    context['suppliers_info'] = suppliers_info
-        # 删除功能 尚未完成
-        elif 'delete' in request.POST:
+        # 编辑功能
+        elif 'update_supplier' in request.POST:
+            supplier_id = request.POST.get('table_supplier_id')
+            supplier = models.Supplier.objects.get(supplier_id=supplier_id)
+            # 这里可以写一个函数来处理supplier的信息
+            request.session['table_supplier'] = get_supplier_info(supplier)
+            return redirect('/work/purchase/manage_supplierinfo/update/')
+        # 删除功能
+        elif 'delete_supplier' in request.POST:
             pass
 
     return render(request,'purchase/manage_supplierinfo/homepage.html',context=context)
@@ -88,18 +102,29 @@ def purchase_manage_supplierinfo_update_info(request):
                                     supplier_charge_phone=supplier_charge_phone, supplier_charge_name=supplier_charge_name)
 
             messages.add_message(request, messages.SUCCESS, '更新成功！')
+            request.session["table_supplier"] = None
             return HttpResponseRedirect(reverse('update_supplier'))
         except models.Supplier.DoesNotExist:
-            messages.add_message(request, messages.ERROR, '更新失败，不存在该供应商信息！\n请检查供应商编号是否输入错误！')
+            messages.error(request, '更新失败! 请检查供应商编号是否输入错误！')
             return HttpResponseRedirect(reverse('update_supplier'))
         except ValueError as ve:
-            messages.add_message(request, messages.ERROR, ve)
+            messages.error(request, ve)
             return HttpResponseRedirect(reverse('update_supplier'))
     else:
         return render(request, 'purchase/manage_supplierinfo/update.html')
 
 
 
+def get_purchase_order_info(purchase_detail):
+    return {'purchase_id' : purchase_detail.purchase_id.purchase_id,
+            'purchase_time': purchase_detail.purchase_id.purchase_time.strftime('%Y-%m-%d'),
+            'purchase_num' : purchase_detail.purchase_id.purchase_num,
+            'purchase_price': purchase_detail.purchase_id.purchase_price,
+            'product_name' : purchase_detail.product_id.product_name,
+            'product_type' : purchase_detail.product_id.product_type,
+            'supplier_name' : purchase_detail.supplier_id.supplier_name,
+            'product_root' : purchase_detail.product_root
+            }
 # 制定采购决策
 def purchase_make_purchases(request):
     purchase_detail = models.PurchaseDetail.objects.all()
@@ -165,6 +190,12 @@ def purchase_make_purchases(request):
                 _content = 1
 
             if _content:    context['purchase_orders_info'] = purchase_detail
+        # 编辑功能
+        elif 'update_purchase_order' in request.POST:
+            purchase_id = request.POST.get('table_purchase_id')
+            purchase_detail = models.PurchaseDetail.objects.get(purchase_id_id =purchase_id)
+            request.session['table_purchase_order'] = get_purchase_order_info(purchase_detail)
+            return redirect('/work/purchase/make_purchase/update/')
         # 删除功能 尚未完成
         elif 'delete_purchase_order' in request.POST:
             pass
@@ -211,13 +242,13 @@ def purchase_make_purchase_update_purchase(request):
         product_root = request.POST.get('product_root')
 
         try:
-            old_purchase_order = models.Purchase.objects.get(purchase_id = purchase_id)
-            old_purchase_order.update_purchase_order(purchase_id=purchase_id,purchase_num=purchase_num,
+            models.Purchase.update_purchase_order(purchase_id=purchase_id,purchase_num=purchase_num,
                                                      purchase_time=purchase_time, purchase_price=purchase_price,
                                                      supplier_name=supplier_name, product_name=product_name,
                                                      product_type=product_type, product_root=product_root)
 
             messages.add_message(request, messages.SUCCESS, '更新成功！')
+            request.session["table_purchase_order"] = None
             return HttpResponseRedirect(reverse('update_purchase'))
         except ValueError as ve:
             messages.add_message(request, messages.ERROR, ve)
@@ -275,5 +306,22 @@ def purchase_purchase_demands(request):
                 _content = 1
 
             if _content:    context['purchase_demand_info'] = purchase_demand
+        elif 'update_purchase_demand_state' in request.POST:
+            purchase_demand_id = request.POST.get('table_purchase_demand_id')
+            print(purchase_demand_id)
+            purchase_demand = PurchaseDemand.objects.get(pdemand_id=purchase_demand_id)
+            # 修改采购需求状态
+            print(purchase_demand)
+            print(purchase_demand.pdemand_state)
+            if purchase_demand.pdemand_state:
+                purchase_demand.pdemand_state = 0
+            else:
+                purchase_demand.pdemand_state = 1
+            purchase_demand.save()
+            print(purchase_demand.pdemand_state)
+
+            request.session['context'] = context
+            return redirect('/work/purchase/purchase_demand/homepage.html')
+
 
     return render(request,'purchase/purchase_demand/homepage.html', context=context)

@@ -1,23 +1,20 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
-
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Free Bootstrap HTML5 Admin Template : Master</title>
+    <title>生鲜溯源系统-销售部</title>
     <link rel="shortcut icon" href="/static/favicon.ico" />
-    <!-- Bootstrap Styles-->
+	<!-- Bootstrap Styles-->
     <link href="/static/css/bootstrap.css" rel="stylesheet" />
-    <!-- FontAwesome Styles-->
+     <!-- FontAwesome Styles-->
     <link href="/static/css/font-awesome.css" rel="stylesheet" />
     <link href="/static/css/font-awesome.min.css" rel="stylesheet">
     <!-- Custom Styles-->
     <link href="/static/css/custom-styles.css" rel="stylesheet" />
-    <!-- Google Fonts-->
+     <!-- Google Fonts-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
-    <link href="/static/css/point.css" rel="stylesheet">
 </head>
-
 <body>
     <div id="wrapper">
         <nav class="navbar navbar-default top-navbar" role="navigation">
@@ -28,7 +25,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html"><i class="fa fa-pagelines"></i> <strong>生鲜码盒可溯源</strong></a>
+                <a class="navbar-brand" href = 'http://127.0.0.1:8000/work/sales'><i class="fa fa-pagelines"></i> <strong>生鲜溯源系统</strong></a>
             </div>
 
             <ul class="nav navbar-top-links navbar-right">
@@ -240,55 +237,109 @@
                 <!-- /.dropdown -->
             </ul>
         </nav>
-        
         <!--/. NAV TOP  -->
         <nav class="navbar-default navbar-side" role="navigation">
             <div class="sidebar-collapse">
                 <ul class="nav" id="main-menu">
                     <li>
-                        <a class="active-menu" href="/work/sales/"><i class="fa fa-desktop"></i>销售部主页</a>
+                        <a href="/work/sales/"><i class="fa fa-desktop"></i>销售部主页</a>
                     </li>
                     <li>
-                        <a href="/work/sales/order_check/"><i class="fa fa-address-card"></i>销售订单管理</a>
+                        <a href="/work/sales/order_check/"><i class="fa fa-sitemap"></i>销售订单管理<span class="fa arrow"></span></a>
+                        <ul>
+                            <li>
+                                <a href="/work/sales/order_check/a">待处理订单</a>
+                            </li>
+                            <li>
+                                <a href="/work/sales/order_check/b">订单查询<span class="fa arrow"></span></a>
+                                <ul class="nav nav-third-level">
+                                    <li>
+                                        <a href="/work/sales/order_check/b/d">修改订单</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="/work/sales/order_check/c">全部订单</a>
+                            </li>
+                        </ul>
                     </li>
                     <li>
                         <a href="/work/sales/customer_rela/"><i class="fa fa-check-square"></i>客户关系管理</a>
                     </li>
                     <li>
-                        <a href="/work/purchase/order_stats/"><i class="fa fa-tasks"></i>销售订单统计</a>
-                    </li>
+                        <a href="/work/purchase/order_stats/" class="active-menu"><i class="fa fa-tasks"></i>销售订单统计</a>
+                    </li>                    
                 </ul>
             </div>
         </nav>
-
         <!-- /. NAV SIDE  -->
         <div id="page-wrapper" >
             <div id="page-inner">
-			    <div class="row">
+			 <div class="row">
                     <div class="col-md-12">
                         <h1 class="page-header">
-                            欢迎使用销售订单管理系统！
+                            历史销售订单统计<small>Show up your stats</small>
                         </h1>
-                        <table>
-                            <tr>
-                                <td><a href="/work/sales/order_check/"><img src="/static/images/ordermn.png" img-align="center" border=0 width="80%"></a></td>
-                                <td><a href="/work/sales/customer_rela/"><img src="/static/images/cusmn.png" border=0 width="80%"></a></td>
-                                <td><a href="/work/purchase/order_stats/"><img src="/static/images/ordersta.png" border=0 width="80%"></a></td>
-                            </tr>
-                            <tr>
-                                <td><a><img src="/static/images/space.png" border=0 width="20%"></a></td>
-                                <td><a><img src="/static/images/space.png" border=0 width="20%"></a></td>
-                                <td><a><img src="/static/images/space.png" border=0 width="20%"></a></td>
-                            </tr>
-                        </table>
-                        <!-- /. ROW  -->
                     </div>
                 </div> 
-                <!-- /. ROW  -->
-                <footer><p>All right reserved. Template by: <a href="http://webthemez.com">WebThemez</a></p></footer>
+                 <!-- /. ROW  -->
+             
+                <div class="row"> 
+                    
+                      
+                               <div class="col-md-6 col-sm-12 col-xs-12">                     
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Bar Chart
+                        </div>
+                        <div class="panel-body">
+                            <div id="morris-bar-chart"></div>
+                        </div>
+                    </div>            
                 </div>
+                      <div class="col-md-6 col-sm-12 col-xs-12">                     
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Area Chart
+                        </div>
+                        <div class="panel-body">
+                            <div id="morris-area-chart"></div>
+                        </div>
+                    </div>            
+                </div> 
+                
+           </div>
+                 <!-- /. ROW  -->
+                <div class="row">                     
+                      
+                               <div class="col-md-6 col-sm-12 col-xs-12">                     
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Line Chart
+                        </div>
+                        <div class="panel-body">
+                            <div id="morris-line-chart"></div>
+                        </div>
+                    </div>            
+                </div>
+                      <div class="col-md-6 col-sm-12 col-xs-12">                     
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Donut Chart
+                        </div>
+                        <div class="panel-body">                            
+							<div id="morris-donut-chart"></div>
+                        </div>
+                    </div>            
+                </div> 
+                
+           </div>
+                 <!-- /. ROW  -->
+				 <footer><p>All right reserved. Template by: <a href="http://webthemez.com">WebThemez</a></p></footer>
+				</div>
+             <!-- /. PAGE INNER  -->
             </div>
-                <!-- /. ROW  -->
+         <!-- /. PAGE WRAPPER  -->
         </div>
      <!-- /. WRAPPER  -->
     <!-- JS Scripts-->
@@ -298,8 +349,12 @@
     <script src="/static/js/bootstrap.min.js"></script>
     <!-- Metis Menu Js -->
     <script src="/static/js/jquery.metisMenu.js"></script>
+     <!-- Morris Chart Js -->
+     <script src="/static/js/morris/raphael-2.1.0.min.js"></script>
+    <script src="/static/js/morris/morris.js"></script>
       <!-- Custom Js -->
     <script src="/static/js/custom-scripts.js"></script>
-
+    
+   
 </body>
 </html>

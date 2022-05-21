@@ -72,10 +72,15 @@ urlpatterns = [
     path('work/delivery/test/', test),
 
     # order_heyueyu
-    path('work/sales/', sales_home),
-    path('work/sales/order_check/', sales_order_check),
-    path('work/sales/customer_rela/', customer_manage),
-    path('work/purchase/order_stats/', order_stats),
+    path('work/sales/',sales_home),
+    path('work/sales/order_check/',sales_order_check),
+    path('work/sales/customer_rela/',customer_manage),
+    path('work/purchase/order_stats/',order_stats),
+    path('work/sales/order_check/a',sales_order_new),  # 待处理订单
+    path('work/sales/order_check/b',sales_order_search),  # 订单查询
+    path('work/sales/order_check/c',sales_order_all),  # 全部订单
+    path('work/sales/order_check/b/d',sales_order_correct),  # 订单修改
+
 
     # aftermarket_dyq
     path('work/aftermarket/', AMtable),
@@ -94,10 +99,10 @@ urlpatterns = [
     path('work/purchase/make_purchase/update/',purchase_make_purchase_update_purchase,name='update_purchase'),
 
     path('work/purchase/manage_supplierinfo/',purchase_manage_suppliers_info),
-    path('work/purchase/manage_supplierinfo/add',purchase_manage_supplierinfo_add_info,name='add_supplier'),
-    path('work/purchase/manage_supplierinfo/update',purchase_manage_supplierinfo_update_info,name='update_supplier'),
+    path('work/purchase/manage_supplierinfo/add/',purchase_manage_supplierinfo_add_info,name='add_supplier'),
+    path('work/purchase/manage_supplierinfo/update/',purchase_manage_supplierinfo_update_info,name='update_supplier'),
 
-    path('work/purchase/purchase_demand/',purchase_purchase_demands),
+    path('work/purchase/purchase_demand/',purchase_purchase_demands,name='purchase_demand_homepage'),
 
 
 
