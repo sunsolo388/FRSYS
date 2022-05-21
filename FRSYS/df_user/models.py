@@ -1,8 +1,5 @@
 from django.db import models
 
-# Create your models here.
-from django.db import models
-
 from datetime import datetime
 
 from df_goods.models import GoodsInfo

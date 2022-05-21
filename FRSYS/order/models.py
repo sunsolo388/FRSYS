@@ -12,7 +12,7 @@ class enterprise_flow(models.Model):
 
 
 class Customer(models.Model):
-    customer_id = models.IntegerField(max_length=4,primary_key=True)
+    customer_id = models.IntegerField(primary_key=True)
     customer_name = models.CharField(max_length=8)
     customer_tel = models.CharField(max_length=11)
     customer_cre = models.FloatField(max_length=8)

@@ -1,6 +1,5 @@
 from django.http import JsonResponse
-from django.shortcuts import render, redirect
-from django.urls import reverse
+from django.shortcuts import render, redirect, reverse
 
 from .models import *
 from df_user import user_decorator

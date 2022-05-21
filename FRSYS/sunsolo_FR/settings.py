@@ -13,11 +13,12 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from pathlib import Path
 import os
 import pymysql
+import sys
 
 pymysql.install_as_MySQLdb()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+sys.path.insert(0,os.path.join(BASE_DIR,'apps'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -28,7 +29,7 @@ SECRET_KEY = 'django-insecure-24k$axs@wjm0d5_^q0u_uf_so^*l^bzgl!$#z)7(8x)bn-curc
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -80,6 +81,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',  # 将media_url上传文件路径注册到模板中
             ],
         },
     },
@@ -98,10 +100,10 @@ DATABASES = {
         'USER': 'root',
 
         #'PASSWORD': 'Wxt200158', # 王心童密码，改密码怎么这么难
-        #'PASSWORD': 'wsyly', # 于禄洋密码，查了好久不会改密码
+        'PASSWORD': 'wsyly', # 于禄洋密码，查了好久不会改密码
         #'PASSWORD':'123456', # 林学涛密码，我建议统一设成123456吧
         #'PASSWORD':'dyq000',# 董言嵚密码，我也不会该密码
-        'PASSWORD': 'root', #于合乐密码
+        #'PASSWORD': 'root', #于合乐密码
         'HOST' : '127.0.0.1',
         'PORT' : 3306,
     }

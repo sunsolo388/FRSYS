@@ -49,12 +49,12 @@ urlpatterns = [
     path('work/', work),
 
     # userpage
-    url(r'^userpage/', include('df_goods.urls', namespace='df_goods')),
-    url(r'^userpage/user/', include('df_user.urls', namespace='df_user')),
-    url(r'^userpage/cart/', include('df_cart.urls', namespace='df_cart')),
-    url(r'^userpage/order/', include('df_order.urls', namespace='df_order')),
-    url(r'^userpage/tinymce/', include('tinymce.urls')),  # 使用富文本编辑框配置confurl
-    url(r'^userpage/media/(?P<path>.*)$', serve, {"document_root":MEDIA_ROOT}),
+    url(r'^', include('df_goods.urls', namespace='df_goods')),
+    url(r'^user/', include('df_user.urls', namespace='df_user')),
+    url(r'^cart/', include('df_cart.urls', namespace='df_cart')),
+    url(r'^order/', include('df_order.urls', namespace='df_order')),
+    url(r'^tinymce/', include('tinymce.urls')),  # 使用富文本编辑框配置confurl
+    url(r'^media/(?P<path>.*)$', serve, {"document_root":MEDIA_ROOT}),
 
     # delivery_yly
     path('work/delivery/', deliver_home),
@@ -68,8 +68,6 @@ urlpatterns = [
     path('work/delivery/psc/<str:staff_id>/dqrw/', deliver_psc_dqrw),
     path('work/delivery/psc/<str:staff_id>/xxsc/', deliver_psc_xxsc),
     path('work/delivery/psc/<str:staff_id>/ywc/', deliver_psc_ywc),
-
-    path('work/delivery/test/', test),
 
     # order_heyueyu
     path('work/sales/',sales_home),
