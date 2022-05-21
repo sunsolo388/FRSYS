@@ -58,7 +58,7 @@ urlpatterns = [
     path('work/delivery/test/', test),
 
     # order_heyueyu
-<<<<<<< HEAD
+
     path('work/sales/',sales_home),
     path('work/sales/order_check/',sales_order_check),
     path('work/sales/customer_rela/',customer_manage),
@@ -68,16 +68,17 @@ urlpatterns = [
     path('work/sales/order_check/c',sales_order_all),  # 全部订单
     path('work/sales/order_check/b/d',sales_order_correct),  # 订单修改
 
-=======
+
     path('work/sales/', sales_home),
     path('work/sales/order_check/', sales_order_check),
     path('work/sales/customer_rela/', customer_manage),
     path('work/purchase/order_stats/', order_stats),
->>>>>>> a42799c1a9e2b422716063a9866b21b2e4fbabd0
+
 
     # aftermarket_dyq
     path('work/aftermarket/', AMtable),
     path('work/aftermarket/<am_id>/', AMdealing),
+    path('work/FS/',FS_func),
 
     # warehouse_wxt
     path('work/warehouse/', warehouse_home),

@@ -15,13 +15,6 @@
     <!-- Google Fonts-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
 </head>
-{% if messages %}
-    <script>
-        {% for msg in messages %}
-            alert('{{ msg.message }}');
-        {% endfor %}
-    </script>
-{% endif %}
 <body>
 <div id="wrapper">
     <nav class="navbar navbar-default top-navbar" role="navigation">
@@ -32,7 +25,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.html"><i class="fa fa-comments"></i> <strong>生鲜码盒后台管理 </strong></a>
+            <a class="navbar-brand" href="/work"><i class="fa fa-comments"></i> <strong>生鲜码盒后台管理 </strong></a>
         </div>
 
         <ul class="nav navbar-top-links navbar-right">
@@ -60,12 +53,19 @@
         <div class="sidebar-collapse">
             <ul class="nav" id="main-menu">
                 <li>
-                    <a href="table.html" class="active-menu"><i class="fa fa-table"></i> 售后部门</a>
+                    <a href="#"><i class="fa fa-sitemap"></i> 售后部门<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="/work/aftermarket">售后处理</a>
+                        </li>
+                        <li>
+                            <a href="/work/FS">溯源查询</a>
+                        </li>
+
+                    </ul>
                 </li>
             </ul>
-
         </div>
-
     </nav>
     <!-- /. NAV SIDE  -->
     <div id="page-wrapper">
@@ -160,7 +160,7 @@
                                             </div>
 
                                         </div>
-                                        <button type="submit" class="btn btn-default">提交</button>
+                                        <button type="submit" name='dealing submit' class="btn btn-default">提交</button>
 
 
                                     </form>

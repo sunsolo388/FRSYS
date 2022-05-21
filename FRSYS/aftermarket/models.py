@@ -3,8 +3,9 @@
 import datetime
 
 from django.db import models
-
-
+from order import  models as om
+from deliver import models as dm
+from warehouse import models as wm
 
 class AM(models.Model):
     AM_id=models.CharField(max_length=8,primary_key=True)
@@ -17,3 +18,12 @@ class AM(models.Model):
 # insert into aftermarket_am values("am003","o003","退货","奸商卖我烂水果","未处理");
 # insert into aftermarket_am values("am004","o004","退货","奸商卖我烂水果","未处理");
 # insert into aftermarket_am values("am005","o005","退货","奸商卖我烂水果","未处理");
+
+class AM_feedback(models.Model):
+    order_id = models.ForeignKey(to=om.Order, to_field="order_id", on_delete=models.CASCADE,primary_key=True)
+    dealingtxt=models.CharField(max_length=255)
+    dealing_result=models.CharField(max_length=8)
+
+
+
+
