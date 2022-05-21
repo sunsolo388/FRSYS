@@ -95,9 +95,9 @@
                                     <span class="fa fa-cog fa-spin" aria-hidden="true"></span>
                                     <input type="text" name="identity" list="typelist" placeholder="选择商品" required="" input style="width:200px;height:30px">
                                     <datalist id="typelist">
-                                        <option>商品1</option>
-                                        <option>商品2</option>
-                                        <option>商品3</option>
+                                        {% for xx in pdc %}
+                                        <option>{{ xx.product_name }}</option>
+                                        {% endfor %}
                                     </datalist>
                                     <div class="clear"></div>
                                 </div>

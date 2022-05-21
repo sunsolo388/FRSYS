@@ -5,7 +5,10 @@ from warehouse import models as wm # 导入models文件
 from purchase import models as pm  #导入purchase检查采购订单编号
 from login import models as lm     #导入login检查是否存在该员工
 from order import models as om
+from product import models as pdm
 
+productinfo = pdm.Product.objects.all().values('product_name','product_id')
+pdc = productinfo
 def warehouse_home(request):
     '''
     仓库主页
@@ -14,7 +17,20 @@ def warehouse_home(request):
         'warehouse_flow', 'product_name', 'left_num', 'warehouse_status'
     )
     kcxx = warehouseinfo
-    context = {'kcxx': kcxx}
+
+    context = {'kcxx': kcxx,'pdc':pdc}
+    if request.method == 'POST':
+        num = request.POST.get('num')
+        time = request.POST.get('time')
+        product = request.POST.get('identity')
+        product_id = pdm.Product.objects.filter(product_name = product).first()
+        pdm.PurchaseDemand.objects.create(
+            product_id = product_id, pdemand_num = num,
+            pdemand_time = time
+        )
+        messages.add_message(request, messages.SUCCESS, '申请成功！')
+        return redirect('/work/warehouse')
+
     return render(request,'warehouse/index.html',context=context)
 
 def warehouse_inward(request):
@@ -69,7 +85,7 @@ def warehouse_inward(request):
     'purchase_id','warehouse_flow','product_name','in_num','in_time'
     )
     rkxx = inwardinfo
-    context = {'rkxx':rkxx}
+    context = {'rkxx':rkxx,'pdc':pdc}
    # print('哈哈哈哈')
    # print('xxxxxxxxx' +str(context))
     return render(request,'warehouse/inward.html',context=context)
@@ -140,12 +156,9 @@ def warehouse_outward(request):
         'out_time','out_num'           #这个地方应该要修改
     )
     ckxx = outwardinfo
-    context = {'ckxx': ckxx}
+    context = {'ckxx': ckxx,'pdc':pdc}
     # print('哈哈哈哈')
     # print('xxxxxxxxx' +str(context))
     return render(request, 'warehouse/outward.html', context=context)
 
-"""
-def test(request):
-    return render(request,'delivery/tab-panel.html')
-"""
+
