@@ -66,7 +66,12 @@ def purchase_manage_suppliers_info(request):
             return redirect('/work/purchase/manage_supplierinfo/update/')
         # 删除功能
         elif 'delete_supplier' in request.POST:
-            pass
+            supplier_id = request.POST.get('table_supplier_id')
+            supplier= models.Supplier.objects.get(supplier_id=supplier_id)
+            # 修改采购需求状态
+            supplier.delete()
+
+            return redirect('/work/purchase/manage_supplierinfo/')
 
     return render(request,'purchase/manage_supplierinfo/homepage.html',context=context)
 
@@ -198,7 +203,12 @@ def purchase_make_purchases(request):
             return redirect('/work/purchase/make_purchase/update/')
         # 删除功能 尚未完成
         elif 'delete_purchase_order' in request.POST:
-            pass
+            purchase_id = request.POST.get('table_purchase_id')
+            purchase_detail = models.PurchaseDetail.objects.get(purchase_id_id =purchase_id)
+            # 修改采购需求状态
+            purchase_detail.delete()
+
+            return redirect('/work/purchase/make_purchase/')
 
     return render(request,'purchase/make_purchase/homepage.html',context=context)
 
@@ -308,20 +318,15 @@ def purchase_purchase_demands(request):
             if _content:    context['purchase_demand_info'] = purchase_demand
         elif 'update_purchase_demand_state' in request.POST:
             purchase_demand_id = request.POST.get('table_purchase_demand_id')
-            print(purchase_demand_id)
             purchase_demand = PurchaseDemand.objects.get(pdemand_id=purchase_demand_id)
             # 修改采购需求状态
-            print(purchase_demand)
-            print(purchase_demand.pdemand_state)
             if purchase_demand.pdemand_state:
                 purchase_demand.pdemand_state = 0
             else:
                 purchase_demand.pdemand_state = 1
             purchase_demand.save()
-            print(purchase_demand.pdemand_state)
 
-            request.session['context'] = context
-            return redirect('/work/purchase/purchase_demand/homepage.html')
+            return redirect('/work/purchase/purchase_demand/')
 
 
     return render(request,'purchase/purchase_demand/homepage.html', context=context)
