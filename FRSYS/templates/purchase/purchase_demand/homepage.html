@@ -180,6 +180,7 @@
 
                                 <tbody>
                                 {% for purchase_demand in purchase_demand_info %}
+                                <form action="" method="post">
                                     <tr>
                                         <td>
                                             <div>
@@ -201,6 +202,7 @@
                                             <button type="submit" name="update_purchase_demand_state" class="btn btn-link">修改需求状态</button>
                                         </td>
                                     </tr>
+                                    </form>
                                 {% endfor %}
                                 </tbody>
                             </table>
