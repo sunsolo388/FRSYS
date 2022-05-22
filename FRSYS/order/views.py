@@ -3,11 +3,11 @@ import django
 os.environ.setdefault('DJANGO_SETTING_MODULE', 'sunsolo_FR.settings')
 django.setup()
 
+
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import messages
 from order import models as od # 导入models文件
-
 
 
 # Create your views here.
@@ -51,11 +51,13 @@ def sales_order_all(request):
     """
     全部订单
     """
-    return render(request,'order/sales/all.html')
+    orders = od.Order.objects.filter(out_time__isnull=False).order_by('-order_time')[0:]
+    return render(request,'order/sales/all.html',{'orders_list':orders})
 
 
 def sales_order_correct(request):
     """
     订单修改
     """
+
     return render(request,'order/sales/form.html')
