@@ -18,9 +18,9 @@ def AMtable(request):
         # 此处可以留作扩展显示未查询到有处理信息怎么办
         return render(request, 'aftermarket/AMtable.html', locals())
     else:
-        am_id = request.POST.get("am_id")
+            am_id = request.POST.get("am_id")
 
-        return redirect(AMdealing, am_id=am_id)
+            return redirect(AMdealing, am_id=am_id)
 
 
 def AMdealing(request, am_id):
@@ -41,15 +41,21 @@ def AMdealing(request, am_id):
 
     else:
 
-        dealingtext = request.POST.get('dealtext')
-        dealresult = request.POST.get('optionsRadios')
-        if dealresult == 0:
-            dealresult = '退款'
-        elif dealresult == 1:
-            dealresult = '不予退款'
-        amevent = amm.AM.objects.get(AM_id=am_id)
-        amevent.AM_status = '已处理'
-        amevent.save()
-
+        if 'dealing submit' in request.POST:
+            dealingtext = request.POST.get('dealtext')
+            dealresult = request.POST.get('optionsRadios')
+            if dealresult == 0:
+                dealresult = '退款'
+            elif dealresult == 1:
+                dealresult = '不予退款'
+            amevent = amm.AM.objects.get(AM_id=am_id)
+            order_id = amevent.order_id
+            dealing_AM = amm.AM_feedback.get(order_id=order_id)
+            dealing_AM.dealingtxt = dealingtext
+            dealing_AM.dealing_result = dealresult
+            dealing_AM.save()
+            amevent.AM_status = '已处理'
+            amevent.save()
 
         return redirect('/work/aftermarket')
+

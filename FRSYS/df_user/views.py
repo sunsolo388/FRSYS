@@ -1,5 +1,4 @@
-from django.shortcuts import render, redirect, HttpResponseRedirect
-from django.urls import reverse
+from django.shortcuts import render, redirect, HttpResponseRedirect, reverse
 from django.core.paginator import Paginator
 from django.http import JsonResponse
 

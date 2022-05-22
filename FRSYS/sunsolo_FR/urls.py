@@ -49,12 +49,12 @@ urlpatterns = [
     path('work/', work),
 
     # userpage
-    url(r'^userpage/', include('df_goods.urls', namespace='df_goods')),
-    url(r'^userpage/user/', include('df_user.urls', namespace='df_user')),
-    url(r'^userpage/cart/', include('df_cart.urls', namespace='df_cart')),
-    url(r'^userpage/order/', include('df_order.urls', namespace='df_order')),
-    url(r'^userpage/tinymce/', include('tinymce.urls')),  # 使用富文本编辑框配置confurl
-    url(r'^userpage/media/(?P<path>.*)$', serve, {"document_root":MEDIA_ROOT}),
+    url(r'^', include('df_goods.urls', namespace='df_goods')),
+    url(r'^user/', include('df_user.urls', namespace='df_user')),
+    url(r'^cart/', include('df_cart.urls', namespace='df_cart')),
+    url(r'^order/', include('df_order.urls', namespace='df_order')),
+    url(r'^tinymce/', include('tinymce.urls')),  # 使用富文本编辑框配置confurl
+    url(r'^media/(?P<path>.*)$', serve, {"document_root":MEDIA_ROOT}),
 
     # delivery_yly
     path('work/delivery/', deliver_home),
@@ -69,9 +69,8 @@ urlpatterns = [
     path('work/delivery/psc/<str:staff_id>/xxsc/', deliver_psc_xxsc),
     path('work/delivery/psc/<str:staff_id>/ywc/', deliver_psc_ywc),
 
-    path('work/delivery/test/', test),
-
     # order_heyueyu
+
     path('work/sales/',sales_home),
     path('work/sales/order_check/',sales_order_check),
     path('work/sales/customer_rela/',customer_manage),
@@ -80,6 +79,12 @@ urlpatterns = [
     path('work/sales/order_check/b',sales_order_search),  # 订单查询
     path('work/sales/order_check/c',sales_order_all),  # 全部订单
     path('work/sales/order_check/b/d',sales_order_correct),  # 订单修改
+
+
+    path('work/sales/', sales_home),
+    path('work/sales/order_check/', sales_order_check),
+    path('work/sales/customer_rela/', customer_manage),
+    path('work/purchase/order_stats/', order_stats),
 
 
     # aftermarket_dyq
@@ -103,6 +108,8 @@ urlpatterns = [
     path('work/purchase/manage_supplierinfo/update/',purchase_manage_supplierinfo_update_info,name='update_supplier'),
 
     path('work/purchase/purchase_demand/',purchase_purchase_demands,name='purchase_demand_homepage'),
+    path('work/purchase/findroot/hp',order_trace,name='find_root'),
+    path('work/purchase/findroot/re',fr_result,name='fr_result'),
 
 
 

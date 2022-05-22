@@ -8,6 +8,8 @@ from django.http import HttpResponse
 from django.contrib import messages
 from order import models as od # 导入models文件
 
+
+
 # Create your views here.
 def sales_home(request):
     return render(request,'order/empty.html')
@@ -17,7 +19,7 @@ def sales_order_new(request):
     """
     待处理订单
     """
-    order_new = od.Order.objects.all().order_by('-order_time')
+    order_new = od.Order.objects.filter(out_time__isnull = True).order_by('-order_time')
     return render(request,'order/sales/neworder.html',{'order_new':order_new})
 
 
