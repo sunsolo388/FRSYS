@@ -90,7 +90,6 @@ urlpatterns = [
     # aftermarket_dyq
     path('work/aftermarket/', AMtable),
     path('work/aftermarket/<am_id>/', AMdealing),
-    path('work/FS/',FS_func),
 
     # warehouse_wxt
     path('work/warehouse/', warehouse_home),
@@ -109,6 +108,8 @@ urlpatterns = [
     path('work/purchase/manage_supplierinfo/update/',purchase_manage_supplierinfo_update_info,name='update_supplier'),
 
     path('work/purchase/purchase_demand/',purchase_purchase_demands,name='purchase_demand_homepage'),
+    path('work/purchase/findroot/hp',order_trace,name='find_root'),
+    path('work/purchase/findroot/re',fr_result,name='fr_result'),
 
 
 

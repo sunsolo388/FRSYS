@@ -59,5 +59,3 @@ def AMdealing(request, am_id):
 
         return redirect('/work/aftermarket')
 
-def FS_func(request):
-    return render(request,'aftermarket/base.html')
