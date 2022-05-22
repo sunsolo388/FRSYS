@@ -17,7 +17,8 @@ def sales_order_new(request):
     """
     待处理订单
     """
-    return render(request,'order/sales/neworder.html')
+    order_new = od.Order.objects.all().order_by('-order_time')
+    return render(request,'order/sales/neworder.html',{'order_new':order_new})
 
 
 def sales_order_check(request):
