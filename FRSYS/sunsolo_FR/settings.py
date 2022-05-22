@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from pathlib import Path
 import os
 import pymysql
+import sys
 
 pymysql.install_as_MySQLdb()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -42,7 +43,12 @@ INSTALLED_APPS = [
     'product',
     'purchase',
     'customer',
-    
+    'df_cart',
+    'df_goods',
+    'df_order',
+    'df_user',
+    'tinymce',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -75,6 +81,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',  # 将media_url上传文件路径注册到模板中
             ],
         },
     },
@@ -91,18 +98,11 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'testdemo',
         'USER': 'root',
-
-        'PASSWORD': 'Wxt200158', # 王心童密码，改密码怎么这么难
+        #'PASSWORD': 'Wxt200158', # 王心童密码，改密码怎么这么难
         #'PASSWORD': 'wsyly', # 于禄洋密码，查了好久不会改密码
-
         #'PASSWORD':'123456', # 林学涛密码，我建议统一设成123456吧
         #'PASSWORD':'dyq000',# 董言嵚密码，我也不会该密码
-        #'PASSWORD': 'root', #于合乐密码
-
-        #'PASSWORD':'123456', # 林学涛密码，我建议统一设成123456吧
-        #'PASSWORD':'dyq000',# 董言嵚密码，我也不会该密码
-        #'PASSWORD': 'root', #于合乐密码
-
+        'PASSWORD': 'root', #于合乐密码
         'HOST' : '127.0.0.1',
         'PORT' : 3306,
     }
@@ -156,3 +156,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATICFILES_DIRS = [os.path.join(BASE_DIR,'static')]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
+
+
+MEDIA_URL = '/media/'
+# 设置上传文件的路径
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')   # 指定根目录
+
+# 富文本编辑框的使用配置
+TINYMCE_DEFAULT_CONFIG = {
+    'theme': 'advanced',
+    'width': 600,
+    'height': 400,
+}
