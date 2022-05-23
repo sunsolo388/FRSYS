@@ -3,6 +3,8 @@ from deliver import models as dm
 from warehouse import models as wm
 from product import models as pm
 # Create your models here.
+
+
 class enterprise_flow(models.Model):
     flow_id = models.CharField(max_length=20,primary_key=True)
     reason = models.TextField()
@@ -18,7 +20,6 @@ class Customer(models.Model):
     customer_cre = models.FloatField(max_length=8)
     customer_add = models.TextField()
     #customer_gender = models.BooleanField("性别")
-
 
 
 class OrderStatus(models.Model):
@@ -44,10 +45,11 @@ class AfterSales(models.Model):
     question_status = models.BooleanField()
     question_discription = models.TextField()
 
+
 class OrderDetail(models.Model):
     order_detail_id = models.CharField(max_length=8,primary_key=True)
     order_id = models.ForeignKey(to=Order,to_field="order_id",on_delete=models.CASCADE)
     product_id = models.ForeignKey(to=pm.Product,to_field="product_id",on_delete=models.CASCADE)
     detail_num = models.FloatField(max_length=8)
-    outward_id = models.ForeignKey(to=wm.Outward,to_field='outward_id',on_delete=models.CASCADE,null=True,blank=True)
-    out_time = models.DateTimeField(null=True,blank=True)
+    # outward_id = models.ForeignKey(to=wm.Outward,to_field='outward_id',on_delete=models.CASCADE,null=True,blank=True)
+    # out_time = models.DateTimeField(null=True,blank=True)
