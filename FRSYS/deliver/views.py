@@ -190,7 +190,8 @@ def deliver_psc_dqrw(request,staff_id):
             for dqrw in dqrws:
                 aim_deliver=dqrw['deliver_id']
                 models.Deliver.objects.filter(deliver_id=aim_deliver).update(departure_time=datetime.datetime.now(),status=2)
-                Order.objects.filter(deliver_id=aim_deliver).update(order_status=3)
+                if dqrw['deliver_id'][0:2]=='XS':
+                    Order.objects.filter(deliver_id=aim_deliver).update(order_status=3)
             models.Car.objects.filter(car_id=car_id).update(status=1)
             messages.add_message(request,messages.SUCCESS,"任务已开始\n祝您一路顺风\n╰（‵□′）╯")
             return redirect('/work/delivery/psc/'+staff_id+'/dqrw/')
@@ -257,7 +258,8 @@ def deliver_psc_xxsc(request,staff_id):
                     status=3,
                     arrival_time=datetime.datetime.now(),
                 )
-                Order.objects.filter(diliver_id=deliver_id).update(order_status=4)
+                if deliver_id[0:2]=='XS':
+                    Order.objects.filter(diliver_id=deliver_id).update(order_status=4)
             return redirect('/work/delivery/psc/'+staff_id+'/dqrw/')
     return render(request,'delivery/psc/psc_xxsc.html',context=context)
 
