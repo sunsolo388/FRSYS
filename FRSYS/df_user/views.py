@@ -7,6 +7,7 @@ from hashlib import sha1
 from .models import GoodsBrowser
 from . import user_decorator
 from df_order.models import *
+from .tasks import *
 
 
 def register(request):
@@ -34,6 +35,8 @@ def register_handle(request):
 
     # 创建对象
     UserInfo.objects.create(uname=username, upwd=encrypted_pwd, uemail=email)
+    send_active_email.delay(email)
+
     # 注册成功
     context = {
         'title': '用户登陆',
