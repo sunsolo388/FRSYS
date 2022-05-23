@@ -19,15 +19,23 @@ class Customer(models.Model):
     customer_add = models.TextField()
     #customer_gender = models.BooleanField("性别")
 
+
+
+class OrderStatus(models.Model):
+    status_id = models.IntegerField(primary_key=True)
+    status_name = models.CharField(max_length=20)
+
+
 class Order(models.Model):
     order_id = models.CharField(max_length=8,primary_key=True)
     deliver_id = models.CharField(max_length=16)
     customer_id = models.ForeignKey(to=Customer,to_field="customer_id",on_delete=models.CASCADE)
     order_price = models.FloatField(max_length=8)
     order_time = models.DateTimeField()
+    order_status = models.ForeignKey(to=OrderStatus,to_field="status_id",on_delete=models.CASCADE,default=1)
     out_time = models.DateTimeField(null=True, blank=True)
     #warehouse_flow = models.ForeignKey(to=wm.WareHouse,to_field="warehouse_flow",on_delete=models.CASCADE,default='WF100')
-    
+
 
 class AfterSales(models.Model):
     aftersales_id = models.CharField(max_length=8,primary_key=True)
