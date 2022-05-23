@@ -35,7 +35,7 @@ def register_handle(request):
 
     # 创建对象
     UserInfo.objects.create(uname=username, upwd=encrypted_pwd, uemail=email)
-    send_active_email.delay(email)
+    send_active_email(email,username)
 
     # 注册成功
     context = {

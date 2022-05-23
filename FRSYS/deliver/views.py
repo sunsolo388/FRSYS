@@ -1,13 +1,16 @@
-import django
-from django.db import reset_queries
-from django.shortcuts import redirect, render
-from django.shortcuts import HttpResponseRedirect,HttpResponse
-from sympy import det, re
-from django.contrib import messages
-from deliver import models
-from personnel.models import Staff
 import datetime
-import sys,os
+import os
+import sys
+
+import django
+from django.contrib import messages
+from django.db import reset_queries
+from django.shortcuts import (HttpResponse, HttpResponseRedirect, redirect,
+                              render)
+from personnel.models import Staff
+from order.models import Order
+from deliver import models
+
 sys.path.append(os.path.dirname(__file__) + os.sep + '../')
 from df_user import user_decorator
 
@@ -164,6 +167,7 @@ def deliver_psc_sfyz(request):
     else:
         return render(request,'delivery/psc/psc_sfyz.html')
 
+
 @user_decorator.worker
 def deliver_psc_dqrw(request,staff_id):
     car_id=models.Car.objects.filter(staff_id=staff_id).values('car_id').last()['car_id']
@@ -186,6 +190,7 @@ def deliver_psc_dqrw(request,staff_id):
             for dqrw in dqrws:
                 aim_deliver=dqrw['deliver_id']
                 models.Deliver.objects.filter(deliver_id=aim_deliver).update(departure_time=datetime.datetime.now(),status=2)
+                Order.objects.filter(deliver_id=aim_deliver).update(order_status=3)
             models.Car.objects.filter(car_id=car_id).update(status=1)
             messages.add_message(request,messages.SUCCESS,"任务已开始\n祝您一路顺风\n╰（‵□′）╯")
             return redirect('/work/delivery/psc/'+staff_id+'/dqrw/')
@@ -252,6 +257,7 @@ def deliver_psc_xxsc(request,staff_id):
                     status=3,
                     arrival_time=datetime.datetime.now(),
                 )
+                Order.objects.filter(diliver_id=deliver_id).update(order_status=4)
             return redirect('/work/delivery/psc/'+staff_id+'/dqrw/')
     return render(request,'delivery/psc/psc_xxsc.html',context=context)
 
@@ -267,6 +273,7 @@ def deliver_psc_ywc(request,staff_id):
             rw['depart']='采购部'
         deliver=models.Deliver.objects.filter(deliver_id=deliver_id).filter(status=3)
         deliver_info=deliver.values('deliver_id','apply_time','start_add','aim_add','departure_time','arrival_time').last()
+
         if deliver_info is None:
             return render(request,'delivery/psc/psc_ywc.html')
         rw['use_time']=deliver_info['arrival_time']-deliver_info['departure_time']
