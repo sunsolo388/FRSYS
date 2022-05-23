@@ -20,7 +20,7 @@ class AM(models.Model):
 # insert into aftermarket_am values("am005","o005","退货","奸商卖我烂水果","未处理");
 
 class AM_feedback(models.Model):
-    order_id = models.ForeignKey(to=om.Order, to_field="order_id", on_delete=models.CASCADE,primary_key=True)
+    order_id = models.OneToOneField(to=om.Order, to_field="order_id", on_delete=models.CASCADE,primary_key=True)
     dealingtxt=models.CharField(max_length=255)
     dealing_result=models.CharField(max_length=8)
 
