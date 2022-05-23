@@ -246,18 +246,13 @@
                         <a href="/work/sales/"><i class="fa fa-desktop"></i>销售部主页</a>
                     </li>
                     <li>
-                        <a href="/work/sales/order_check/a"><i class="fa fa-sitemap"></i>销售订单管理<span class="fa arrow"></span></a>
+                        <a href="/work/sales/order_check/"><i class="fa fa-sitemap"></i>销售订单管理<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="/work/sales/order_check/a">待处理订单</a>
+                                <a class="active-menu" href="/work/sales/order_check/a">待处理订单</a>
                             </li>
                             <li>
-                                <a href="/work/sales/order_check/b">订单查询<span class="fa arrow"></span></a>
-                                <ul class="nav nav-third-level">
-                                    <li>
-                                        <a href="/work/sales/order_check/b/d">修改订单</a>
-                                    </li>
-                                </ul>
+                                <a href="/work/sales/order_check/b">修改订单</a>
                             </li>
                             <li>
                                 <a href="/work/sales/order_check/c">全部订单</a>
@@ -265,7 +260,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="/work/sales/customer_rela/" class="active-menu"><i class="fa fa-check-square"></i>客户关系管理</a>
+                        <a href="/work/sales/customer_rela/"><i class="fa fa-check-square"></i>客户关系管理</a>
                     </li>
                     <li>
                         <a href="/work/purchase/order_stats/"><i class="fa fa-tasks"></i>销售订单统计</a>
@@ -369,31 +364,23 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
-                                            <th>First Name</th>
-                                            <th>Last Name</th>
-                                            <th>Username</th>
+                                            <th>客户ID</th>
+                                            <th>客户姓名</th>
+                                            <th>客户电话</th>
+                                            <th>客户积分</th>
+                                            <th>订单编号</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Mark</td>
-                                            <td>Otto</td>
-                                            <td>@mdo</td>
+                                        {% for i in order_new %}
+                                        <tr class="odd gradeX">
+                                            <td class="center">{{i.customer_id.customer_id}}</td>
+                                            <td class="center">{{i.customer_id.customer_name}}</td>
+                                            <td class="center">{{i.customer_id.customer_tel}}</td>
+                                            <td class="center">{{i.customer_id.customer_cre}}</td>
+                                            <td class="center">{{i.order_id}}</td>
                                         </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Jacob</td>
-                                            <td>Thornton</td>
-                                            <td>@fat</td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Larry</td>
-                                            <td>the Bird</td>
-                                            <td>@twitter</td>
-                                        </tr>
+                                        {% endfor %} 
                                     </tbody>
                                 </table>
                             </div>

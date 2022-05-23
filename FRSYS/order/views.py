@@ -8,6 +8,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import messages
 from order import models as od # 导入models文件
+from deliver import models as dl
 
 
 # Create your views here.
@@ -23,14 +24,13 @@ def sales_order_new(request):
     return render(request,'order/sales/neworder.html',{'order_new':order_new})
 
 
-def sales_order_check(request):
-    return render(request,'order/form.html')
-
-
 def customer_manage(request):
     cus_form = od.Customer.objects.all().order_by('customer_id')
     cus_top_form = od.Customer.objects.all().order_by('-customer_cre')[0:5]
-    return render(request,'order/customer/table.html',{'customer_list' : cus_form,'customer_top_list':cus_top_form})
+    order_new = od.Order.objects.filter(order_status=1)
+    #cus_new = od.Customer
+    return render(request,'order/customer/table.html',
+                  {'customer_list' : cus_form,'customer_top_list':cus_top_form,'order_new':order_new})
 
 
 def order_stats(request):
@@ -39,16 +39,13 @@ def order_stats(request):
     """
     return render(request,'order/sales/chart.html')
 
-
+"""
 def sales_order_search(request):
-    """
-    订单查询
-    """
     if request.method=='GET':
         return render(request,'order/sales/search.html')
     else:
         new_add = request.POST.get('new_address')
-
+"""
 
 
 def sales_order_all(request):
@@ -63,5 +60,22 @@ def sales_order_correct(request):
     """
     订单修改
     """
-
-    return render(request,'order/sales/form.html')
+    if request.method == 'POST':
+        order_id = request.POST.get('order_id')
+        new_address = request.POST.get('new_address')  # 采购订单
+        try:  # 检查采购订单是否存在
+            order = od.Order.objects.get(order_id=order_id)
+        except Exception as e:
+            order = None
+        if order == None:
+            messages.add_message(request, messages.ERROR, '不存在该订单号，请检查！')
+            return render(request, 'order/sales/form.html')
+        status_id = order.order_status.status_id
+        if status_id >= 3:  # 已经发货的时候就不能再修改了
+            messages.add_message(request, messages.ERROR, '该订单已经发货，不能修改地址！')
+            return render(request, 'order/sales/form.html')
+        else:
+            dl.Deliver.objects.filter(deliver_id = order.deliver_id).update(aim_add = new_address)
+            messages.add_message(request, messages.SUCCESS, '修改成功！')
+            return redirect('order/sales/form.html')
+    return render(request, 'order/sales/form.html')
