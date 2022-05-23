@@ -99,7 +99,6 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'testdemo',
         'USER': 'root',
-
         #'PASSWORD': 'Wxt200158', # 王心童密码，改密码怎么这么难
         'PASSWORD': 'wsyly', # 于禄洋密码，查了好久不会改密码
         #'PASSWORD':'123456', # 林学涛密码，我建议统一设成123456吧

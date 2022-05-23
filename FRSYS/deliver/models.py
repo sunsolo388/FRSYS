@@ -19,7 +19,7 @@ class Deliver(models.Model):
     apply_time=models.DateTimeField(verbose_name='申请时间',default=timezone.now)
     departure_time = models.DateTimeField(null=True,verbose_name='离开时间')
     arrival_time = models.DateTimeField(blank=True, null=True, verbose_name='到达时间')
-    status = models.PositiveIntegerField(default=0, choices=STATUS_ITEMS, verbose_name="冷链情况")
+    status = models.PositiveIntegerField(default=0, choices=STATUS_ITEMS, verbose_name="订单状态")
     '''
     insert into deliver_deliver 
     (deliver_id,aim_add,start_add,apply_time,status) 
