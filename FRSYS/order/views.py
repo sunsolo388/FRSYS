@@ -44,7 +44,11 @@ def sales_order_search(request):
     """
     订单查询
     """
-    return render(request,'order/sales/search.html')
+    if request.method=='GET':
+        return render(request,'order/sales/search.html')
+    else:
+        new_add = request.POST.get('new_address')
+
 
 
 def sales_order_all(request):
