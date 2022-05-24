@@ -14,7 +14,7 @@ class Inward(models.Model):
 
 class WareHouse(models.Model):
     warehouse_flow = models.ForeignKey(to=Inward,to_field='warehouse_flow',on_delete=models.CASCADE)
-    left_num = models.FloatField(max_length=8)
+    left_num = models.FloatField(max_length=8,default=0)
     warehouse_status = models.CharField(max_length=10,default='库存')  #库存or出库
     product_name = product_name = models.CharField(default='苹果', max_length=20)
     class Meta:
