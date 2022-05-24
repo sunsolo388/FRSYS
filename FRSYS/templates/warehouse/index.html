@@ -20,6 +20,13 @@
     <link href="/static/css/font-awesome.min.css" rel="stylesheet">
 </head>
 
+{% if messages %}
+<script type="text/jscript">
+    {% for msg in messages %}
+    alert('{{ msg.message }}');
+    {% endfor %}
+</script>
+{% endif %}
 <body>
     <div id="wrapper">
         <nav class="navbar navbar-default top-navbar" role="navigation">
@@ -100,46 +107,56 @@
 		</div><!--/.row-->
                 <!-- /. ROW  -->
                 <div class="row">
+                    <form action="" method="post">
+                    {% csrf_token %}
                     <div class="col-md-4 col-sm-12 col-xs-12">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                仓库流水
+                                补货申请
                             </div>
                             <div class="panel-body">
                                 <div class="list-group">
+                                    <div class="form-group">
 
-                                    <a href="#" class="list-group-item">
-                                        <span class="badge">7 minutes ago</span>
-                                        <i class="fa fa-fw fa-comment"></i> 阿呆引进了一批鬼子
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <span class="badge">16 minutes ago</span>
-                                        <i class="fa fa-fw fa-truck"></i> 正男拉了三车西瓜
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <span class="badge">36 minutes ago</span>
-                                        <i class="fa fa-fw fa-globe"></i> 妮妮卖掉了5箱水果
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <span class="badge">1 hour ago</span>
-                                        <i class="fa fa-fw fa-user"></i> A new user has been added
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <span class="badge">1.23 hour ago</span>
-                                        <i class="fa fa-fw fa-user"></i> A new user has added
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <span class="badge">yesterday</span>
-                                        <i class="fa fa-fw fa-globe"></i> Saved the world
-                                    </a>
+
+                                    </div>
+
+                                    </div>
+                                    <div class="form-group ">
+                                    <span class="fa fa-cog fa-spin" aria-hidden="true"></span>
+                                    <input type="text" name="identity" list="typelist" placeholder="选择商品" required="" input style="width:200px;height:30px">
+                                    <datalist id="typelist">
+                                        {% for xx in pdc %}
+                                        <option>{{ xx.product_name }}</option>
+                                        {% endfor %}
+                                    </datalist>
+                                    <div class="clear"></div>
                                 </div>
+
+                                <div class="form-group ">
+                                    <span class="fa fa-spinner fa-spin" aria-hidden="true"></span>
+                                    <input type="number" name="num" placeholder="采购质量" required="" step="0.5" input style="width:200px;height:30px">
+                                    <div class="clear"></div>
+                                </div>
+
+                                <div class="from-group">
+                                    <span class="fa fa-refresh fa-spin" aria-hidden="true"></span>
+                                    <input type="date" name="time" placeholder="时间" required="" input style="width:200px;height:30px">
+                                    <div class="clear"></div>
+                                </div>
+
+
                                 <div class="text-right">
-                                    <a href="#">More Tasks <i class="fa fa-arrow-circle-right"></i></a>
+                                    <div class="btnn">
+                                    <button type="submit" button style="width:100px;height:40px">提交申请</button>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
 
                     </div>
+                    </form>
                     <div class="col-md-8 col-sm-12 col-xs-12">
                         <div class="panel panel-default">
                             <div class="panel-heading">
