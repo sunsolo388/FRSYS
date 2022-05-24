@@ -1,12 +1,18 @@
-import django
-from django.db import reset_queries
-from django.shortcuts import redirect, render
-from django.shortcuts import HttpResponseRedirect,HttpResponse
-from sympy import det, re
-from django.contrib import messages
-from deliver import models
-from personnel.models import Staff
 import datetime
+import os
+import sys
+
+import django
+from django.contrib import messages
+from django.db import reset_queries
+from django.shortcuts import (HttpResponse, HttpResponseRedirect, redirect,
+                              render)
+from personnel.models import Staff
+from order.models import Order
+from deliver import models
+
+sys.path.append(os.path.dirname(__file__) + os.sep + '../')
+from df_user import user_decorator
 
 
 def get_car_info(did):
@@ -24,11 +30,23 @@ def get_car_info(did):
 
 
 def deliver_home(request):
-    return render(request,'delivery/homepage.html')
+    sid=request.session['staff_id']
+    s=Staff.objects.filter(staff_id=sid).values('position').last()
+    if s['position']=="管理员":
+        messages.add_message(request,messages.SUCCESS,"干活吧打工人 ╰（‵□′）╯")
+        print(s['position'])
+        return redirect('/work/delivery/glc/xqgl/')
+    elif s['position']=="配送员":
+        messages.add_message(request,messages.SUCCESS,"干活吧打工人 ╰（‵□′）╯")
+        return redirect('/work/delivery/psc/'+sid+'/dqrw/')
+    else:
+        messages.add_message(request,messages.ERROR,"部门验证失败")
+        return redirect('/innerlogin/')
+    #return render(request,'delivery/homepage.html')
 
-
+### 已经无用
 def deliver_glc_sfyz(request):
-    if request.method=='POST':
+    '''if request.method=='POST':
         sid=request.POST.get('sid')
         s=Staff.objects.filter(staff_id=sid).values('position').last()
         if not s:
@@ -42,8 +60,19 @@ def deliver_glc_sfyz(request):
             messages.add_message(request,messages.ERROR,"部门验证失败")
             return redirect('/work/delivery/glc/sfyz/')
     else:    
-        return render(request,'delivery/glc/glc_sfyz.html')
+        return render(request,'delivery/glc/glc_sfyz.html')'''
+    sid=request.session['staff_id']
+    s=Staff.objects.filter(staff_id=sid).values('position').last()
+    if s['position']=="管理员":
+        messages.add_message(request,messages.SUCCESS,"干活吧打工人 ╰（‵□′）╯")
+        print(s['position'])
+        return redirect('/work/delivery/glc/xqgl/')
+    else:
+        messages.add_message(request,messages.ERROR,"部门验证失败")
+        return redirect('/work/delivery/glc/sfyz/')
+    # return render(request,'delivery/glc/glc_sfyz.html')
 
+@user_decorator.worker
 def deliver_glc_xqgl(request):
     '''update deliver_deliver set status=0 where status!=0;'''
     if request.method == 'POST':
@@ -63,6 +92,7 @@ def deliver_glc_xqgl(request):
         context={'wclxq':wclxq}
         return render(request,'delivery/glc/glc_xqgl.html',context=context)
 
+@user_decorator.worker
 def deliver_glc_rwfp(request):
     '''update deliver_car set status=0 where status=1;'''
     if request.method == 'POST':
@@ -83,6 +113,7 @@ def deliver_glc_rwfp(request):
         context = get_car_info(did)
         return render(request,'delivery/glc/glc_rwfp.html',context=context)
 
+@user_decorator.worker
 def deliver_glc_jxz(request):
     deliverinfo=models.Deliver.objects.all().order_by('apply_time').values(
         'deliver_id','departure_time','arrival_time',
@@ -101,6 +132,7 @@ def deliver_glc_jxz(request):
     context={'jxzxq':jxzxq}
     return render(request,'delivery/glc/glc_jxz.html',context=context)
 
+@user_decorator.worker
 def deliver_glc_ywc(request):
     deliverinfo=models.Deliver.objects.all().order_by('apply_time').values(
         'deliver_id','departure_time','arrival_time',
@@ -117,6 +149,8 @@ def deliver_glc_ywc(request):
     return render(request,'delivery/glc/glc_ywc.html',context=context)
 
 
+#### 已经无用
+@user_decorator.worker
 def deliver_psc_sfyz(request):
     if request.method=='POST':
         sid=request.POST.get('sid')
@@ -133,6 +167,8 @@ def deliver_psc_sfyz(request):
     else:
         return render(request,'delivery/psc/psc_sfyz.html')
 
+
+@user_decorator.worker
 def deliver_psc_dqrw(request,staff_id):
     car_id=models.Car.objects.filter(staff_id=staff_id).values('car_id').last()['car_id']
     dqrws=models.CarForDeliver.objects.filter(car_id=car_id).order_by('id').values('deliver_id')
@@ -154,6 +190,8 @@ def deliver_psc_dqrw(request,staff_id):
             for dqrw in dqrws:
                 aim_deliver=dqrw['deliver_id']
                 models.Deliver.objects.filter(deliver_id=aim_deliver).update(departure_time=datetime.datetime.now(),status=2)
+                if dqrw['deliver_id'][0:2]=='XS':
+                    Order.objects.filter(deliver_id=aim_deliver).update(order_status=3)
             models.Car.objects.filter(car_id=car_id).update(status=1)
             messages.add_message(request,messages.SUCCESS,"任务已开始\n祝您一路顺风\n╰（‵□′）╯")
             return redirect('/work/delivery/psc/'+staff_id+'/dqrw/')
@@ -179,6 +217,7 @@ def deliver_psc_dqrw(request,staff_id):
         context={'dqrws':dqrws}
     return render(request,'delivery/psc/psc_dqrw.html',context=context)
 
+@user_decorator.worker
 def deliver_psc_xxsc(request,staff_id):
     context={}
     car_id=models.Car.objects.filter(staff_id=staff_id).values('car_id').last()['car_id']
@@ -219,9 +258,12 @@ def deliver_psc_xxsc(request,staff_id):
                     status=3,
                     arrival_time=datetime.datetime.now(),
                 )
+                if deliver_id[0:2]=='XS':
+                    Order.objects.filter(diliver_id=deliver_id).update(order_status=4)
             return redirect('/work/delivery/psc/'+staff_id+'/dqrw/')
     return render(request,'delivery/psc/psc_xxsc.html',context=context)
 
+@user_decorator.worker
 def deliver_psc_ywc(request,staff_id):
     car_id=models.Car.objects.filter(staff_id=staff_id).values('car_id').last()['car_id']
     syrw=models.CarForDeliver.objects.filter(car_id=car_id).values('deliver_id')
@@ -233,6 +275,7 @@ def deliver_psc_ywc(request,staff_id):
             rw['depart']='采购部'
         deliver=models.Deliver.objects.filter(deliver_id=deliver_id).filter(status=3)
         deliver_info=deliver.values('deliver_id','apply_time','start_add','aim_add','departure_time','arrival_time').last()
+
         if deliver_info is None:
             return render(request,'delivery/psc/psc_ywc.html')
         rw['use_time']=deliver_info['arrival_time']-deliver_info['departure_time']

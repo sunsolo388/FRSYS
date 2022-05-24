@@ -16,4 +16,5 @@ class UserInfo(models.Model):
     pwd = models.CharField(max_length=20, verbose_name='密码')
     mail = models.EmailField(verbose_name='邮箱')
     tel = models.PositiveBigIntegerField(verbose_name='电话号码')
-    identity = models.PositiveIntegerField(default=0, choices=IDENTITY_ITEMS, verbose_name="状态")
+    identity = models.PositiveIntegerField(default=0, choices=IDENTITY_ITEMS, verbose_name="部门")
+    staff_id = models.CharField(max_length=20,default=0, verbose_name='员工编号')

@@ -73,6 +73,7 @@ def register_worker(request):
         tel = request.POST.get('tel')
         email = request.POST.get('email')
         identity = request.POST.get('identity')
+        user_id = request.POST.get('user_id')
         a=dic[identity]
         if password!=password2:
             messages.add_message(request, messages.ERROR, '两次密码输入不一致，请检查！')
@@ -88,7 +89,8 @@ def register_worker(request):
         # 将数据保存到数据库
             models.UserInfo.objects.create(
                 username=username, pwd=password,
-                tel=tel, mail=email, identity=a
+                tel=tel, mail=email, identity=a,
+                staff_id=user_id,
             )
             messages.add_message(request, messages.SUCCESS, '注册成功')
             return redirect('/innerlogin/')
@@ -109,6 +111,7 @@ def login_worker(request):
         
         if password == user.pwd:
             messages.add_message(request, messages.SUCCESS, '登录成功')
+            request.session['staff_id']=user.staff_id
             if user.identity == 1:
                 return redirect('/work/purchase/')
             elif user.identity == 2:

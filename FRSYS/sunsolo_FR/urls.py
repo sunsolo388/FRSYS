@@ -72,19 +72,11 @@ urlpatterns = [
     # order_heyueyu
 
     path('work/sales/',sales_home),
-    path('work/sales/order_check/',sales_order_check),
     path('work/sales/customer_rela/',customer_manage),
     path('work/purchase/order_stats/',order_stats),
     path('work/sales/order_check/a',sales_order_new),  # 待处理订单
-    path('work/sales/order_check/b',sales_order_search),  # 订单查询
     path('work/sales/order_check/c',sales_order_all),  # 全部订单
-    path('work/sales/order_check/b/d',sales_order_correct),  # 订单修改
-
-
-    path('work/sales/', sales_home),
-    path('work/sales/order_check/', sales_order_check),
-    path('work/sales/customer_rela/', customer_manage),
-    path('work/purchase/order_stats/', order_stats),
+    path('work/sales/order_check/b',sales_order_correct),  # 订单修改
 
 
     # aftermarket_dyq
@@ -98,19 +90,21 @@ urlpatterns = [
 
     # purchase_lxt
     path('work/purchase/', purchase_home),
-
     path('work/purchase/make_purchase/',purchase_make_purchases),
     path('work/purchase/make_purchase/add/',purchase_make_purchase_add_purchase,name='add_purchase'),
     path('work/purchase/make_purchase/update/',purchase_make_purchase_update_purchase,name='update_purchase'),
 
+<<<<<<< HEAD
+=======
     path('work/purchase/manage_supplierinfo/',purchase_manage_suppliers_info),
     path('work/purchase/manage_supplierinfo/add/',purchase_manage_supplierinfo_add_info,name='add_supplier'),
     path('work/purchase/manage_supplierinfo/update/',purchase_manage_supplierinfo_update_info,name='update_supplier'),
 
     path('work/purchase/purchase_demand/',purchase_purchase_demands,name='purchase_demand_homepage'),
     path('work/purchase/findroot/hp',order_trace,name='find_root'),
-    path('work/purchase/findroot/re',fr_result,name='fr_result'),
+    #path('work/purchase/findroot/re',fr_result,name='fr_result'),
 
 
+>>>>>>> 1308a3f74ff70ee4eed114ace076d677094e3fb6
 
 ]
