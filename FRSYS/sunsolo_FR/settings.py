@@ -14,7 +14,6 @@ from pathlib import Path
 import os
 import pymysql
 import sys
-import os
 
 pymysql.install_as_MySQLdb()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -101,14 +100,14 @@ DATABASES = {
         'USER': 'root',
         #'PASSWORD': 'Wxt200158', # 王心童密码，改密码怎么这么难
         #'PASSWORD': 'wsyly', # 于禄洋密码，查了好久不会改密码
-        #'PASSWORD':'123456', # 林学涛密码，我建议统一设成123456吧
-        'PASSWORD':'dyq000',# 董言嵚密码，我也不会该密码
+        'PASSWORD':'123456', # 林学涛密码，我建议统一设成123456吧
+        #'PASSWORD':'dyq000',# 董言嵚密码，我也不会该密码
         #'PASSWORD': 'root', #于合乐密码
         'HOST' : '127.0.0.1',
         'PORT' : 3306,
     }
 }
-#DATABASE_ROUTERS = ["utils.db_router.MasterSlaveDBRouter"]
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -127,7 +126,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-# AUTH_USER_MODEL = "users.User"
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
