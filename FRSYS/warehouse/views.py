@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import messages
+from django.db.models.aggregates import Sum
 from warehouse import models as wm # 导入models文件
 from purchase import models as pm  #导入purchase检查采购订单编号
 from login import models as lm     #导入login检查是否存在该员工
 from order import models as om
 from product import models as pdm
+from df_goods import models as gm
 
 productinfo = pdm.Product.objects.all().values('product_name','product_id')
 pdc = productinfo
@@ -37,6 +39,11 @@ def warehouse_inward(request):
     '''
     入库管理
     '''
+    purchase_already = wm.Inward.objects.all()
+    purchase_to_choose = pm.Purchase.objects.exclude(purchase_id__in = purchase_already)
+    purchaseinfo = purchase_to_choose.values('purchase_id')
+    pinfo = purchaseinfo
+
     if request.method == 'POST':
         purchase_id = request.POST.get('purchase_id')       #采购订单
         warehouse_flow = request.POST.get('warehouse_flow') #仓库流水
@@ -78,6 +85,11 @@ def warehouse_inward(request):
                 warehouse_flow=warehouse_flow1,left_num = in_num,product_name = product,
                 warehouse_status = '库存'
             )
+
+            total = wm.WareHouse.objects.filter(product_name=product, warehouse_status='库存').aggregate(num=Sum('lef_num'))
+            total_num = total['num']  # 计算当前该产品剩余总库存
+            gm.GoodsInfo.objects.filter(gtitle=product).update(gkucun=total_num * 2)
+
             messages.add_message(request, messages.SUCCESS, '添加成功！')
             return redirect('/work/warehouse/inward')
 
@@ -85,9 +97,7 @@ def warehouse_inward(request):
     'purchase_id','warehouse_flow','product_name','in_num','in_time'
     )
     rkxx = inwardinfo
-    context = {'rkxx':rkxx,'pdc':pdc}
-   # print('哈哈哈哈')
-   # print('xxxxxxxxx' +str(context))
+    context = {'rkxx':rkxx,'pdc':pdc,'pinfo':pinfo}
     return render(request,'warehouse/inward.html',context=context)
 
 
@@ -96,6 +106,11 @@ def warehouse_outward(request):
     '''
     出库管理
     '''
+    order_to_complete = om.Order.objects.filter(order_status=1)
+    orderinfo = om.OrderDetail.objects.filter(order_id__in=order_to_complete).values(
+        'order_detail_id', 'product_id__product_name', 'detail_num'
+    )  # 筛选出所有未处理的orderDetail
+    xsdd = orderinfo
     if request.method == 'POST':
         order_id = request.POST.get('order_id')  # 销售订单
         outward_id = request.POST.get('outward_id')  # 出库编号
@@ -104,7 +119,7 @@ def warehouse_outward(request):
       #  print(date)
         out_num = int(request.POST.get('out_num'))  # 出库质量
         try:  # 检查销售订单是否存在，是不是乱输的
-            order = om.Order.objects.get(order_id=order_id)
+            order = om.OrderDetail.objects.get(order_detail_id=order_id)
         # print(purchase)
         except Exception as e:
             order = None
@@ -112,7 +127,17 @@ def warehouse_outward(request):
             messages.add_message(request, messages.ERROR, '不存在该订单号，请检查！')
             return render(request, 'warehouse/outward.html')
 
-        #分配仓库流水和出库商品
+        total = wm.WareHouse.objects.filter(product_name=product,warehouse_status='库存').aggregate(nums=Sum('left_num'))
+        total_num = total['nums']        #计算该产品剩余总库存
+       # print(type(total))        #需要调整一下
+       # total_num = wm.WareHouse.objects.values('left_num').annotate(num=Sum('left_num')).filter(product_name=product,warehouse_status='库存')
+       # print(total_num)
+        if total_num == None:
+            total_num = 0
+        if out_num > total_num:
+            messages.add_message(request, messages.ERROR, '库存不足，请补货！')
+            return render(request, 'warehouse/index.html')
+        # 分配仓库流水和出库商品
         temp_num = 0
         while out_num > temp_num:                                                                               #如果不够就找下一个流水
             i=0
@@ -143,12 +168,18 @@ def warehouse_outward(request):
             outward_id = outward_id+f'_{i}'
             wm.Outward.objects.create(
                 outward_id = outward_id,
+                orderdetail_id = order_id,
                 warehouse_flow = warehouse_flow1,
                 out_num = temp_num,
                 out_time = date,
                 product_name = product
             )
 
+        total = wm.WareHouse.objects.filter(product_name=product, warehouse_status='库存').aggregate(num=Sum('lef_num'))
+        total_num = total['num']  # 计算当前该产品剩余总库存
+        gm.GoodsInfo.objects.filter(gtitle=product).update(gkucun=total_num * 2)
+
+        om.Order.objects.filter(order_id=order_id).update(out_time=date, order_status=2)  # 更新order表
         messages.add_message(request, messages.SUCCESS, '添加成功！')
         return redirect('/work/warehouse/outward')
     outwardinfo = wm.Outward.objects.all().order_by('out_time').values(
@@ -156,9 +187,8 @@ def warehouse_outward(request):
         'out_time','out_num'           #这个地方应该要修改
     )
     ckxx = outwardinfo
-    context = {'ckxx': ckxx,'pdc':pdc}
-    # print('哈哈哈哈')
-    # print('xxxxxxxxx' +str(context))
+
+    context = {'ckxx': ckxx,'pdc':pdc,'xsdd':xsdd}
     return render(request, 'warehouse/outward.html', context=context)
 
 

@@ -68,6 +68,35 @@
         <div id="page-wrapper">
             <div id="page-inner">
                 <!-- /. ROW  -->
+
+        <div class="row">
+            <div class="panel-heading">
+                                待处理的销售订单
+                            </div>
+            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>销售订单编号</th>
+                                                <th>商品名称</th>
+                                                <th>销售质量</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for xx in xsdd %}
+                                            <tr>
+                                                <td>{{ xx.order_detail_id }}</td>
+                                                <td>{{ xx.product_id__product_name }}</td>
+                                                <td>{{ xx.detail_num }}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+        </div>
         <div class="row">
                 <div class="row">
                     <form action="" method="post">
@@ -170,7 +199,7 @@
 
 
                 <!-- /. ROW  -->
-				<footer><p>All right reserved. Template by: <a href="http://webthemez.com">WebThemez</a></p></footer>
+
             </div>
 
             <!-- /. PAGE INNER  -->

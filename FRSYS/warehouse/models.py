@@ -22,6 +22,7 @@ class WareHouse(models.Model):
 
 class Outward(models.Model):
     outward_id = models.CharField(max_length=8,primary_key=True)
+    orderdetail_id = models.CharField(max_length=20)
     warehouse_flow = models.ForeignKey(to=Inward,to_field="warehouse_flow",on_delete=models.CASCADE)
     out_num = models.FloatField(max_length=8)
     out_time = models.DateTimeField()
