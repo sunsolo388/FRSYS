@@ -14,6 +14,7 @@ from pathlib import Path
 import os
 import pymysql
 import sys
+import os
 
 pymysql.install_as_MySQLdb()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -107,7 +108,7 @@ DATABASES = {
         'PORT' : 3306,
     }
 }
-
+#DATABASE_ROUTERS = ["utils.db_router.MasterSlaveDBRouter"]
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -126,7 +127,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
+# AUTH_USER_MODEL = "users.User"
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/

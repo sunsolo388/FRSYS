@@ -109,7 +109,7 @@ urlpatterns = [
 
     path('work/purchase/purchase_demand/',purchase_purchase_demands,name='purchase_demand_homepage'),
     path('work/purchase/findroot/hp',order_trace,name='find_root'),
-#    path('work/purchase/findroot/re',fr_result,name='fr_result'),
+    #path('work/purchase/findroot/re',fr_result,name='fr_result'),
 
 
 
