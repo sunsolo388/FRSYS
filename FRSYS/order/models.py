@@ -28,8 +28,8 @@ class OrderStatus(models.Model):
 
 
 class Order(models.Model):
-    order_id = models.CharField(max_length=8,primary_key=True)
-    deliver_id = models.CharField(max_length=16)
+    order_id = models.CharField(max_length=20,primary_key=True)
+    deliver_id = models.CharField(max_length=22)
     customer_id = models.ForeignKey(to=Customer,to_field="customer_id",on_delete=models.CASCADE)
     order_price = models.FloatField(max_length=8)
     order_time = models.DateTimeField()

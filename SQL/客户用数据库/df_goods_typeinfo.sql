@@ -1,3 +1,4 @@
+use testdemo;
 INSERT INTO df_goods_typeinfo VALUES ('1', '0', '新鲜水果');
 INSERT INTO df_goods_typeinfo VALUES ('2', '0', '海鲜水产');
 INSERT INTO df_goods_typeinfo VALUES ('3', '0', '猪羊牛肉');
