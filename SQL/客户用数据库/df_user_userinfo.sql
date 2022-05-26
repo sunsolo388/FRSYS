@@ -1,5 +1,5 @@
 use testdemo;
-INSERT INTO df_user_userinfo VALUES ('32', '111111', '3d4f2bf07dc1be38b20cd6e46949a1071f9d0e3d', '123123@163.com', '散人', '河南理工大学南校区', '13323232332', '4100');
+INSERT INTO df_user_userinfo VALUES ('32', '111111', '3d4f2bf07dc1be38b20cd6e46949a1071f9d0e3d', '123123@163.com', '散人', '河南理工大学南校区', '13332', '4100');
 INSERT INTO df_user_userinfo VALUES ('33', 'sanren', '4569416a6a60a85332f52e25b096bec0be49060a', '13123@163.com', '散人', '112', '112', '112');
 INSERT INTO df_user_userinfo VALUES ('34', 'root2', '7b21848ac9af35be0ddb2d6b9fc3851934db8420', 'weilanhanf@163.com', '', '', '', '');
 INSERT INTO df_user_userinfo VALUES ('35', '11111', '7b21848ac9af35be0ddb2d6b9fc3851934db8420', 'weilananf@163.com', '', '', '', '');
