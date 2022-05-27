@@ -1,4 +1,4 @@
-use testdemo
+
 insert into purchase_supplier (supplier_id, supplier_add,supplier_name,supplier_charge_phone,supplier_charge_name) values ('3292677', '深圳市南山区西丽街道西丽社区留新四街万科云城三期C区八栋A座3601房', '深圳开阳电子股份有限公司', '86169506', '石岭');
 insert into purchase_supplier (supplier_id, supplier_add,supplier_name,supplier_charge_phone,supplier_charge_name) values ('2908973', '深圳市龙华区龙华街道梅龙路梅龙苑商业写字楼316室', '深圳市蓝魔数码科技有限公司', '13613020574', '席鹏飞');
 insert into purchase_supplier (supplier_id, supplier_add,supplier_name,supplier_charge_phone,supplier_charge_name) values ('1118624', '深圳市南山区西丽街道西丽社区同发南路天珑移动总部大厦南侧27-001', '深圳市天珑移动技术有限公司', '86095550', '林文炭');

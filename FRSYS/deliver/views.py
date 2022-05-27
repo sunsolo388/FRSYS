@@ -258,6 +258,9 @@ def deliver_psc_xxsc(request,staff_id):
                     status=3,
                     arrival_time=datetime.datetime.now(),
                 )
+                models.Car.objects.filter(deliver_id=deliver_id).update(
+                    status=0
+                )
                 if deliver_id[0:2]=='XS':
                     Order.objects.filter(diliver_id=deliver_id).update(order_status=4)
             return redirect('/work/delivery/psc/'+staff_id+'/dqrw/')
