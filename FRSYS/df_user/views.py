@@ -354,7 +354,7 @@ def order_trace(request,index):
                 except Order.DoesNotExist:
                     messages.add_message(request, messages.ERROR, '查询失败！不存在该订单编号！')
 
-    return render(request, 'df_user/findroot.html',context=trace_info)# 搞不清现在啥情况,返回哪个页面也不明白。前端来搞
+    return render(request, 'df_user/findroot.html',locals())# 搞不清现在啥情况,返回哪个页面也不明白。前端来搞
 
 @user_decorator.login
 def findroot(request,index):
