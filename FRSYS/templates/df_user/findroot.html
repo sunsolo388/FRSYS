@@ -14,157 +14,151 @@
 
         <div class="right_content clearfix">
 
-            <h4>订单运输过程溯源</h4>
-
+            <h3 class="common_title" >订单运输过程溯源</h3>
+            <h5 style="margin:10px auto 0;font-size :18px">订单运输基础信息</h5>
             <div class="site_con">
                 <table class="order_list_table w980">
-                    <thead>
+                    <thead style="font-size: 16px">
 
 
                     <tr>
-                        <th>order_time</th>
-                        <th>driver</th>
-                        <th>car_id</th>
-                        <th>cold_chain</th>
-                        <th>province</th>
-                        <th>city</th>
-                        <th>detail_time</th>
+                        <th >下单时间</th>
+                        <th>司机姓名</th>
+                        <th>运输车编号</th>
+                        <th>冷链级别</th>
 
                     </tr>
 
                     </thead>
-                    <tbody>
-                    <tr>{# 示例数据 #}
+                    <tbody style="font-size: 15px">
 
-                        <td>order_time</td>
-                        <td>driver</td>
-                        <td>car_id</td>
-                        <td>cold_chain</td>
-                        <td>province</td>
-                        <td>city</td>
-                        <td>detail_time</td>
 
-                    </tr>
-                    {% for delivery_detail in trace_info.deliver_details_order_list %}
                         <tr>{# 示例数据 #}
                             <td>{{ trace_info.order_time }}</td>
-                            <td>{{ trace_info.driver }}</td>
+                            <td>{{ trace_info.driver_name }}</td>
                             <td>{{ trace_info.car_id }}</td>
                             <td>{{ trace_info.cold_chain }}</td>
-                            <td>{{ deliver_detail.province }}</td>
-                            <td>{{ deliver_detail.city }}</td>
-                            <td>{{ deliver_detail.detail_time }}</td>
+
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <h5 style="margin:10px auto 0;font-size :18px">运输过程</h5>
+
+            <div class="site_con">
+                <table class="order_list_table w980">
+                    <thead style="font-size: 16px">
+
+
+                    <tr>
+
+                        <th>途径省份</th>
+                        <th>途径城市</th>
+                        <th>时间节点</th>
+
+                    </tr>
+
+                    </thead>
+                    <tbody style="font-size: 15px">
+
+                    {% for delivery_detail in trace_info.deliver_details_order_list %}
+                        <tr>{# 示例数据 #}
+                            <td>{{ delivery_detail.province }}</td>
+                            <td>{{ delivery_detail.city }}</td>
+                            <td>{{ delivery_detail.time }}</td>
 
                         </tr>
                     {% endfor %}
                     </tbody>
                 </table>
             </div>
+<h4 class="common_title">采购入库过程溯源</h4>
+ {% for order_detail_info in trace_info.order_details_info_dic_list %}
 
-            {#            {% for order_detail_info in trace_info.order_details_info_dic_list %}#}
+            <h5 style="margin:10px auto 0;font-size :18px">商品名称: {{ order_detail_info.product_name }} </h5>
 
-            <h4>采购入库过程溯源:{{ order_detail_info.product_name }}商品种类</h4>
-            <h5>采购运输</h5>
-{#            {% for purchase in order_detail_info.purchase %}#}
+ {% for d_purchase in order_detail_info.purchase %}
+            <h5>采购运输基础信息</h5>
                 <div class="site_con">
                     <table class="order_list_table w980">
-                        <thead>
+                        <thead style="font-size: 16px">
                         <tr>
-                            <th>product_root</th>
-                            <th>supplier_name</th>
-                            <th>supplier_add</th>
-                            <th>car_id</th>
-                            <th>cold_chain</th>
-                            <th>driver_name</th>
-                            <th>province</th>
-                            <th>city</th>
-                            <th>time</th>
+                            <th >产品根源</th>
+                            <th >供应商姓名</th>
+                            <th>供应商地址</th>
+
 
                         </tr>
 
                         </thead>
-                        <tbody>
-                        <tr>
-                            <td>product_root</td>
-                            <td>supplier_name</td>
-                            <td>supplier_add</td>
-                            <td>car_id</td>
-                            <td>cold_chain</td>
-                            <td>driver_name</td>
-                            <td>province</td>
-                            <td>city</td>
-                            <td>time</td>
+                        <tbody style="font-size: 15px">
+
+                        <tr>{# 此处的数据库查询我不是很清楚 #}
+                            <td >{{ d_purchase.product_root }}</td>
+                            <td>{{ d_purchase.supplier_name }}</td>
+                            <td>{{ d_purchase.supplier_add }}</td>
 
                         </tr>
-{#                        {% for deliver_purchase in purchase.deliver_purchase_purchase_list %} #}
-                        <tr>{# 此处的数据库查询我不是很清楚 #}
-                            <td>{{ purchase.product_root }}</td>
-                            <td>{{ purchase.supplier_name }}</td>
-                            <td>{{ purchase.supplier_add }}</td>
-                            <td>{{ purchase.car_id }}</td>
-                            <td>{{ purchase.cold_chain }}</td>
-                            <td>{{ purchase.driver_name }}</td>
-                            <td>{{ deliver_purchase.province }}</td>
-                            <td>{{ deliver_purchase.city }}</td>
-                            <td>{{ deliver_purchase.time}}</td>
+
+                        </tbody>
+                    </table>
+                    <table class="order_list_table w980">
+                        <thead style="font-size: 16px">
+                        <tr>
+                            <th>运输车编号</th>
+                            <th>冷链级别</th>
+                            <th>司机姓名</th>
+                            <th>入库时间</th>
+                            <th>出库时间</th>
+
                         </tr>
-{#                        {% endfor %}#}
+
+                        </thead>
+                        <tbody style="font-size: 15px">
+
+                        <tr>{# 此处的数据库查询我不是很清楚 #}
+
+                            <td>{{ d_purchase.car_id }}</td>
+                            <td>{{ d_purchase.cold_chain }}</td>
+                            <td>{{ d_purchase.driver_name }}</td>
+                            <td>{{ d_purchase.in_time }}</td>
+                             <td>{{ d_purchase.out_time }}</td>
+                        </tr>
+
                         </tbody>
                     </table>
                 </div>
 
-{#            {% endfor %}#}
-
-            <h5>出入库</h5>
-            <div class="site_con">
-                <table class="order_list_table w980">
-                    <thead>
-                    <tr>
-
-                        <th>in_time</th>
-
-                    </tr>
-
-                    </thead>
-                    <tbody>
-                    <tr>{# 示例 #}
-                        <td>in_time</td>
-                        
-                    </tr>
-                    {% for time in order_detail_info.in_time %}
+            <h5 style="margin:10px auto 0;font-size :18px">运输过程</h5>
+<div class="site_con">
+                    <table class="order_list_table w980">
+                        <thead style="font-size: 16px">
                         <tr>
-                            <td>{{ time }}</td>
+                            <th>途径省份</th>
+                            <th>途径城市</th>
+                            <th>时间节点</th>
+
                         </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
 
-            <h5>出库</h5>
-            <div class="site_con">
-                <table class="order_list_table w980">
-                    <thead>
-                    <tr>
-                        <th>out_time</th>
-                    </tr>
-
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>out_time</td>
-
-                    </tr>
-                    {% for time in order_detail_info.out_time %}
-                        <tr>
-                            <td>{{ time }}</td>
+                        </thead>
+                        <tbody style="font-size: 15px">
+                      {% for deliver_purchase in d_purchase.deliver_details_purchase_list %}
+                        <tr>{# 此处的数据库查询我不是很清楚 #}
+                            <td>{{ deliver_purchase.province }}</td>
+                            <td>{{ deliver_purchase.city }}</td>
+                            <td>{{ deliver_purchase.time}}</td>
                         </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+           {% endfor %}
+
+
+
+
                     {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-
-
-            {#          {% endfor %}#}
 
         </div>
     </div>

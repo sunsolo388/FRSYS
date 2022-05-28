@@ -19,7 +19,7 @@ import os
 pymysql.install_as_MySQLdb()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+sys.path.insert(0,os.path.join(BASE_DIR,'apps'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -103,7 +103,11 @@ DATABASES = {
         #'PASSWORD': 'wsyly', # 于禄洋密码，查了好久不会改密码
         #'PASSWORD':'123456', # 林学涛密码，我建议统一设成123456吧
         #'PASSWORD':'dyq000',# 董言嵚密码，我也不会该密码
+<<<<<<< HEAD
         'PASSWORD': 'root', #于合乐密码
+=======
+        #'PASSWORD': 'root', #于合乐密码
+>>>>>>> faad657c5f48dddd01781e240827fe2c5dd966a7
         'HOST' : '127.0.0.1',
         'PORT' : 3306,
     }
