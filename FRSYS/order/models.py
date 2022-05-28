@@ -34,7 +34,7 @@ class Order(models.Model):
     order_price = models.FloatField(max_length=8)
     order_time = models.DateTimeField()
     order_status = models.ForeignKey(to=OrderStatus,to_field="status_id",on_delete=models.CASCADE,default=1)
-    out_time = models.DateTimeField(null=True, blank=True)
+    #out_time = models.DateTimeField(null=True, blank=True)
     #warehouse_flow = models.ForeignKey(to=wm.WareHouse,to_field="warehouse_flow",on_delete=models.CASCADE,default='WF100')
 
 
