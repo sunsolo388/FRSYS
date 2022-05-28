@@ -28,3 +28,9 @@ $(function() {
 
 $('#calendar').datepicker({
 	});
+$(function() {
+    $('#easypiechart-green').easyPieChart({
+        scaleColor: false,
+        barColor: '#1ebf29'
+    });
+});

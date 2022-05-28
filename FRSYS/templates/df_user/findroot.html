@@ -15,14 +15,14 @@
         <div class="right_content clearfix">
 
             <h3 class="common_title" >订单运输过程溯源</h3>
-            <h5 style="margin:10px auto 0">订单运输基础信息</h5>
+            <h5 style="margin:10px auto 0;font-size :18px">订单运输基础信息</h5>
             <div class="site_con">
                 <table class="order_list_table w980">
-                    <thead>
+                    <thead style="font-size: 16px">
 
 
                     <tr>
-                        <th>下单时间</th>
+                        <th >下单时间</th>
                         <th>司机姓名</th>
                         <th>运输车编号</th>
                         <th>冷链级别</th>
@@ -30,7 +30,7 @@
                     </tr>
 
                     </thead>
-                    <tbody>
+                    <tbody style="font-size: 15px">
 
 
                         <tr>{# 示例数据 #}
@@ -44,11 +44,11 @@
                     </tbody>
                 </table>
             </div>
-            <h5>运输过程</h5>
+            <h5 style="margin:10px auto 0;font-size :18px">运输过程</h5>
 
             <div class="site_con">
                 <table class="order_list_table w980">
-                    <thead>
+                    <thead style="font-size: 16px">
 
 
                     <tr>
@@ -60,7 +60,7 @@
                     </tr>
 
                     </thead>
-                    <tbody>
+                    <tbody style="font-size: 15px">
 
                     {% for delivery_detail in trace_info.deliver_details_order_list %}
                         <tr>{# 示例数据 #}
@@ -76,23 +76,23 @@
 <h4 class="common_title">采购入库过程溯源</h4>
  {% for order_detail_info in trace_info.order_details_info_dic_list %}
 
-            <h5 class="common_title2">商品名称: {{ order_detail_info.product_name }} </h5>
+            <h5 style="margin:10px auto 0;font-size :18px">商品名称: {{ order_detail_info.product_name }} </h5>
 
  {% for d_purchase in order_detail_info.purchase %}
             <h5>采购运输基础信息</h5>
                 <div class="site_con">
                     <table class="order_list_table w980">
-                        <thead>
+                        <thead style="font-size: 16px">
                         <tr>
                             <th >产品根源</th>
-                            <th>供应商姓名</th>
+                            <th >供应商姓名</th>
                             <th>供应商地址</th>
 
 
                         </tr>
 
                         </thead>
-                        <tbody>
+                        <tbody style="font-size: 15px">
 
                         <tr>{# 此处的数据库查询我不是很清楚 #}
                             <td >{{ d_purchase.product_root }}</td>
@@ -104,7 +104,7 @@
                         </tbody>
                     </table>
                     <table class="order_list_table w980">
-                        <thead>
+                        <thead style="font-size: 16px">
                         <tr>
                             <th>运输车编号</th>
                             <th>冷链级别</th>
@@ -115,7 +115,7 @@
                         </tr>
 
                         </thead>
-                        <tbody>
+                        <tbody style="font-size: 15px">
 
                         <tr>{# 此处的数据库查询我不是很清楚 #}
 
@@ -130,10 +130,10 @@
                     </table>
                 </div>
 
-            <h5>运输过程</h5>
+            <h5 style="margin:10px auto 0;font-size :18px">运输过程</h5>
 <div class="site_con">
                     <table class="order_list_table w980">
-                        <thead>
+                        <thead style="font-size: 16px">
                         <tr>
                             <th>途径省份</th>
                             <th>途径城市</th>
@@ -142,7 +142,7 @@
                         </tr>
 
                         </thead>
-                        <tbody>
+                        <tbody style="font-size: 15px">
                       {% for deliver_purchase in d_purchase.deliver_details_purchase_list %}
                         <tr>{# 此处的数据库查询我不是很清楚 #}
                             <td>{{ deliver_purchase.province }}</td>
