@@ -23,7 +23,7 @@
 
                     <tr>
                         <th>order_time</th>
-                        <th>driver</th>
+                        <th>driver_name</th>
                         <th>car_id</th>
                         <th>cold_chain</th>
                         <th>province</th>
@@ -37,7 +37,7 @@
                     <tr>{# 示例数据 #}
 
                         <td>order_time</td>
-                        <td>driver</td>
+                        <td>driver_name</td>
                         <td>car_id</td>
                         <td>cold_chain</td>
                         <td>province</td>
@@ -48,7 +48,7 @@
                     {% for delivery_detail in trace_info.deliver_details_order_list %}
                         <tr>{# 示例数据 #}
                             <td>{{ trace_info.order_time }}</td>
-                            <td>{{ trace_info.driver }}</td>
+                            <td>{{ trace_info.driver_name }}</td>
                             <td>{{ trace_info.car_id }}</td>
                             <td>{{ trace_info.cold_chain }}</td>
                             <td>{{ deliver_detail.province }}</td>
@@ -63,7 +63,7 @@
 
             {#            {% for order_detail_info in trace_info.order_details_info_dic_list %}#}
 
-            <h4>采购入库过程溯源:{{ order_detail_info.product_name }}商品种类</h4>
+            <h4>采购入库过程溯源:{{ order_detail_info.product_name }}商品名称</h4>
             <h5>采购运输</h5>
 {#            {% for purchase in order_detail_info.purchase %}#}
                 <div class="site_con">
