@@ -205,7 +205,7 @@ def warehouse_outward(request):
                 product_name = product
             )
 
-        total = wm.WareHouse.objects.filter(product_name=product, warehouse_status='库存').aggregate(num=Sum('lef_num'))
+        total = wm.WareHouse.objects.filter(product_name=product, warehouse_status='库存').aggregate(num=Sum('left_num'))
         total_num = total['num']  # 计算当前该产品剩余总库存
         gm.GoodsInfo.objects.filter(gtitle=product).update(gkucun=total_num * 2)
 

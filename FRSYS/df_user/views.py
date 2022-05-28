@@ -162,16 +162,127 @@ def site(request):
     return render(request, 'df_user/user_center_site.html', context)
 
 
-from django.test import TestCase
-
-# Create your tests here.
-
-
 ''' 溯源功能的实现-后端 '''
 from order.models import Order, OrderDetail
 from warehouse.models import Inward, WareHouse, Outward
 from deliver.models import Deliver, DeliverDetail, CarForDeliver, Car, Staff
 from purchase.models import Purchase, PurchaseDetail, Supplier, SupplierDetail
+from django.contrib import messages
+
+def _get_trace_info(order_time, car_order, driver_name, deliver_details_order, order_details):
+    '''
+    trace_info数据说明：
+    trace_info包括：
+    order_time：一个str形式的time
+    car_id：一个str
+    cold_chain：一个int
+    driver_name：一个str
+    deliver_details_order_list：一个列表，列表内的元素是字典，每个字典包括三个键province、city、time
+    order_details_info_dic_list：一个列表，列表内的元素是字典，具体如下：
+        每个字典包括以下键：
+            product_name（对应一个str）、
+            out_time（对应一个列表，列表内是str形式的time)、in_time(对应一个列表,列表内是str形式的time）、
+            purchase(对应一个列表，列表内是字典，具体如下：
+                每个字典拥有product_root、supplier_name、supplier_add、car_id、cold_chain、driver_name、deliver_details_purchase_list
+                    其中deliver_details_purchase_list对应一个列表，列表内的元素是字典，每个字典包括三个键province、city、time
+    '''
+    # 数据处理
+    order_time = order_time.strftime('%Y-%m-%d %H:%M:%S')   # 一个str形式的time
+    deliver_details_order_list = []                         # 一个列表，列表内的元素是字典，每个字典包括三个键province、city、time
+    for deliver_detail_order in deliver_details_order:
+        deliver_detail_order_dic = {}
+        deliver_detail_order_dic['province'] = deliver_detail_order.province
+        deliver_detail_order_dic['city'] = deliver_detail_order.city
+        deliver_detail_order_dic['time'] = deliver_detail_order.detail_time.strftime('%Y-%m-%d')
+        deliver_details_order_list.append(deliver_detail_order_dic)
+        
+    order_details_info_dic_list = []                                  # 一个列表，列表内的元素是字典，见如下
+    for order_detail in order_details:
+        product = order_detail.product_id   # product_name
+        order_detail_info_dic = {}                           # 一个字典，字典包括以下键：
+                                                             # product_name（对应str）、
+                                                             # out_time（对应一个列表，列表内是str形式的time)、in_time(对应一个列表,列表内是str形式的time）
+                                                             # purchase(对应一个列表，列表内是字典，
+                                                                                      # 其中每个字典拥有product_root、supplier_name、supplier_add、car_id、cold_chain、driver_name、deliver_details_purchase_list
+                                                                                        # 其中deliver_details_purchase_list对应一个列表，列表内的元素是字典，每个字典每个字典包括三个键province、city、time
+        order_detail_info_dic['product_name'] = product.product_name
+        outwards = Outward.objects.filter(orderdetail_id=order_detail.order_detail_id)  # out_time
+        order_detail_info_dic['out_time'] = []
+        order_detail_info_dic['in_time'] = []
+        order_detail_info_dic['purchase'] = []
+        for outward in outwards:
+            order_detail_info_dic['out_time'].append(outward.out_time.strftime('%Y-%m-%d %H:%M:%S'))
+
+            inward = outward.warehouse_flow  # in_time
+            order_detail_info_dic['in_time'].append(inward.in_time.strftime('%Y-%m-%d %H:%M:%S'))
+
+            purchase = inward.purchase_id
+            purchase_info_dic = {}
+            purchase_detail = PurchaseDetail.objects.get(purchase_id_id=purchase.purchase_id)  # product_root
+            purchase_info_dic['product_root'] = purchase_detail.product_root
+            supplier = purchase_detail.supplier_id  # supplier_name、supplier_add
+            purchase_info_dic['supplier_name'] = supplier.supplier_name
+            purchase_info_dic['supplier_add'] = supplier.supplier_add
+            ''' 采购运输过程的溯源 '''
+            deliver_purchase = purchase.deliver_id
+            car_for_deliver_purchase = CarForDeliver.objects.get(deliver_id_id=deliver_purchase.deliver_id)
+            car_purchase = car_for_deliver_purchase.car_id  # car_id、cold_chain
+            purchase_info_dic['car_id'] = car_purchase.car_id
+            purchase_info_dic['cold_chain'] = car_purchase.cold_chain
+
+            driver_purchase = car_purchase.staff_id  # staff_name
+            purchase_info_dic['driver_name'] = driver_purchase.staff_name
+
+            purchase_info_dic['deliver_details_purchase_list'] = [] # 一个列表，列表内的元素是字典，每个字典包括三个键province、city、time
+            # DeliverDetail查询集
+            deliver_details_purchase = DeliverDetail.objects.filter(deliver_id_id=deliver_purchase.deliver_id)  # province、city、detail_time
+            for deliver_detail_purchase in deliver_details_purchase:
+                deliver_detail_purchase_dic = {}
+                deliver_detail_purchase_dic['province'] = deliver_detail_purchase.province
+                deliver_detail_purchase_dic['city'] = deliver_detail_purchase.city
+                deliver_detail_purchase_dic['time'] = deliver_detail_purchase.detail_time.strftime('%Y-%m-%d')
+                purchase_info_dic['deliver_details_purchase_list'].append(deliver_detail_purchase_dic)
+
+            order_detail_info_dic['purchase'].append(purchase_info_dic)
+
+        order_details_info_dic_list.append(order_detail_info_dic)
+
+    return {'order_time':order_time,
+            'car_id':car_order.car_id,
+            'cold_chain':car_order.cold_chain,
+            'driver_name':driver_name,
+            'deliver_details_order_list':deliver_details_order_list,
+            'order_details_info_dic_list':order_details_info_dic_list
+    }
+    # 数据展示
+'''    print(type(order_time), order_time)
+    print(type(car_order.car_id), car_order.car_id)
+    print(type(car_order.cold_chain), car_order.cold_chain)
+    print(type(driver_name), driver_name)
+    for deliver_detail_order_dic in deliver_details_order_list:
+        print(type(deliver_detail_order_dic['province']), deliver_detail_order_dic['province'])
+        print(type(deliver_detail_order_dic['city']), deliver_detail_order_dic['city'])
+        print(type(deliver_detail_order_dic['time']), deliver_detail_order_dic['time'])
+    print(order_details_info_dic_list)
+    for order_detail_info_dic in order_details_info_dic_list:
+        print(type(order_detail_info_dic['product_name']), order_detail_info_dic['product_name'])
+        for in_time in order_detail_info_dic['in_time']:
+            print(type(in_time), in_time)
+        for out_time in order_detail_info_dic['out_time']:
+            print(type(out_time), out_time)
+        for purchase in order_detail_info_dic['purchase']:
+            print(type(purchase['product_root']), purchase['product_root'])
+            print(type(purchase['supplier_name']), purchase['supplier_name'])
+            print(type(purchase['supplier_add']), purchase['supplier_add'])
+            print(type(purchase['car_id']), purchase['car_id'])
+            print(type(purchase['cold_chain']), purchase['cold_chain'])
+            print(type(purchase['driver_name']), purchase['driver_name'])
+
+            for deliver_detail_purchase_dic in purchase['deliver_details_purchase_list']:
+                print(type(deliver_detail_purchase_dic['province']), deliver_detail_purchase_dic['province'])
+                print(type(deliver_detail_purchase_dic['city']), deliver_detail_purchase_dic['city'])
+                print(type(deliver_detail_purchase_dic['time']), deliver_detail_purchase_dic['time'])
+'''
 
 
 @user_decorator.login
@@ -193,50 +304,50 @@ def order_trace(request,index):
 
     elif request.method == 'POST':
         if 'search_order_trace' in request.POST:
-            order_id = request.POST.get('order_id')  # 这里看前端到底把这个名字设成啥了
+            # order_id = request.POST.get('order_id')  # 这里看前端到底把这个名字设成啥了
+            order_id = '05252302'
 
             if order_id:  # 保证有输入内容
                 try:
                     # Order实例
-                    order = Order.objects.get(order_id=order_id)  # order_time?
+                    order = Order.objects.get(order_id=order_id)  # order_time
                     '''  订单运输过程溯源  '''
                     # Deliver实例
-                    deliver_order = order.deliver_id  #
-                    car_for_deliver_order = CarForDeliver.objects.get(deliver_id_id=deliver_order.deliver_id)
+                   # deliver_order = Deliver.objects.get(order_id=order.deliver_id)  #
+                    car_for_deliver_order = CarForDeliver.objects.get(deliver_id_id=order.deliver_id)
                     car_order = car_for_deliver_order.car_id  # car_id、cold_chain
                     driver_order = car_order.staff_id  # staff_name
                     # DeliverDetail查询集  这里还需要考虑一个问题，如果这个订单还没发货，从而导致没有DeliverDetail呢
                     deliver_details_order = DeliverDetail.objects.filter(
-                        deliver_id_id=deliver_order.deliver_id)  # province、city、detail_time
+                        deliver_id_id=order.deliver_id)  # province、city、detail_time
 
                     '''  采购过程溯源  '''
                     # OrderDetail查询集
-                    order_details = OrderDetail.objects.filter(order_id=order_id)
-                    '''  这里的业务逻辑需要沟通  前端需要啥数据 理论上，后端到这儿可以结束了'''
+                    order_details = OrderDetail.objects.filter(order_id_id=order_id)
 
-                    for order_detail in order_details:
-                        # Outward实例
-                        outward = order_detail.outward_id  # out_time
-                        # Inward实例
-                        inward = outward.warehouse_flow  # in_time
-                        ''' 如果还需要Warehouse实例的话，可以用下面这个 不过这个就没办法在前端做到了。后端好像也没法搞'''
-                        # 这里获得的是一个WareHouse的查询集，所以我不推荐展示里面的数据
-                        # warehouse = WareHouse.objects.filter(warehouse_flow = inward.warehouse_flow)
-                        # Purchase实例
-                        purchase = inward.purchase_id
-                        # PurchaseDetail实例  这里没法在前端完成，所以，还需要进行讨论，该怎么完成
-                        purchase_detail = PurchaseDetail.objects.get(
+                    trace_info = _get_trace_info(order.order_time,car_order,driver_order.staff_name,deliver_details_order,order_details)
+                   # print(trace_info)  # 如果你想看看数据到底啥样，可以取消该注释看看，不过，你没有数据，所以大概率看不到啥。
+                    '''for order_detail in order_details:
+                        # Outward查询集
+                        outwards = Outward.objects.filter(orderdetail_id=order_detail.order_detail_id)  # out_time
+                        for outward in outwards:
+                            # Inward实例
+                            inward = outward.warehouse_flow  # in_time
+                            # Purchase实例
+                            purchase = inward.purchase_id
+                            # PurchaseDetail实例  这里没法在前端完成，所以，还需要进行讨论，该怎么完成
+                            purchase_detail = PurchaseDetail.objects.get(
                             purchase_id_id=purchase.purchase_id)  # product_root
-                        supplier = purchase_detail.supplier_id  # supplier_name、supplier_add
-                        ''' 采购运输过程的溯源 '''
-                        # Deliver实例
-                        deliver_purchase = purchase.deliver_id
-                        car_for_deliver_purchase = CarForDeliver.objects.get(deliver_id_id=deliver_purchase.deliver_id)
-                        car_purchase = car_for_deliver_purchase.car_id  # car_id、cold_chain
-                        driver_purchase = car_purchase.staff_id  # staff_name
-                        # DeliverDetail查询集 这里没法在前端完成，所以，还需要进行讨论，该怎么完成
-                        deliver_details_purchase = DeliverDetail.objects.filter(
-                            deliver_id_id=deliver_purchase.deliver_id)  # province、city、detail_time
+                            supplier = purchase_detail.supplier_id  # supplier_name、supplier_add
+                                采购运输过程的溯源
+                            # Deliver实例
+                            deliver_purchase = purchase.deliver_id
+                            car_for_deliver_purchase = CarForDeliver.objects.get(deliver_id_id=deliver_purchase.deliver_id)
+                            car_purchase = car_for_deliver_purchase.car_id  # car_id、cold_chain
+                            driver_purchase = car_purchase.staff_id  # staff_name
+                            # DeliverDetail查询集 这里没法在前端完成，所以，还需要进行讨论，该怎么完成
+                            deliver_details_purchase = DeliverDetail.objects.filter(
+                                deliver_id_id=deliver_purchase.deliver_id)  # province、city、detail_time'''
 
                     '''  溯源过程到此结束  '''
 
