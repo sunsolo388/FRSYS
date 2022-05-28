@@ -9,6 +9,8 @@ from .models import OrderInfo, OrderDetailInfo
 from df_cart.models import CartInfo
 from df_user.models import UserInfo
 from df_user import user_decorator
+from deliver.models import Deliver
+from order.models import Order
 
 
 @user_decorator.login
@@ -36,6 +38,7 @@ def order(request):
         'total_trans_price': total_trans_price,
         # 'value':value
     }
+    
     return render(request, 'df_order/place_order.html', context)
 
 '''
@@ -63,8 +66,26 @@ def order_handle(request):
         order_info.odate = now  # 订单时间
         order_info.user_id = int(user_id)  # 订单的用户id
         order_info.ototal = Decimal(request.POST.get('total'))  # 从前端获取的订单总价
+        ucre = UserInfo.objects.get(id=order_info.user_id).ucre
+        UserInfo.objects.filter(id=order_info.user_id).update(ucre=ucre+int(order_info.ototal))
+        # 在创建采购订单时创建对应的物流需求
+        # deliver = Deliver()
+        customer = UserInfo.objects.get(id=order_info.user_id)
+        customer_add = customer.uaddress
+        '''
+        deliver.deliver_id = 'XS' + order_info.oid
+        deliver.start_add = ''
+        deliver.aim_add = customer_add
+        deliver.apply_time = order_info.odate
+        '''
+        deliver = Deliver(deliver_id='XS' + order_info.oid, start_add='', aim_add=customer_add,
+                          apply_time=order_info.odate)
+        deliver.save() # 保存
         order_info.save()  # 保存订单
-
+        order = Order(order_id = order_info.oid, deliver_id_id=deliver.deliver_id,
+                      order_price = order_info.ototal, order_time=order_info.odate,
+                      customer_id_id=order_info.user_id,order_status_id = 1)
+        order.save()
         for cart_id in cart_ids.split(','):  # 逐个对用户提交订单中的每类商品即每一个小购物车
             cart = CartInfo.objects.get(pk=cart_id)  # 从CartInfo表中获取小购物车对象
             order_detail = OrderDetailInfo()  # 大订单中的每一个小商品订单
@@ -93,3 +114,4 @@ def order_handle(request):
 @user_decorator.login
 def pay(request):
     pass
+

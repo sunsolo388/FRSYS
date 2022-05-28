@@ -1,11 +1,12 @@
+USE testdemo;
+
 CREATE TEMPORARY TABLE t1 AS(
     SELECT SUM(price*count) AS order_price, order_id FROM df_order_orderdetailinfo GROUP BY order_id);
         
-INSERT INTO order_order (order_id, order_price, order_time,out_time,customer_id_id,deliver_id,order_status_id)
+INSERT INTO order_order (order_id, order_price, order_time,customer_id_id,deliver_id,order_status_id)
 SELECT oid AS order_id, 
 order_price,
 odate AS order_time, 
-NULL AS out_time,
 user_id AS customer_id_id,
 order_id AS deliver_id,
 1

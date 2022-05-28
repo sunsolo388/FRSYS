@@ -302,11 +302,11 @@
                                     <tbody>
                                         {% for customer in customer_list %}
                                         <tr class="odd gradeX">
-                                            <td class="center">{{customer.customer_id}}</td>
-                                            <td class="center">{{customer.customer_name}}</td>
-                                            <td class="center">{{customer.customer_tel}}</td>
-                                            <td class="center">{{customer.customer_cre}}</td>
-                                            <td class="center">{{customer.customer_add}}</td>
+                                            <td class="center">{{customer.id}}</td>
+                                            <td class="center">{{customer.uname}}</td>
+                                            <td class="center">{{customer.uphone}}</td>
+                                            <td class="center">{{customer.ucre}}</td>
+                                            <td class="center">{{customer.uaddress}}</td>
                                         </tr>
                                         {% endfor %} 
                                     </tbody>
@@ -340,10 +340,10 @@
                                     <tbody>
                                         {% for customer in customer_top_list %}
                                         <tr class="odd gradeX">
-                                            <td class="center">{{customer.customer_id}}</td>
-                                            <td class="center">{{customer.customer_name}}</td>
-                                            <td class="center">{{customer.customer_tel}}</td>
-                                            <td class="center">{{customer.customer_cre}}</td>
+                                            <td class="center">{{customer.id}}</td>
+                                            <td class="center">{{customer.uname}}</td>
+                                            <td class="center">{{customer.uphone}}</td>
+                                            <td class="center">{{customer.ucre}}</td>
                                         </tr>
                                         {% endfor %} 
                                     </tbody>
@@ -374,10 +374,10 @@
                                     <tbody>
                                         {% for i in order_new %}
                                         <tr class="odd gradeX">
-                                            <td class="center">{{i.customer_id.customer_id}}</td>
-                                            <td class="center">{{i.customer_id.customer_name}}</td>
-                                            <td class="center">{{i.customer_id.customer_tel}}</td>
-                                            <td class="center">{{i.customer_id.customer_cre}}</td>
+                                            <td class="center">{{i.customer_id.id}}</td>
+                                            <td class="center">{{i.customer_id.uname}}</td>
+                                            <td class="center">{{i.customer_id.uphone}}</td>
+                                            <td class="center">{{i.customer_id.ucre}}</td>
                                             <td class="center">{{i.order_id}}</td>
                                         </tr>
                                         {% endfor %} 

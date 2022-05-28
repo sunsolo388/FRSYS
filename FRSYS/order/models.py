@@ -2,6 +2,8 @@ from django.db import models
 from deliver import models as dm
 from warehouse import models as wm
 from product import models as pm
+from df_user.models import UserInfo
+
 # Create your models here.
 
 
@@ -29,12 +31,12 @@ class OrderStatus(models.Model):
 
 class Order(models.Model):
     order_id = models.CharField(max_length=20,primary_key=True)
-    deliver_id = models.CharField(max_length=22)
-    customer_id = models.ForeignKey(to=Customer,to_field="customer_id",on_delete=models.CASCADE)
+    deliver_id = models.ForeignKey(to=dm.Deliver,to_field="deliver_id", on_delete=models.SET_NULL,null=True)
+    customer_id = models.ForeignKey(to=UserInfo,to_field="id",on_delete=models.CASCADE)
     order_price = models.FloatField(max_length=8)
     order_time = models.DateTimeField()
     order_status = models.ForeignKey(to=OrderStatus,to_field="status_id",on_delete=models.CASCADE,default=1)
-    out_time = models.DateTimeField(null=True, blank=True)
+    #out_time = models.DateTimeField(null=True, blank=True)
     #warehouse_flow = models.ForeignKey(to=wm.WareHouse,to_field="warehouse_flow",on_delete=models.CASCADE,default='WF100')
 
 
@@ -53,3 +55,4 @@ class OrderDetail(models.Model):
     detail_num = models.FloatField(max_length=8)
     # outward_id = models.ForeignKey(to=wm.Outward,to_field='outward_id',on_delete=models.CASCADE,null=True,blank=True)
     # out_time = models.DateTimeField(null=True,blank=True)
+
