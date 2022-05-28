@@ -116,7 +116,7 @@
         <div id="page-wrapper">
             <div id="page-inner">
                     <!-- /. ROW  -->
-                <form class="form-inline" role="form" action="work/purchase/manage_supplierinfo/" method="post">
+                <form class="form-inline" role="form" action="" method="post">
                     <h3>筛选查询</h3>
                     <h6></h6>
                     <div class="form-group">
@@ -170,7 +170,7 @@
 
                             <div class="panel-body">
                                 <div class="table-responsive">
-                                    <table class="table table-striped table-bordered table-hover">
+                                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                         <thead>
                                             <tr>
                                                 <th>供应商编号</th>
@@ -233,6 +233,15 @@
 
 	<script src="/static/js/easypiechart.js"></script>
 	<script src="/static/js/easypiechart-data.js"></script>
+
+        <!-- DATA TABLE SCRIPTS -->
+    <script src="/static/js/dataTables/jquery.dataTables.js"></script>
+    <script src="/static/js/dataTables/dataTables.bootstrap.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('#dataTables-example').dataTable();
+            });
+    </script>
 
 
     <!-- Custom Js -->

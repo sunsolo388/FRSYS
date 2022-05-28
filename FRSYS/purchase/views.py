@@ -57,6 +57,7 @@ def purchase_manage_suppliers_info(request):
                 _content = 1
 
             if _content:    context['suppliers_info'] = suppliers_info
+
         # 编辑功能
         elif 'update_supplier' in request.POST:
             supplier_id = request.POST.get('table_supplier_id')
@@ -201,7 +202,7 @@ def purchase_make_purchases(request):
             purchase_detail = models.PurchaseDetail.objects.get(purchase_id_id =purchase_id)
             request.session['table_purchase_order'] = get_purchase_order_info(purchase_detail)
             return redirect('/work/purchase/make_purchase/update/')
-        # 删除功能 尚未完成
+        # 删除功能
         elif 'delete_purchase_order' in request.POST:
             purchase_id = request.POST.get('table_purchase_id')
             purchase_detail = models.PurchaseDetail.objects.get(purchase_id_id =purchase_id)
