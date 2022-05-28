@@ -209,12 +209,12 @@ def warehouse_outward(request):
         total_num = total['num']  # 计算当前该产品剩余总库存
         gm.GoodsInfo.objects.filter(gtitle=product).update(gkucun=total_num * 2)
 
-        om.Order.objects.filter(order_id=order_id).update(out_time=date, order_status=2)  # 更新order表
+        om.Order.objects.filter(order_id=order_id).update(order_status=2)  # 更新order表
         messages.add_message(request, messages.SUCCESS, '添加成功！')
         return redirect('/work/warehouse/outward')
     outwardinfo = wm.Outward.objects.all().order_by('out_time').values(
         'outward_id', 'warehouse_flow', 'product_name',
-        'out_time','out_num'           #这个地方应该要修改
+        'out_time','out_num'
     )
     ckxx = outwardinfo
 

@@ -330,7 +330,9 @@ line-height: 30px;
 #easypiechart-teal .percent { color: #1ebfae;}
 #easypiechart-orange .percent { color: #ffb53e;}
 #easypiechart-red .percent { color: #ef4040;}
-#easypiechart-green .percent { color: #1ac612;}
+#easypiechart-purple .percent { color: #8a2be2;}
+#easypiechart-navy .percent { color: #6495ed;}
+
 	 
  .chat-panel .panel-body {
 height: 450px;
