@@ -23,12 +23,41 @@ def warehouse_home(request):
     '''
     仓库主页
     '''
+    totalfruit = gm.GoodsInfo.objects.filter(gtype__ttitle='新鲜水果').aggregate(num=Sum('gkucun'))
+    fruit = totalfruit['num']  # 计算当前水果总库存
+    if fruit == None:
+        fruit = 0
+    totalseafood = gm.GoodsInfo.objects.filter(gtype__ttitle='海鲜水产').aggregate(num=Sum('gkucun'))
+    seafood = totalseafood['num']  # 计算当前海鲜总库存
+    if seafood == None:
+        seafood = 0
+    totalmeat = gm.GoodsInfo.objects.filter(gtype__ttitle='牛羊猪肉').aggregate(num=Sum('gkucun'))
+    meat = totalmeat['num']  # 计算当前肉类总库存
+    if meat == None:
+        meat = 0
+    totaleggs = gm.GoodsInfo.objects.filter(gtype__ttitle='禽类蛋品').aggregate(num=Sum('gkucun'))
+    eggs = totaleggs['num']  # 计算当前蛋类总库存
+    if eggs == None:
+        eggs = 0
+    totalvege = gm.GoodsInfo.objects.filter(gtype__ttitle='新鲜蔬菜').aggregate(num=Sum('gkucun'))
+    vegetable = totalvege['num']  # 计算当前蔬菜总库存
+    if vegetable == None :
+        vegetable = 0
+    totalfrozen = gm.GoodsInfo.objects.filter(gtype__ttitle='速冻食品').aggregate(num=Sum('gkucun'))
+    frozen = totalfrozen['num']  # 计算当前水果总库存
+    if frozen == None:
+        frozen = 0
+
+    leftinfo = {'fruit':fruit//100,'seafood':seafood//100,'meat':int(meat)//100,
+                'eggs':int(eggs)//100,'vegetable':int(vegetable)//100,'frozen':int(frozen)//100}
+
     warehouseinfo = wm.WareHouse.objects.all().values(
         'warehouse_flow', 'product_name', 'left_num', 'warehouse_status'
     )
     kcxx = warehouseinfo
 
-    context = {'kcxx': kcxx,'pdc':pdc}
+
+    context = {'kcxx': kcxx,'pdc':pdc,'left':leftinfo}
     if request.method == 'POST':
         num = request.POST.get('num')
         time = request.POST.get('time')
@@ -121,7 +150,7 @@ def warehouse_outward(request):
     )  # 筛选出所有未处理的orderDetail
     xsdd = orderinfo
     if request.method == 'POST':
-        order_id = request.POST.get('order_id')  # 销售订单
+        order_id = request.POST.get('order_id')  # 销售详情编号
         outward_id = request.POST.get('outward_id')  # 出库编号
         product = request.POST.get('identity')  # 商品种类
         date = request.POST.get('time')  # 时间
@@ -188,12 +217,12 @@ def warehouse_outward(request):
         total_num = total['num']  # 计算当前该产品剩余总库存
         gm.GoodsInfo.objects.filter(gtitle=product).update(gkucun=total_num * 2)
 
-        om.Order.objects.filter(order_id=order_id).update(out_time=date, order_status=2)  # 更新order表
+        om.Order.objects.filter(order_id=order_id).update(order_status=2)  # 更新order表
         messages.add_message(request, messages.SUCCESS, '添加成功！')
         return redirect('/work/warehouse/outward')
     outwardinfo = wm.Outward.objects.all().order_by('out_time').values(
         'outward_id', 'warehouse_flow', 'product_name',
-        'out_time','out_num'           #这个地方应该要修改
+        'out_time','out_num'
     )
     ckxx = outwardinfo
 

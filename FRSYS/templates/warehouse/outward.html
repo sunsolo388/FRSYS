@@ -167,7 +167,7 @@
                             </div>
                             <div class="panel-body">
                                 <div class="table-responsive">
-                                    <table class="table table-striped table-bordered table-hover">
+                                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                         <thead>
                                             <tr>
                                                 <th>出库编号</th>
@@ -222,7 +222,14 @@
 
 	<script src="/static/js/easypiechart.js"></script>
 	<script src="/static/js/easypiechart-data.js"></script>
-
+    <!-- DATA TABLE SCRIPTS -->
+    <script src="/static/js/dataTables/jquery.dataTables.js"></script>
+    <script src="/static/js/dataTables/dataTables.bootstrap.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('#dataTables-example').dataTable();
+            });
+    </script>
 
     <!-- Custom Js -->
     <script src="/static/js/custom-scripts.js"></script>

@@ -173,4 +173,3 @@ class SupplierDetail(models.Model):
     '''
     product_id = models.ForeignKey(Product, on_delete=models.DO_NOTHING, related_name='supplier_of_this_product')
     supplier_id = models.ForeignKey(Supplier, on_delete=models.CASCADE, related_name='detail_of_this_supplier')
-
