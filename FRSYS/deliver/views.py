@@ -168,26 +168,26 @@ def deliver_psc_sfyz(request):
         return render(request,'delivery/psc/psc_sfyz.html')
 
 
+
 @user_decorator.worker
 def deliver_psc_dqrw(request,staff_id):
     car_id=models.Car.objects.filter(staff_id=staff_id).values('car_id').last()['car_id']
     dqrws=models.CarForDeliver.objects.filter(car_id=car_id).order_by('id').values('deliver_id')
-    if len(dqrws)==0:
+    aims=[dqrw['deliver_id'] for dqrw in dqrws]
+    all_deliver=models.Deliver.objects.filter(status__in=[1,2],deliver_id__in=aims)
+    if len(all_deliver)==0:
         messages.add_message(request,messages.SUCCESS,"当前无任务\n请好好休息！\n╰（‵□′）╯")
         return redirect('/work/delivery/psc/'+staff_id+'/ywc/')
-    for dqrw in dqrws:
-        aim_deliver=dqrw['deliver_id']
-        deliver=models.Deliver.objects.filter(deliver_id=aim_deliver).filter(status__in=[1,2])
-        if len(deliver)==0:
-            messages.add_message(request,messages.SUCCESS,"当前无任务\n请好好休息！\n╰（‵□′）╯")
-            return redirect('/work/delivery/psc/'+staff_id+'/ywc/')
-        deliver_info=deliver.values('deliver_id','start_add','aim_add','apply_time','departure_time','status').last()
-        dqrw.update(deliver_info)
-        dqrw['dd']=models.DeliverDetail.objects.filter(deliver_id=aim_deliver).order_by('detail_time')
+    all_deliver=all_deliver.values('deliver_id','start_add','aim_add','apply_time','departure_time','status')
+
+    for deliver in all_deliver:
+        deliver_info=deliver
+        deliver['dd']=models.DeliverDetail.objects.filter(deliver_id=deliver_info['deliver_id']).order_by('detail_time')
 
     if request.method=='POST':
         if deliver_info['status']==1:
-            for dqrw in dqrws:
+            print(2)
+            for dqrw in all_deliver:
                 aim_deliver=dqrw['deliver_id']
                 models.Deliver.objects.filter(deliver_id=aim_deliver).update(departure_time=datetime.datetime.now(),status=2)
                 if dqrw['deliver_id'][0:2]=='XS':
@@ -199,12 +199,11 @@ def deliver_psc_dqrw(request,staff_id):
             messages.add_message(request,messages.SUCCESS,"任务已领取\n请勿重复领取\n╰（‵□′）╯")
             return redirect('/work/delivery/psc/'+staff_id+'/xxsc/')
 
-    for dqrw in dqrws:
+    for dqrw in all_deliver:
         if dqrw['deliver_id'][0:2]=='XS':
             dqrw['depart']='销售部'
         elif dqrw['deliver_id'][0:2]=='CG':
             dqrw['depart']='采购部'
-
         if len(dqrw['dd'])==0:
             dqrw['place']='还未出发'
         else:
@@ -214,7 +213,7 @@ def deliver_psc_dqrw(request,staff_id):
             else:
                 dqrw['place']=ddinfo['province']+ddinfo['city']
         dqrw['use_time']=datetime.datetime.now().replace(microsecond=0)-deliver_info['apply_time'].replace(tzinfo=None).replace(microsecond=0)
-        context={'dqrws':dqrws}
+        context={'dqrws':all_deliver}
     return render(request,'delivery/psc/psc_dqrw.html',context=context)
 
 @user_decorator.worker
@@ -222,25 +221,26 @@ def deliver_psc_xxsc(request,staff_id):
     context={}
     car_id=models.Car.objects.filter(staff_id=staff_id).values('car_id').last()['car_id']
     syrw=models.CarForDeliver.objects.filter(car_id=car_id).values('deliver_id')
+    all_deliver_id=[rw['deliver_id'] for rw in syrw]
     deliver_ls=[]
-    for rw in syrw:
-        deliver_id=rw['deliver_id']
-        deliver=models.Deliver.objects.filter(deliver_id=deliver_id).filter(status=2)
-        if len(deliver)==0:
-            messages.add_message(request,messages.SUCCESS,"当前无进行中任务")
-            return redirect('/work/delivery/psc/'+staff_id+'/dqrw/')
-        deliver_info=deliver.values('deliver_id','start_add','aim_add','departure_time').last()
+    delivers=models.Deliver.objects.filter(deliver_id__in=all_deliver_id,status=2).values('deliver_id','start_add','aim_add','departure_time')
+    if len(delivers)==0:
+        messages.add_message(request,messages.SUCCESS,"当前无进行中任务")
+        return redirect('/work/delivery/psc/'+staff_id+'/dqrw/')
+    for deliver in delivers:
+        deliver_id=deliver['deliver_id']
         deliver_ls.append(deliver_id)
-    context.update(deliver_info)
+    context.update(deliver)
 
-    context['use_time']=datetime.datetime.now().replace(microsecond=0)-deliver_info['departure_time'].replace(tzinfo=None).replace(microsecond=0)
+    context['use_time']=datetime.datetime.now().replace(microsecond=0)-deliver['departure_time'].replace(tzinfo=None).replace(microsecond=0)
 
     deliverdetail=models.DeliverDetail.objects.filter(deliver_id=deliver_id).order_by('detail_time')
     detail_info=deliverdetail.values('province','city','detail_time')
     for dd in detail_info:
         dd['passadd']=dd['province']+'省'+dd['city']+'市'
-        dd['use_time']=dd['detail_time'].replace(microsecond=0)-deliver_info['departure_time'].replace(microsecond=0) 
+        dd['use_time']=dd['detail_time'].replace(microsecond=0)-deliver['departure_time'].replace(microsecond=0) 
     context['detail_info']=detail_info
+    print(context)
     
     if request.method=='POST':
         if 'sc' in request.POST:
@@ -258,11 +258,11 @@ def deliver_psc_xxsc(request,staff_id):
                     status=3,
                     arrival_time=datetime.datetime.now(),
                 )
-                models.Car.objects.filter(deliver_id=deliver_id).update(
-                    status=0
-                )
                 if deliver_id[0:2]=='XS':
-                    Order.objects.filter(diliver_id=deliver_id).update(order_status=4)
+                    Order.objects.filter(deliver_id=deliver_id).update(order_status=4)
+            models.Car.objects.filter(staff_id=staff_id).update(
+                status=0
+            )
             return redirect('/work/delivery/psc/'+staff_id+'/dqrw/')
     return render(request,'delivery/psc/psc_xxsc.html',context=context)
 
