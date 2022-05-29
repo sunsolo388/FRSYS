@@ -8,6 +8,7 @@ from login import models as lm     #导入login检查是否存在该员工
 from order import models as om
 from product import models as pdm
 from df_goods import models as gm
+from itertools import chain
 
 import os
 import sys
@@ -79,8 +80,10 @@ def warehouse_inward(request):
     '''
     purchase_already = wm.Inward.objects.all()
     purchase_to_choose = pm.Purchase.objects.exclude(purchase_id__in = purchase_already)
-    purchaseinfo = purchase_to_choose.values('purchase_id')
-    pinfo = purchaseinfo
+    #purchaseinfo = purchase_to_choose.values('purchase_id','purchase_num')
+    pinfo = pm.PurchaseDetail.objects.filter(purchase_id__in = purchase_to_choose).values(
+        'purchase_id','product_id__product_name','purchase_id__purchase_num')
+
 
     if request.method == 'POST':
         purchase_id = request.POST.get('purchase_id')       #采购订单
@@ -149,6 +152,13 @@ def warehouse_outward(request):
         'order_detail_id', 'product_id__product_name', 'detail_num'
     )  # 筛选出所有未处理的orderDetail
     xsdd = orderinfo
+
+    #进入出库界面就删掉多余的库存信息
+    try:
+        to_delete = wm.WareHouse.objects.get(left_num=0)
+        to_delete.delete()
+    except:
+        print('没有数据需要删除')
     if request.method == 'POST':
         order_id = request.POST.get('order_id')  # 销售详情编号
         outward_id = request.POST.get('outward_id')  # 出库编号
@@ -177,8 +187,8 @@ def warehouse_outward(request):
             return render(request, 'warehouse/index.html')
         # 分配仓库流水和出库商品
         temp_num = 0
+        i = 0
         while out_num > temp_num:                                                                               #如果不够就找下一个流水
-            i=0
             warehouse = wm.WareHouse.objects.all().order_by('warehouse_flow__in_time').filter(product_name=product,warehouse_status='库存').values(
                 'warehouse_flow', 'left_num')  # 返回字典
             warehouse_flow = warehouse[i]['warehouse_flow']  # 从入库最早的开始,返回一个仓库流水
@@ -188,36 +198,45 @@ def warehouse_outward(request):
             origin_num = warehouse[i]['left_num'] #原始库存
             if out_num <= temp_num:
                 temp_num = out_num
-            else:
-                out_num -= temp_num
-                i+=1
+            out_num -= temp_num
             warehouse_flow1 = wm.Inward.objects.filter(warehouse_flow=warehouse_flow).first()  # 返回该流水对应的入库实例
             # 修改库存信息
-            #在order中添加出库时间，更改库存信息：出库的商品改为出库，同一批未完全出售的商品质量减少
-          #  om.Order.objects.filter(order_id = order_id).update(out_time=date,warehouse_flow=warehouse_flow)
-            wm.WareHouse.objects.create(
-                warehouse_flow = warehouse_flow1,left_num = temp_num,
-                warehouse_status = '出库',product_name = product
-            )
+            try:
+                wm.WareHouse.objects.create(
+                    warehouse_flow = warehouse_flow1,left_num = temp_num,
+                    warehouse_status = '出库',product_name = product
+                )
+            except Exception:
+                wm.WareHouse.objects.filter(
+                    warehouse_flow=warehouse_flow1,
+                    warehouse_status='出库', product_name=product
+                ).update(left_num=temp_num)
+
+
+
             wm.WareHouse.objects.filter(warehouse_flow=warehouse_flow1,warehouse_status='库存').update(
                 left_num=origin_num-temp_num
             )
             #修改出库表
-            outward_id = outward_id+f'_{i}'
+            outward_id1 = outward_id+f'_{i}'
             wm.Outward.objects.create(
-                outward_id = outward_id,
+                outward_id = outward_id1,
                 orderdetail_id = order_id,
                 warehouse_flow = warehouse_flow1,
                 out_num = temp_num,
                 out_time = date,
                 product_name = product
             )
+            if out_num > 0:
+                i+=1
+                temp_num = 0
 
         total = wm.WareHouse.objects.filter(product_name=product, warehouse_status='库存').aggregate(num=Sum('left_num'))
         total_num = total['num']  # 计算当前该产品剩余总库存
         gm.GoodsInfo.objects.filter(gtitle=product).update(gkucun=total_num * 2)
-
-        om.Order.objects.filter(order_id=order_id).update(order_status=2)  # 更新order表
+        order = om.OrderDetail.objects.filter(order_detail_id=order_id).values('order_id')[0]['order_id']   #获取order对应实例
+        print(order)
+        om.Order.objects.filter(order_id=order).update(order_status=2)  # 更新order表
         messages.add_message(request, messages.SUCCESS, '添加成功！')
         return redirect('/work/warehouse/outward')
     outwardinfo = wm.Outward.objects.all().order_by('out_time').values(
