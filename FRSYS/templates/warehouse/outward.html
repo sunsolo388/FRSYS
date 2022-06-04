@@ -81,6 +81,7 @@
                                                 <th>销售订单编号</th>
                                                 <th>商品名称</th>
                                                 <th>销售质量</th>
+                                                <th>出库状态</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -89,6 +90,7 @@
                                                 <td>{{ xx.order_detail_id }}</td>
                                                 <td>{{ xx.product_id__product_name }}</td>
                                                 <td>{{ xx.detail_num }}</td>
+                                                <td>{{ xx.order_detail_status}}</td>
                                             </tr>
                                             {% endfor %}
                                         </tbody>
