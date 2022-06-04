@@ -9,6 +9,7 @@
                 <li><a href="{% url "df_user:info" %}">· 个人信息</a></li>
                 <li><a href="{% url "df_user:order" 1 %}" class="active">· 全部订单</a></li>
                 <li><a href="{% url "df_user:site" %}">· 收货地址</a></li>
+
             </ul>
         </div>
         <div class="right_content clearfix">
@@ -19,22 +20,35 @@
                 <thead>
                 <tr>
                     <div class="form-left-to-w3l ">
-                        <th width="85%" align="center">订单编号</th>
-                        <th width="15%" align="center">溯源查询</th>
+                        <th width="50%">订单编号</th>
+                        <th width="25%">溯源查询</th>
+                        <th width="25%">售后申请</th>
+
                     </div>
                 </tr>
 
                 </thead>
                 <tbody>
-
-                {% for i in orders_list %}
+                <form action="" method="post">{% csrf_token %}
+                    <tr>
+                        <td><input type="text" name="order_id" value="order_id" readonly required=""
+                                   style=" text-align:center;border: #FFFFFF"></td>
+                        <td>
+                            <button type="submit" name="search_order_trace">一键溯源</button>
+                        </td>
+                        <td>
+                            <button type="submit" name="aftermarket">售后申请</button>
+                        </td>
+                    </tr>
+                </form>
+                {% for i in order_set %}
                 <form action="" method="post">
                     {% csrf_token %}
                     <tr>
 
                         <td>
 
-                            <input type="text" name="order_id"  readonly required="" value="{{ i.order_id }}"
+                            <input type="text" name="order_id"  readonly required=""
                                     {# 在此处将order——id的value替换为变量 #}
                                    style=" border: #FFFFFF " align="center">
                             <div class="clear"></div>
@@ -43,6 +57,9 @@
 
                         <td>
                             <button type="submit" name="search_order_trace">一键溯源</button>
+                        </td>
+                        <td>
+                            <button type="submit" name="aftermarket">售后申请</button>
                         </td>
                     </tr>
                 </form>
@@ -86,5 +103,11 @@
         )
 
     </script>
-
+{% if messages %}
+        <script>
+            {% for msg in messages %}
+                alert('{{ msg.message }}');
+            {% endfor %}
+        </script>
+    {% endif %}
 {% endblock center_body %}

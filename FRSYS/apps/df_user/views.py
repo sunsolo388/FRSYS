@@ -335,8 +335,39 @@ def order_trace(request,index):
                     user_id = request.session['user_id']
                     return redirect('/user/order/'+str(user_id))
 
-    return render(request, 'df_user/findroot.html',locals())
+                    return render(request, 'df_user/findroot.html', locals())
+
+        elif 'aftermarket' in request.POST:
+                # order_id = request.POST.get('order_id')
+                order_id = '05252302'
+
+                return render(request, 'df_user/user_center_aftermarket_register.html',locals())
+
+
+
 
 @user_decorator.login
 def findroot(request,index):
     return render(request, 'df_user/findroot.html')
+from aftermarket import models as amm
+
+@user_decorator.login
+def aftermarket(request):
+    if request.method=='GET':
+
+        return render(request, 'df_user/user_center_aftermarket_register.html')
+    else:
+            if 'aftermarket' in request.POST:
+                m_s=0
+                order_id=request.POST.get("order_id")
+                reason=request.POST.get('reason')
+                detail=request.POST.get("detail_info")
+                AM_id="am"+order_id
+                AM_status='未处理'
+
+                # AM=amm.AM.objects.create(AM_id=AM_id,order_id=order_id,reason_kind=reason,reason_detail=detail,AM_status=AM_status)
+                m_s=1
+                if m_s==1:
+                    messages.error(request, '申请成功，请等待审核！')
+
+                return redirect("/user/order/1")

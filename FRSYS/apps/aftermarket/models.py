@@ -8,8 +8,8 @@ from deliver import models as dm
 from warehouse import models as wm
 
 class AM(models.Model):
-    AM_id=models.CharField(max_length=8,primary_key=True)
-    order_id = models.CharField(max_length=8)
+    AM_id=models.CharField(max_length=22,primary_key=True)
+    order_id = models.OneToOneField(to=om.Order, to_field="order_id", on_delete=models.CASCADE)
     reason_kind=models.CharField(max_length=8)
     reason_detail=models.CharField(max_length=255)
     AM_status=models.CharField(max_length=8)

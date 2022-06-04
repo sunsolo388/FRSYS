@@ -18,4 +18,5 @@ urlpatterns = [
     # url(r'^place_order/$', views.place_order),
     url(r'^logout/$', logout, name="logout"),
     url(r'^order/(\d+)/findroot/$',findroot),
+    url(r'^aftermarket/$',aftermarket,name='aftermarket'),
 ]

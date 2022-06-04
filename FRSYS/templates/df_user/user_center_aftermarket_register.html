@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block center_body %}
+
+
+
+
+	<div class="main_con clearfix">
+		<div class="left_menu_con clearfix">
+			<h3>用户中心</h3>
+			<ul>
+                <li><a href="{% url "df_user:info" %}">· 个人信息</a></li>
+				<li><a href="{% url "df_user:order" 1 %}">· 全部订单</a></li>
+				<li><a href="{% url "df_user:site" %}" >· 收货地址</a></li>
+			</ul>
+		</div>
+        <form action="{% url "df_user:aftermarket" %}" method="post">
+		<div class="right_content clearfix">
+				<h3 class="common_title2">售后申请</h3>
+				<div class="site_con">
+					<dl>
+                        <input type="text" name="order_id" value={{ order_id }} readonly required=""
+                                   style=" text-align:center;border: #4a4545">
+
+					</dl>
+				</div>
+				<h3 class="common_title2">售后信息填写</h3>
+				<div class="site_con">
+
+                        {% csrf_token %}
+						<div class="form_group">
+							<label>售后种类：</label>
+							<input type="text" name="reason" >
+						</div>
+                        <div class="form_group form_group2">
+                            <label>申请详细信息：</label>
+                            <textarea class="site_area" name="detail_info" ></textarea>
+                        </div>
+
+						<input type="submit" name="aftermarket" value="上传信息" class="info_submit">
+
+				</div>
+            </form>
+		</div>
+	</div>
+
+
+{% endblock center_body %}
