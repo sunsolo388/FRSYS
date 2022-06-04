@@ -19,7 +19,6 @@ def purchase_home(request):
     return render(request,'purchase/homepage.html')
 
 
-@user_decorator.worker
 def get_supplier_info(supplier):
     return {'supplier_id':supplier.supplier_id,
          'supplier_name':supplier.supplier_name,
@@ -71,6 +70,7 @@ def purchase_manage_suppliers_info(request):
             supplier = models.Supplier.objects.get(supplier_id=supplier_id)
             # 这里可以写一个函数来处理supplier的信息
             request.session['table_supplier'] = get_supplier_info(supplier)
+
             return redirect('/work/purchase/manage_supplierinfo/update/')
         # 删除功能
         elif 'delete_supplier' in request.POST:
@@ -129,7 +129,6 @@ def purchase_manage_supplierinfo_update_info(request):
         return render(request, 'purchase/manage_supplierinfo/update.html')
 
 
-@user_decorator.worker
 def get_purchase_order_info(purchase_detail):
     return {'purchase_id' : purchase_detail.purchase_id.purchase_id,
             'purchase_time': purchase_detail.purchase_id.purchase_time.strftime('%Y-%m-%d'),

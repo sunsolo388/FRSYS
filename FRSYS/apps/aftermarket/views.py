@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import messages
 from aftermarket import models as amm
-
+from order.models import Order
 import os
 import sys
 sys.path.append(os.path.dirname(__file__) + os.sep + '../')
@@ -52,10 +52,8 @@ def AMdealing(request, am_id):
                 dealresult = '不予退款'
             amevent = amm.AM.objects.get(AM_id=am_id)
             order_id = amevent.order_id
-            dealing_AM = amm.AM_feedback.get(order_id=order_id)
-            dealing_AM.dealingtxt = dealingtext
-            dealing_AM.dealing_result = dealresult
-            dealing_AM.save()
+
+            dealing_AM = amm.AM_feedback.objects.create(order_id=order_id,dealingtxt=dealingtext,dealing_result=dealresult)
             amevent.AM_status = '已处理'
             amevent.save()
 

@@ -85,6 +85,7 @@ def deliver_glc_xqgl(request):
             'deliver_id','aim_add','start_add','apply_time'
         )
         wclxq=deliverinfo.filter(status=0)
+        wclxq = [xq for xq in wclxq if Order.objects.filter(deliver_id=xq['deliver_id']).values('order_status').last()['order_status'] == 2]
         for xq in wclxq:
             if xq['deliver_id'][0:2]=='XS':
                 xq['depart']='销售部'
