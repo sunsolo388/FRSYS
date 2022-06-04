@@ -25,13 +25,6 @@
 {#	<script type="text/javascript" src="/static/js/register.js"></script>#}
     {% block head %}{% endblock head %}
 </head>
-{% if messages %}
-<script type="text/jscript">
-    {% for msg in messages %}
-    alert('{{ msg.message }}');
-    {% endfor %}
-</script>
-{% endif %}
 <body>
 
 {% block body %}{% endblock body %}
