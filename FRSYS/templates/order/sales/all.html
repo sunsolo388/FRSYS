@@ -294,7 +294,6 @@
                                         <tr>
                                             <th>订单ID</th>
                                             <th>订单时间</th>
-                                            <th>订单状态</th>
                                             <th>订单价格</th>
                                             <th>物流编号</th>
                                             <th>客户ID</th>
@@ -305,9 +304,8 @@
                                         <tr class="odd gradeX">
                                             <td>{{order.order_id}}</td>
                                             <td>{{order.order_time}}</td>
-                                            <td>{{order.order_status_id.status_name}}</td>
                                             <td class="center">{{order.order_price}}</td>
-                                            <td>{{order.deliver_id}}</td>
+                                            <td>{{order.deliver_id.deliver_id}}</td>
                                             <td>{{order.customer_id.id}}</td>
                                         </tr>
                                         {% endfor %}

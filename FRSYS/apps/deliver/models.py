@@ -14,8 +14,8 @@ class Deliver(models.Model):
         (3, '已完成'),
     )
     deliver_id = models.CharField(max_length=26, primary_key=True, verbose_name='物流编号')  # 'XS'/'CG'
-    start_add=models.CharField(max_length=30,null=True,verbose_name='出发地点')  # 我们的某个仓库
-    aim_add=models.CharField(max_length=30,null=True, verbose_name='目标地点')  # 用户自己填的地址
+    start_add=models.CharField(max_length=200,null=True,verbose_name='出发地点')  # 我们的某个仓库
+    aim_add=models.CharField(max_length=200,null=True, verbose_name='目标地点')  # 用户自己填的地址
     apply_time=models.DateTimeField(verbose_name='申请时间',default=timezone.now)  # 申请时间就是用户下订单的时间
     departure_time = models.DateTimeField(null=True,verbose_name='离开时间')  # 离开时间
     arrival_time = models.DateTimeField(blank=True, null=True, verbose_name='到达时间')  # 开始是空

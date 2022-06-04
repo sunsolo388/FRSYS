@@ -289,13 +289,14 @@ def _get_trace_info(order_time, car_order, driver_name, deliver_details_order, o
 def order_trace(request,index):
     if request.method == 'GET':
         user_id = request.session['user_id']
-        orders_list = OrderInfo.objects.filter(user_id=int(user_id)).order_by('-odate')
+        orders_list = Order.objects.filter(customer_id=user_id)
+        print(orders_list)
         paginator = Paginator(orders_list, 2)
         page = paginator.page(int(index))
         context = {
             'paginator': paginator,
             'page': page,
-            # 'orders_list':orders_list,
+            'orders_list':orders_list,
             'title': "用户中心",
             'page_name': 1,
         }
@@ -303,8 +304,8 @@ def order_trace(request,index):
 
     elif request.method == 'POST':
         if 'search_order_trace' in request.POST:
-            # order_id = request.POST.get('order_id')  # 这里看前端到底把这个名字设成啥了
-            order_id = '05252302'
+            # order_id = '202205281536001'
+            order_id = request.POST.get('order_id')  # 这里看前端到底把这个名字设成啥了
 
             if order_id:  # 保证有输入内容
                 try:

@@ -53,7 +53,7 @@ def sales_order_all(request):
     """
     全部订单
     """
-    orders = od.Order.objects.filter(order_status_id=1).order_by('-order_time')[0:]
+    orders = od.Order.objects.filter(order_status_id=4).order_by('-order_time')[0:]
     return render(request,'order/sales/all.html',{'orders_list':orders})
 
 
