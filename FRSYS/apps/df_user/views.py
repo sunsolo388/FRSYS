@@ -330,10 +330,6 @@ def order_trace(request,index):
 
                 except Order.DoesNotExist:
                     messages.add_message(request, messages.ERROR, '查询失败！不存在该订单编号！')
-                except CarForDeliver.DoesNotExist:
-                    messages.add_message(request, messages.ERROR, '查询失败！该订单未发货！')
-                    user_id = request.session['user_id']
-                    return redirect('/user/order/'+str(user_id))
 
                     return render(request, 'df_user/findroot.html', locals())
 
