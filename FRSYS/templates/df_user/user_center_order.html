@@ -29,18 +29,7 @@
 
                 </thead>
                 <tbody>
-                <form action="" method="post">{% csrf_token %}
-                    <tr>
-                        <td><input type="text" name="order_id" value="order_id" readonly required=""
-                                   style=" text-align:center;border: #FFFFFF"></td>
-                        <td>
-                            <button type="submit" name="search_order_trace">一键溯源</button>
-                        </td>
-                        <td>
-                            <button type="submit" name="aftermarket">售后申请</button>
-                        </td>
-                    </tr>
-                </form>
+
                 {% for i in order_set %}
                 <form action="" method="post">
                     {% csrf_token %}
