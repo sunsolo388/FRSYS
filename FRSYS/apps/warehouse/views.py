@@ -149,7 +149,7 @@ def warehouse_outward(request):
     '''
     order_to_complete = om.Order.objects.filter(order_status=1)
     orderinfo = om.OrderDetail.objects.filter(order_id__in=order_to_complete).values(
-        'order_detail_id', 'product_id__product_name', 'detail_num'
+        'order_detail_id', 'product_id__product_name', 'detail_num','order_detail_status'
     )  # 筛选出所有未处理的orderDetail
     xsdd = orderinfo
 
@@ -234,11 +234,18 @@ def warehouse_outward(request):
         total = wm.WareHouse.objects.filter(product_name=product, warehouse_status='库存').aggregate(num=Sum('left_num'))
         total_num = total['num']  # 计算当前该产品剩余总库存
         gm.GoodsInfo.objects.filter(gtitle=product).update(gkucun=total_num * 2)
-        order = om.OrderDetail.objects.filter(order_detail_id=order_id).values('order_id')[0]['order_id']   #获取order对应实例
-        print(order)
-        om.Order.objects.filter(order_id=order).update(order_status=2)  # 更新order表
+        order = om.OrderDetail.objects.filter(order_detail_id=order_id).values('order_id')[0]['order_id']
+        om.OrderDetail.objects.filter(order_detail_id=order_id).update(order_detail_status=1)
+        ordertotal = om.OrderDetail.objects.filter(order_id=order).values('order_detail_status')
+        flag = 1
+        for i in range(len(ordertotal)):
+            if ordertotal[i]['order_detail_status'] == False:
+                flag = 0
+        if flag == 1:
+            om.Order.objects.filter(order_id=order).update(order_status=2)  # 更新order表
         messages.add_message(request, messages.SUCCESS, '添加成功！')
         return redirect('/work/warehouse/outward')
+
     outwardinfo = wm.Outward.objects.all().order_by('out_time').values(
         'outward_id', 'warehouse_flow', 'product_name',
         'out_time','out_num'

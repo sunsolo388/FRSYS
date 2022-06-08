@@ -53,6 +53,7 @@ class OrderDetail(models.Model):
     order_id = models.ForeignKey(to=Order,to_field="order_id",on_delete=models.CASCADE)
     product_id = models.ForeignKey(to=pm.Product,to_field="product_id",on_delete=models.CASCADE)
     detail_num = models.FloatField(max_length=8)
+    order_detail_status = models.BooleanField(default=0)
     # outward_id = models.ForeignKey(to=wm.Outward,to_field='outward_id',on_delete=models.CASCADE,null=True,blank=True)
     # out_time = models.DateTimeField(null=True,blank=True)
 

@@ -97,6 +97,7 @@ def order_handle(request):
                 order_detail.goods = goods
                 order_detail.price = goods.gprice
                 order_detail.count = cart.count
+                order_detail.order_detail_status = 0
                 order_detail.save()
                 cart.delete()  # 并删除当前购物车
             else:  # 否则，则事务回滚，订单取消
