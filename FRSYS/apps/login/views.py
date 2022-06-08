@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import messages
 from login import models  # 导入models文件
+from personnel.models import Staff
+from deliver.models import Car
 
 # Create your views here.
 
@@ -110,11 +112,21 @@ def login_worker(request):
             return redirect('/innerlogin/innerregister/')
         
         if password == user.pwd:
-            messages.add_message(request, messages.SUCCESS, '登录成功')
+            #messages.add_message(request, messages.SUCCESS, '登录成功')
             request.session['staff_id']=user.staff_id
             if user.identity == 1:
                 return redirect('/work/purchase/')
             elif user.identity == 2:
+                sid=user.staff_id
+                lo_staff=Staff.objects.filter(staff_id=sid).values('staff_id','position')
+                if len(lo_staff)==0:
+                    messages.add_message(request, messages.ERROR, '不存在该员工')
+                    return redirect('/innerlogin/')
+                elif lo_staff.last()['position']=="配送员":
+                    lo_car=Car.objects.filter(staff_id=sid).values('car_id','staff_id')
+                    if len(lo_car)==0:
+                        messages.add_message(request, messages.ERROR, '该员工未注册运送车辆')
+                        return redirect('/innerlogin/')
                 return redirect('/work/delivery/')
             elif user.identity == 3:
                 return redirect('/work/warehouse/')
