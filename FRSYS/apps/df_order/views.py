@@ -78,7 +78,7 @@ def order_handle(request):
         deliver.aim_add = customer_add
         deliver.apply_time = order_info.odate
         '''
-        deliver = Deliver(deliver_id='XS' + order_info.oid, start_add='', aim_add=customer_add,
+        deliver = Deliver(deliver_id='XS' + order_info.oid, start_add='公司仓库', aim_add=customer_add,
                           apply_time=order_info.odate)
         deliver.save() # 保存
         order_info.save()  # 保存订单

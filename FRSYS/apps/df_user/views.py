@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect, reverse
 from django.core.paginator import Paginator
 from django.http import JsonResponse
+from django.contrib import messages
+
 
 from hashlib import sha1
 
@@ -25,6 +27,7 @@ def register_handle(request):
 
     # 判断两次密码一致性
     if password != confirm_pwd:
+        messages.add_message(request, messages.ERROR, '请保证两次输入的密码一致！')
         return redirect('/user/register/')
     # 密码加密
     s1 = sha1()
@@ -32,15 +35,20 @@ def register_handle(request):
     encrypted_pwd = s1.hexdigest()
 
     # 创建对象
-    UserInfo.objects.create(uname=username, upwd=encrypted_pwd, uemail=email)
-    send_active_email(email, username)
+    user = UserInfo.objects.filter(uname=username)
+    if user.exists():
+        messages.add_message(request, messages.ERROR, '用户已存在！')
+        return redirect('/user/register/')
+    else:
+        UserInfo.objects.create(uname=username, upwd=encrypted_pwd, uemail=email)
+        send_active_email(email, username)
 
-    # 注册成功
-    context = {
-        'title': '用户登陆',
-        'username': username,
-    }
-    return render(request, 'df_user/login.html', context)
+        # 注册成功
+        context = {
+            'title': '用户登陆',
+            'username': username,
+        }
+        return render(request, 'df_user/login.html', context)
 
 
 def register_exist(request):
@@ -330,11 +338,11 @@ def order_trace(request,index):
 
                 except Order.DoesNotExist:
                     messages.add_message(request, messages.ERROR, '查询失败！不存在该订单编号！')
+                    return redirect('/user/order/1')    # 这里还可以修改一下，把page传回来先
+
                 except CarForDeliver.DoesNotExist:
                     messages.add_message(request, messages.ERROR, '查询失败！订单还未发货！')
-                    user_id = request.session['user_id']
-
-                    return redirect('/user/order/'+str(user_id))
+                    return redirect('/user/order/1')    # 这里还可以修改一下，把page传回来先
 
                 return render(request, 'df_user/findroot.html', locals())
 

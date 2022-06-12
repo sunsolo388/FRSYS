@@ -35,7 +35,7 @@ class Purchase(models.Model):
         id = str(int(time.time()))
 
         # 在创建采购订单时创建对应的物流需求
-        deliver = Deliver( deliver_id='CG'+id, start_add = '本公司距离目标最近的基地', aim_add = supplier.supplier_add,
+        deliver = Deliver( deliver_id='CG'+id, start_add = '公司车库', aim_add = supplier.supplier_add,
                           apply_time = datetime.datetime.now() )
         deliver.save()
 
