@@ -10,6 +10,7 @@ from django.contrib import messages
 from order import models as od # 导入models文件
 from deliver import models as dl
 from df_user.models import UserInfo
+from df_order.models import OrderInfo
 
 
 # Create your views here.
@@ -70,14 +71,14 @@ def sales_order_correct(request):
             order = None
         if order == None:
             messages.add_message(request, messages.ERROR, '不存在该订单号，请检查！')
-            return render(request, 'order/sales/form')
+            return render(request, 'order/sales/form.html')
         status_id = order.order_status.status_id
         if status_id >= 3:  # 已经发货的时候就不能再修改了
             messages.add_message(request, messages.ERROR, '该订单已经发货，不能修改地址！')
-            return render(request, 'order/sales/form')
+            return render(request, 'order/sales/form.html')
         else:
             dl.Deliver.objects.filter(deliver_id = order.deliver_id).update(aim_add = new_address)
             messages.add_message(request, messages.SUCCESS, '修改成功！')
-            return redirect('order/sales/form')
-    return render(request, 'order/sales/form')
+            return redirect('order/sales/form.html')
+    return render(request, 'order/sales/form.html')
 
